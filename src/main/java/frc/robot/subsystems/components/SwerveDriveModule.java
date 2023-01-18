@@ -71,7 +71,7 @@ public class SwerveDriveModule {
 
         SmartDashboard.putNumber(m_name + " Heading", desiredState.angle.getDegrees());
 
-        double desiredPercentOutput = (desiredState.speedMetersPerSecond / SwerveDriveSubsystem.MAX_VELOCITY_METERS_PER_SECOND) * (Constants.SwerveModuleConstants.MAX_VOLTAGE / Constants.SwerveModuleConstants.NOMINAL_VOLTAGE);
+        double desiredPercentOutput = (desiredState.speedMetersPerSecond / Constants.SwerveDriveConstants.MAXVELOCITYMETERSPERSECOND) * (Constants.SwerveModuleConstants.MAX_VOLTAGE / Constants.SwerveModuleConstants.NOMINAL_VOLTAGE);
         SmartDashboard.putNumber(m_name + " desiredVoltage", desiredPercentOutput);
 
         driveMotor.set(ControlMode.PercentOutput, desiredPercentOutput);
