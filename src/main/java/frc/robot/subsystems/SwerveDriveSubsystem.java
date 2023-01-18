@@ -47,7 +47,8 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     // center of the field along the short end, facing forward.
     SwerveDriveOdometry m_odometry;
     Pose2d m_pose;
-    Joystick js0 = new Joystick(0); 
+
+    Joystick driveController = new Joystick(Constants.XboxControllerConstants.DRIVER_CONTROLLER);
 
     SwerveDriveModule frontLeftModule = new SwerveDriveModule(Constants.SwerveDriveConstants.FRONTLEFTMODULENAME, 
                                                                 Constants.SwerveDriveConstants.FRONTLEFTDRIVEMOTORID, 
@@ -113,19 +114,19 @@ public class SwerveDriveSubsystem extends SubsystemBase {
 
         // Update the pose
         // button 8 on xbox is three lines button
-        if (js0.getRawButton(8)) {
+        if (driveController.getRawButton(Constants.XboxControllerConstants.THREE_LINES)) {
             frontLeftModule.resetTurnEncoders();
             frontRightModule.resetTurnEncoders();
             backRightModule.resetTurnEncoders();
             backLeftModule.resetTurnEncoders();
         }
         // button 7 on xbox it two squares
-        if (js0.getRawButton(7)) {
+        if (driveController.getRawButton(Constants.XboxControllerConstants.TWO_SQUARES)) {
             pigeon.setYaw(0);
         }
         //Button 6 is right bumper/slow button
         //Speed is multiplied by 0.3 when held down
-        if (js0.getRawButton(6)) {
+        if (driveController.getRawButton(Constants.XboxControllerConstants.RIGHT_BUMPER)) {
             setDriveRate(0.3);
         }
         else {
