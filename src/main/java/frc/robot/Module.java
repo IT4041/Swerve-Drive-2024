@@ -14,25 +14,23 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.DrivetrainSubsystem;
 
 public class Module {
-    TalonFX driveMotor;
-    TalonFX turnMotor;
-    double m_offset ; 
-    CANCoder enc;
-    String m_name;
-    // ShuffleboardTab tab;
+    private TalonFX driveMotor;
+    private TalonFX turnMotor;
+    private double m_offset ; 
+    private CANCoder enc;
+    private String m_name;
+    public final double MAX_VOLTAGE = 8;
+    public final double NOMINAL_VOLTAGE = 12;
 
     public Module(String name, int driveMotorCanId, int turnMotorCanId, int encoderCanId, double encOffset) {
         this.m_name = name;
         m_offset = encOffset;
-        // this.tab = DrivetrainSubsystem.getInstance().getTab();
 
         driveMotor = new TalonFX(driveMotorCanId, "CANivore1"); 
         turnMotor = new TalonFX(turnMotorCanId, "CANivore1");
         enc = new CANCoder(encoderCanId, "CANivore1");
 
         enc.configSensorInitializationStrategy(SensorInitializationStrategy.BootToAbsolutePosition);
-
-        // enc.setStatusFramePeriod(statusFrame, periodMs)
 
         turnMotor.configFactoryDefault();
         driveMotor.configFactoryDefault();
@@ -55,19 +53,10 @@ public class Module {
         turnMotor.configIntegratedSensorAbsoluteRange(AbsoluteSensorRange.Unsigned_0_to_360);
         //turnMotor.setNeutralMode(NeutralMode.Brake);
 
-
         driveMotor.setInverted(false);
         driveMotor.setNeutralMode(NeutralMode.Brake);
-
     }
   
-    public double getHeading() {
-        double v = Math.floorMod((int)enc.getPosition(), 360);
-        
-       return v - m_offset;
-    }
-
-
     public void periodic() {
         SmartDashboard.putNumber(m_name + " Cancoder",  enc.getPosition());
         SmartDashboard.putNumber(m_name + " Cancoder with offset",  getHeading());
@@ -76,15 +65,13 @@ public class Module {
         SmartDashboard.putNumber(m_name + " turnMotor", DrivetrainSubsystem.convertTicksToDegrees(turnMotor.getSelectedSensorPosition()));
     }
 
-    public final double MAX_VOLTAGE = 8;
-    public final double NOMINAL_VOLTAGE = 12;
-
+    public double getHeading() {
+        double v = Math.floorMod((int)enc.getPosition(), 360);
+        
+       return v - m_offset;
+    }
+ 
     public void setModuleState(SwerveModuleState desiredState) {
-
-        // tab.add(name + " cancoder", getHeading());
-        // tab.add(name + " cancoder",  getHeading());
-        
-        
 
         desiredState = SwerveModuleState.optimize(desiredState, Rotation2d.fromDegrees(getHeading()));
 
@@ -110,6 +97,7 @@ public class Module {
         return new SwerveModuleState(speedMetersPerSecond, Rotation2d.fromDegrees( getHeading()));
 
     }
+    
     public SwerveModulePosition getPosition () {
         // 2048 ticks per rotation
         // 6.75:1 gear ratio
@@ -119,9 +107,9 @@ public class Module {
         ;
         return new SwerveModulePosition(distanceMeters, angle);
     }
+    
     public void resetTurnEncoders() {
-        // enc.setPosition(0);
-        // turnMotor.setSelectedSensorPosition(DrivetrainSubsystem.convertDegreesToTicks(0));
+
         turnMotor.set(ControlMode.Position, 0);
     }
 }

@@ -24,9 +24,10 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Module;
 
 public class DrivetrainSubsystem extends SubsystemBase {
-    // private static DrivetrainSubsystem instance = null;
+    
+    private static DrivetrainSubsystem m_inst = null;
 
-    double wheelBase = 31.625 * 0.0254;
+    double wheelBase = 19.325 * 0.0254;
     // Locations for the swerve drive modules relative to the robot center.
     Translation2d m_frontLeftLocation = new Translation2d(wheelBase, wheelBase);
     Translation2d m_frontRightLocation = new Translation2d(wheelBase, -wheelBase);
@@ -44,11 +45,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
     // our starting pose is 5 meters along the long end of the field and in the
     // center of the field along the short end, facing forward.
     SwerveDriveOdometry m_odometry;
-
     Pose2d m_pose;
-
     Joystick js0 = new Joystick(0);
-
 
     private final double FRONT_LEFT_ENC_OFFSET = 322.82;
     private final double FRONT_RIGHT_ENC_OFFSET = 339.87;
@@ -67,8 +65,32 @@ public class DrivetrainSubsystem extends SubsystemBase {
     SlewRateLimiter turnRateLimiter = new SlewRateLimiter(0.5);
 
     Pigeon2 pigeon = new Pigeon2(13, "CANivore1");
+
     //Global variable for drive rate speed
     double g_driveRate;
+
+    public static final double MAX_VELOCITY_METERS_PER_SECOND = 4;
+    public static final double MAX_OMEGA_RADIANS_PER_SECOND = 2.5;
+
+    private DrivetrainSubsystem() {
+        pigeon.setYaw(0);
+
+        m_odometry = new SwerveDriveOdometry(
+                m_kinematics,
+                getGyroHeading(),
+             getModulePositions(),
+                
+                new Pose2d(0, 0, new Rotation2d()));
+        
+        SmartDashboard.putBoolean("Done", false);
+    }
+
+    public static DrivetrainSubsystem getInstance() {
+        if (m_inst == null) {
+            m_inst = new DrivetrainSubsystem();
+        }
+        return m_inst;
+    }
 
     public Rotation2d getGyroHeading() {
         // // Get my gyro angle. We are negating the value because gyros return positive
@@ -83,14 +105,6 @@ public class DrivetrainSubsystem extends SubsystemBase {
         return m_odometry.getPoseMeters();
     }
 
-    private static DrivetrainSubsystem m_inst = null;
-
-    public static DrivetrainSubsystem getInstance() {
-        if (m_inst == null) {
-            m_inst = new DrivetrainSubsystem();
-        }
-        return m_inst;
-    }
     private SwerveModulePosition[] getModulePositions () {
         SwerveModulePosition[] positions = new SwerveModulePosition[4];
         positions[0] = frontLeftModule.getPosition();  
@@ -100,35 +114,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
        return positions;
         
     }
-    private DrivetrainSubsystem() {
-        pigeon.setYaw(0);
-
-        m_odometry = new SwerveDriveOdometry(
-                m_kinematics,
-                getGyroHeading(),
-             getModulePositions(),
-                
-                new Pose2d(0, 0, new Rotation2d()));
-        
-        SmartDashboard.putBoolean("Done", false);
-    }
-
-    // private DrivetrainSubsystem() {
-    // drivetrainTab = Shuffleboard.getTab("drivetrain");
-
-    // }
-
-    // public static DrivetrainSubsystem getInstance() {
-    // if (instance == null) {
-    // instance = new DrivetrainSubsystem();
-    // }
-    // return instance;
-    // }
-
-    // public ShuffleboardTab getTab() {
-    // return drivetrainTab;
-    // }
-
+    
     // this is alled every loop of the scheduler (~20ms)
     @Override
     public void periodic() {
@@ -227,9 +213,6 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
     }
 
-    public static final double MAX_VELOCITY_METERS_PER_SECOND = 4;
-    public static final double MAX_OMEGA_RADIANS_PER_SECOND = 2.5;
-
     public void setModuleStates(SwerveModuleState[] moduleStates) {
 
         SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates, MAX_VELOCITY_METERS_PER_SECOND);
@@ -272,6 +255,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
     public void setDriveRate(double driveRate) {
         g_driveRate = driveRate;
     }
+    
     public double getDriveRate() {
         return g_driveRate;
     }
