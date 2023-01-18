@@ -54,6 +54,8 @@ public final class Constants {
         public static final double WHEELBASE = 19.325 * 0.0254;
         public static final double SLEWRATELIMIT = 0.5;
         public static final int PIDGEONID = 13;
+        public static final double MAXVELOCITYMETERSPERSECOND = 4;
+        public static final double MAXOMEGARADIANSPERSECOND = 2.5;
     }
 
     public class XboxControllerConstants{
