@@ -55,4 +55,17 @@ public final class Constants {
         public static final double SLEWRATELIMIT = 0.5;
         public static final int PIDGEONID = 13;
     }
+
+    public class XboxControllerConstants{
+        public static final int DRIVER_CONTROLLER = 0;
+        public static final int ASSISTANT_CONTROLLER = 1;
+        public static final int A_BUTTON = 1;
+        public static final int B_BUTTON = 2;
+        public static final int X_BUTTON = 3;
+        public static final int Y_BUTTON = 4;
+        public static final int LEFT_BUMPER = 5;
+        public static final int RIGHT_BUMPER = 6;
+        public static final int TWO_SQUARES = 7;
+        public static final int THREE_LINES = 8;
+    }
 }
