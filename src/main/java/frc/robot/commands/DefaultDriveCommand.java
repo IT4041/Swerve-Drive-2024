@@ -1,18 +1,18 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.DrivetrainSubsystem;
+import frc.robot.subsystems.SwerveDriveSubsystem;
 
 public class DefaultDriveCommand extends CommandBase {
 
-    private final DrivetrainSubsystem m_drivetrainSubsystem;
+    private final SwerveDriveSubsystem m_drivetrainSubsystem;
 
-    Joystick m_driver;
+    XboxController m_driver;
 
-    public DefaultDriveCommand(Joystick driver) {
-        m_drivetrainSubsystem = DrivetrainSubsystem.getInstance();
-        m_driver = driver;
+    public DefaultDriveCommand(XboxController m_driver2) {
+        m_drivetrainSubsystem = SwerveDriveSubsystem.getInstance();
+        m_driver = m_driver2;
 
         this.addRequirements(m_drivetrainSubsystem);
     }

@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
  * each mode, as described in the TimedRobot documentation. If you change the name of this class or
@@ -15,15 +17,12 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * project.
  */
 public class Robot extends TimedRobot {
-  private Command m_autonomousCommand;
   
+  private Command m_autonomousCommand;
   private RobotContainer m_robotContainer;
 
-  public Robot() {
-    super();
-    m_robotContainer = new RobotContainer();
-  }
-
+  private final static TalonSRX ImJustHereSoStuffDoesntBreak = new TalonSRX(99);
+  
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -34,10 +33,6 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
   }
-  @Override
-  public void teleopPeriodic() {
-  }
-
   /**
    * This function is called every robot packet, no matter the mode. Use this for items like
    * diagnostics that you want ran during disabled, autonomous, teleoperated and test.
@@ -88,8 +83,8 @@ public class Robot extends TimedRobot {
   }
 
   /** This function is called periodically during operator control. */
-  
-
+  @Override
+  public void teleopPeriodic() {}
 
   @Override
   public void testInit() {

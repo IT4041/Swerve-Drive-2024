@@ -15,17 +15,18 @@ import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Module;
+import frc.robot.subsystems.components.SwerveDriveModule;
 
-public class DrivetrainSubsystem extends SubsystemBase {
+public class SwerveDriveSubsystem extends SubsystemBase {
     
-    private static DrivetrainSubsystem m_inst = null;
+    private static SwerveDriveSubsystem m_inst = null;
 
     double wheelBase = 19.325 * 0.0254;
     // Locations for the swerve drive modules relative to the robot center.
@@ -53,10 +54,10 @@ public class DrivetrainSubsystem extends SubsystemBase {
     private final double BACK_RIGHT_ENC_OFFSET = 122.52;
     private final double BACK_LEFT_ENC_OFFSET = 153.10;   
 
-    Module frontLeftModule = new Module("FrontLeft", 45, 40, 50, FRONT_LEFT_ENC_OFFSET);
-    Module frontRightModule = new Module("FrontRight", 43, 44, 51, FRONT_RIGHT_ENC_OFFSET);
-    Module backRightModule = new Module("BackRight", 23, 41, 52, BACK_RIGHT_ENC_OFFSET);
-    Module backLeftModule = new Module("BackLeft", 20, 22, 53, BACK_LEFT_ENC_OFFSET);
+    SwerveDriveModule frontLeftModule = new SwerveDriveModule("FrontLeft", 45, 40, 50, FRONT_LEFT_ENC_OFFSET);
+    SwerveDriveModule frontRightModule = new SwerveDriveModule("FrontRight", 43, 44, 51, FRONT_RIGHT_ENC_OFFSET);
+    SwerveDriveModule backRightModule = new SwerveDriveModule("BackRight", 23, 41, 52, BACK_RIGHT_ENC_OFFSET);
+    SwerveDriveModule backLeftModule = new SwerveDriveModule("BackLeft", 20, 22, 53, BACK_LEFT_ENC_OFFSET);
 
     ShuffleboardTab drivetrainTab;
 
@@ -72,7 +73,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
     public static final double MAX_VELOCITY_METERS_PER_SECOND = 4;
     public static final double MAX_OMEGA_RADIANS_PER_SECOND = 2.5;
 
-    private DrivetrainSubsystem() {
+    private SwerveDriveSubsystem() {
         pigeon.setYaw(0);
 
         m_odometry = new SwerveDriveOdometry(
@@ -85,36 +86,13 @@ public class DrivetrainSubsystem extends SubsystemBase {
         SmartDashboard.putBoolean("Done", false);
     }
 
-    public static DrivetrainSubsystem getInstance() {
+    public static SwerveDriveSubsystem getInstance() {
         if (m_inst == null) {
-            m_inst = new DrivetrainSubsystem();
+            m_inst = new SwerveDriveSubsystem();
         }
         return m_inst;
     }
 
-    public Rotation2d getGyroHeading() {
-        // // Get my gyro angle. We are negating the value because gyros return positive
-        // // values as the robot turns clockwise. This is not standard convention that
-        // is
-        // // used by the WPILib classes.
-        // var gyroAngle = Rotation2d.fromDegrees(-m_gyro.getAngle());
-        return Rotation2d.fromDegrees(pigeon.getYaw());
-    }
-
-    private Pose2d getPose() {
-        return m_odometry.getPoseMeters();
-    }
-
-    private SwerveModulePosition[] getModulePositions () {
-        SwerveModulePosition[] positions = new SwerveModulePosition[4];
-        positions[0] = frontLeftModule.getPosition();  
-        positions[1] = frontRightModule.getPosition();  
-        positions[2] = backRightModule.getPosition();
-        positions[3] = backLeftModule.getPosition();  
-       return positions;
-        
-    }
-    
     // this is alled every loop of the scheduler (~20ms)
     @Override
     public void periodic() {
@@ -148,12 +126,31 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
         SmartDashboard.putString("odo", m_odometry.getPoseMeters().toString());
         SmartDashboard.putString("odo", m_odometry.getPoseMeters().toString());
-        // SmartDashboard.putNumber("Pose roation", m_pose.getRotation().getDegrees()) ;
-        // SmartDashboard.putNumber("Pose X", m_pose.getX());
-        // SmartDashboard.putNumber("Pose Y", m_pose.getY());
 
-        // DriveWithJoystick(js0);
         m_odometry.update(getGyroHeading(), getModulePositions());
+    }
+
+    public Rotation2d getGyroHeading() {
+        // // Get my gyro angle. We are negating the value because gyros return positive
+        // // values as the robot turns clockwise. This is not standard convention that
+        // is
+        // // used by the WPILib classes.
+        // var gyroAngle = Rotation2d.fromDegrees(-m_gyro.getAngle());
+        return Rotation2d.fromDegrees(pigeon.getYaw());
+    }
+
+    private Pose2d getPose() {
+        return m_odometry.getPoseMeters();
+    }
+
+    private SwerveModulePosition[] getModulePositions () {
+        SwerveModulePosition[] positions = new SwerveModulePosition[4];
+        positions[0] = frontLeftModule.getPosition();  
+        positions[1] = frontRightModule.getPosition();  
+        positions[2] = backRightModule.getPosition();
+        positions[3] = backLeftModule.getPosition();  
+       return positions;
+        
     }
 
     public static double convertTicksToDegrees(double ticks) {
@@ -169,11 +166,11 @@ public class DrivetrainSubsystem extends SubsystemBase {
         return ticks;
     }
 
-    public void DriveWithJoystick(Joystick js) {
+    public void DriveWithJoystick(XboxController m_driver) {
 
-        double leftRightDir = -1 * getDriveRate() * js.getRawAxis(0); // positive number means left
-        double fwdBackDir = -1 * getDriveRate() * js.getRawAxis(1); // positive number means fwd
-        double turn = -1 * getDriveRate() * js.getRawAxis(4); // positive number means clockwise
+        double leftRightDir = -1 * getDriveRate() * m_driver.getRawAxis(0); // positive number means left
+        double fwdBackDir = -1 * getDriveRate() * m_driver.getRawAxis(1); // positive number means fwd
+        double turn = -1 * getDriveRate() * m_driver.getRawAxis(4); // positive number means clockwise
 
         // fwdBackDir = fwdBakRateLimiter.calculate(fwdBackDir);
         // leftRightDir = leftRightRateLimiter.calculate(leftRightDir);
@@ -201,9 +198,9 @@ public class DrivetrainSubsystem extends SubsystemBase {
         
 
         ChassisSpeeds speeds = ChassisSpeeds.fromFieldRelativeSpeeds(
-                fwdBackDir * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
-                leftRightDir * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
-                turn * DrivetrainSubsystem.MAX_OMEGA_RADIANS_PER_SECOND,
+                fwdBackDir * SwerveDriveSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
+                leftRightDir * SwerveDriveSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
+                turn * SwerveDriveSubsystem.MAX_OMEGA_RADIANS_PER_SECOND,
                 Rotation2d.fromDegrees(pigeon.getYaw()));
 
         // Convert to module states
