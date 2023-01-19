@@ -25,9 +25,9 @@ public class SwerveDriveModule {
         this.m_name = name;
         m_offset = encOffset;
 
-        driveMotor = new TalonFX(driveMotorCanId, Constants.CANBUSNAME); 
-        turnMotor = new TalonFX(turnMotorCanId, Constants.CANBUSNAME);
-        enc = new CANCoder(encoderCanId, Constants.CANBUSNAME);
+        driveMotor = new TalonFX(driveMotorCanId, Constants.CANBUS_NAME); 
+        turnMotor = new TalonFX(turnMotorCanId, Constants.CANBUS_NAME);
+        enc = new CANCoder(encoderCanId, Constants.CANBUS_NAME);
 
         enc.configSensorInitializationStrategy(SensorInitializationStrategy.BootToAbsolutePosition);
 
