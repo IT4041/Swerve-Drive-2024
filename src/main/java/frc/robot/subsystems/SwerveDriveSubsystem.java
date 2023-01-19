@@ -5,7 +5,6 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.filter.SlewRateLimiter; 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -16,7 +15,6 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -46,7 +44,6 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     // our starting pose is 5 meters along the long end of the field and in the
     // center of the field along the short end, facing forward.
    private SwerveDriveOdometry m_odometry;
-   private Pose2d m_pose;
 
    private Joystick driveController = new Joystick(Constants.XboxControllerConstants.DRIVER_CONTROLLER);
 
@@ -70,12 +67,6 @@ public class SwerveDriveSubsystem extends SubsystemBase {
                                                                 Constants.SwerveDriveConstants.BACK_LEFT_TURN_MOTOR_ID, 
                                                                 Constants.SwerveDriveConstants.BACK_LEFT_ENC_ID,
                                                                 Constants.SwerveDriveConstants.BACK_LEFT_OFFSET);
-
-   private ShuffleboardTab drivetrainTab;
-
-   private SlewRateLimiter fwdBakRateLimiter = new SlewRateLimiter(Constants.SwerveDriveConstants.SLEW_RATE_LIMIT);
-   private SlewRateLimiter leftRightRateLimiter = new SlewRateLimiter(Constants.SwerveDriveConstants.SLEW_RATE_LIMIT);
-   private SlewRateLimiter turnRateLimiter = new SlewRateLimiter(Constants.SwerveDriveConstants.SLEW_RATE_LIMIT);
 
    private Pigeon2 pigeon = new Pigeon2(Constants.SwerveDriveConstants.PIDGEON_ID, Constants.CANBUSNAME);
 

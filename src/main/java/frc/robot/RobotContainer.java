@@ -62,12 +62,8 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // return m_drivetrainSubsystem.traj(PathPlanner.loadPath("Our Path", new PathConstraints(4, 3)), true);
-    //return m_drivetrainSubsystem.traj(PathPlanner.loadPath("Left 7 Path", new PathConstraints(4, 3)), true);
-    //return m_drivetrainSubsystem.traj(PathPlanner.loadPath("Angle Path", new PathConstraints(4, 3)), true);
+
     return m_drivetrainSubsystem.traj(PathPlanner.loadPath("TestPath2", new PathConstraints(1, 1)), true);
     
-    // An ExampleCommand will run in autonomous
-    // return m_autoCommand;
   }
 }
