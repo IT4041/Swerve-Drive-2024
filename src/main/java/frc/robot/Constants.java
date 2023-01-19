@@ -14,7 +14,7 @@ package frc.robot;
  */
 public final class Constants {
 
-    public static final String CANBUSNAME = "CANivore1";
+    public static final String CANBUS_NAME = "CANivore1";
 
     public class SwerveModuleConstants{
         public static final double MAX_VOLTAGE = 8.0;

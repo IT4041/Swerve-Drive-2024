@@ -12,7 +12,7 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
-import frc.robot.subsystems.SwerveDriveSubsystem;
+import frc.robot.RobotMath;
 
 public class SwerveDriveModule {
     private TalonFX driveMotor;
@@ -22,12 +22,12 @@ public class SwerveDriveModule {
     private String m_name;
 
     public SwerveDriveModule(String name, int driveMotorCanId, int turnMotorCanId, int encoderCanId, double encOffset) {
-        this.m_name = name;
+        m_name = name;
         m_offset = encOffset;
 
-        driveMotor = new TalonFX(driveMotorCanId, Constants.CANBUSNAME); 
-        turnMotor = new TalonFX(turnMotorCanId, Constants.CANBUSNAME);
-        enc = new CANCoder(encoderCanId, Constants.CANBUSNAME);
+        driveMotor = new TalonFX(driveMotorCanId, Constants.CANBUS_NAME); 
+        turnMotor = new TalonFX(turnMotorCanId, Constants.CANBUS_NAME);
+        enc = new CANCoder(encoderCanId, Constants.CANBUS_NAME);
 
         enc.configSensorInitializationStrategy(SensorInitializationStrategy.BootToAbsolutePosition);
 
@@ -35,7 +35,7 @@ public class SwerveDriveModule {
         driveMotor.configFactoryDefault();
 
         // set motor encoder to 0 when robot code starts
-        var currentHeadingTicks = -1 * SwerveDriveSubsystem.convertDegreesToTicks(getHeading());
+        var currentHeadingTicks = -1 * RobotMath.convertDegreesToTicks(getHeading());
         turnMotor.setSelectedSensorPosition(currentHeadingTicks);
         turnMotor.set(ControlMode.Position, currentHeadingTicks);
 
@@ -55,8 +55,8 @@ public class SwerveDriveModule {
         SmartDashboard.putNumber(m_name + " Cancoder",  enc.getPosition());
         SmartDashboard.putNumber(m_name + " Cancoder with offset",  getHeading());
         SmartDashboard.putNumber(m_name + " error", turnMotor.getClosedLoopError());
-        SmartDashboard.putNumber(m_name + " error deg", SwerveDriveSubsystem.convertTicksToDegrees(turnMotor.getClosedLoopError()));
-        SmartDashboard.putNumber(m_name + " turnMotor", SwerveDriveSubsystem.convertTicksToDegrees(turnMotor.getSelectedSensorPosition()));
+        SmartDashboard.putNumber(m_name + " error deg", RobotMath.convertTicksToDegrees(turnMotor.getClosedLoopError()));
+        SmartDashboard.putNumber(m_name + " turnMotor", RobotMath.convertTicksToDegrees(turnMotor.getSelectedSensorPosition()));
     }
 
     public double getHeading() {
@@ -75,15 +75,15 @@ public class SwerveDriveModule {
         SmartDashboard.putNumber(m_name + " desiredVoltage", desiredPercentOutput);
 
         driveMotor.set(ControlMode.PercentOutput, desiredPercentOutput);
-        turnMotor.set(ControlMode.Position, SwerveDriveSubsystem.convertDegreesToTicks(desiredState.angle.getDegrees()));
+        turnMotor.set(ControlMode.Position, RobotMath.convertDegreesToTicks(desiredState.angle.getDegrees()));
     }
 
     public SwerveModuleState getState() {
 
         double speedTicksPer100miliSeconds = driveMotor.getSelectedSensorVelocity();
 
-        double speedMetersPerSecond = speedTicksPer100miliSeconds * (1 / 100d) * (1_000 / 1d) * (1 / 2048d) * (1 / 6.75)
-                * ((4.0 * Math.PI) / 1d) * (.0254 / 1);
+        double speedMetersPerSecond = RobotMath.calculateSpeedMetersPer100ms(speedTicksPer100miliSeconds);
+         
 
         SmartDashboard.putNumber(m_name + "St", speedTicksPer100miliSeconds);
         SmartDashboard.putNumber(m_name + "Sm", speedMetersPerSecond);
@@ -96,7 +96,7 @@ public class SwerveDriveModule {
         // 2048 ticks per rotation
         // 6.75:1 gear ratio
         // 4" wheels
-        double distanceMeters = (1 / 2048d) * (1 / 6.75) * ((4.0 * Math.PI) / 1d) * (.0254 / 1) * driveMotor.getSelectedSensorPosition();
+        double distanceMeters = RobotMath.distanceMeters(driveMotor.getSelectedSensorPosition());
         Rotation2d angle = Rotation2d.fromDegrees( getHeading());
         
         return new SwerveModulePosition(distanceMeters, angle);

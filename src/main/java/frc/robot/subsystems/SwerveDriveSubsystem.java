@@ -28,13 +28,13 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     private static SwerveDriveSubsystem m_inst = null;
 
     // Locations for the swerve drive modules relative to the robot center.
-   private Translation2d m_frontLeftLocation = new Translation2d(Constants.SwerveDriveConstants.WHEEL_BASE, Constants.SwerveDriveConstants.WHEEL_BASE);
-   private Translation2d m_frontRightLocation = new Translation2d(Constants.SwerveDriveConstants.WHEEL_BASE, -Constants.SwerveDriveConstants.WHEEL_BASE);
-   private Translation2d m_backLeftLocation = new Translation2d(-Constants.SwerveDriveConstants.WHEEL_BASE, Constants.SwerveDriveConstants.WHEEL_BASE);
-   private Translation2d m_backRightLocation = new Translation2d(-Constants.SwerveDriveConstants.WHEEL_BASE, -Constants.SwerveDriveConstants.WHEEL_BASE);
+    private Translation2d m_frontLeftLocation = new Translation2d(Constants.SwerveDriveConstants.WHEEL_BASE, Constants.SwerveDriveConstants.WHEEL_BASE);
+    private Translation2d m_frontRightLocation = new Translation2d(Constants.SwerveDriveConstants.WHEEL_BASE, -Constants.SwerveDriveConstants.WHEEL_BASE);
+    private Translation2d m_backLeftLocation = new Translation2d(-Constants.SwerveDriveConstants.WHEEL_BASE, Constants.SwerveDriveConstants.WHEEL_BASE);
+    private Translation2d m_backRightLocation = new Translation2d(-Constants.SwerveDriveConstants.WHEEL_BASE, -Constants.SwerveDriveConstants.WHEEL_BASE);
 
     // Creating my kinematics object using the module locations
-  private SwerveDriveKinematics m_kinematics = new SwerveDriveKinematics(
+    private SwerveDriveKinematics m_kinematics = new SwerveDriveKinematics(
             m_frontLeftLocation,
             m_frontRightLocation,
             m_backLeftLocation,
@@ -43,35 +43,35 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     // Creating my odometry object from the kinematics object. Here,
     // our starting pose is 5 meters along the long end of the field and in the
     // center of the field along the short end, facing forward.
-   private SwerveDriveOdometry m_odometry;
+    private SwerveDriveOdometry m_odometry;
 
-   private Joystick driveController = new Joystick(Constants.XboxControllerConstants.DRIVER_CONTROLLER);
+    private Joystick driveController = new Joystick(Constants.XboxControllerConstants.DRIVER_CONTROLLER);
 
-   private SwerveDriveModule frontLeftModule = new SwerveDriveModule(Constants.SwerveDriveConstants.FRONT_LEFT_MODULE_NAME, 
+    private SwerveDriveModule frontLeftModule = new SwerveDriveModule(Constants.SwerveDriveConstants.FRONT_LEFT_MODULE_NAME, 
                                                                 Constants.SwerveDriveConstants.FRONT_LEFT_DRIVE_MOTOR_ID, 
                                                                 Constants.SwerveDriveConstants.FRONT_LEFT_TURN_MOTOR_ID, 
                                                                 Constants.SwerveDriveConstants.FRONT_LEFT_ENC_ID, 
                                                                 Constants.SwerveDriveConstants.FRONT_LEFT_OFFSET);
-   private SwerveDriveModule frontRightModule = new SwerveDriveModule(Constants.SwerveDriveConstants.FRONT_RIGHT_MODULE_NAME, 
+    private SwerveDriveModule frontRightModule = new SwerveDriveModule(Constants.SwerveDriveConstants.FRONT_RIGHT_MODULE_NAME, 
                                                                 Constants.SwerveDriveConstants.FRONT_RIGHT_DRIVE_MOTOR_ID, 
                                                                 Constants.SwerveDriveConstants.FRONT_RIGHT_TURN_MOTOR_ID, 
                                                                 Constants.SwerveDriveConstants.FRONT_RIGHT_ENC_ID, 
                                                                 Constants.SwerveDriveConstants.FRONT_RIGHT_OFFSET);
-   private SwerveDriveModule backRightModule = new SwerveDriveModule(Constants.SwerveDriveConstants.BACK_RIGHT_MODULE_NAME, 
+    private SwerveDriveModule backRightModule = new SwerveDriveModule(Constants.SwerveDriveConstants.BACK_RIGHT_MODULE_NAME, 
                                                                 Constants.SwerveDriveConstants.BACK_RIGHT_DRIVE_MOTOR_ID, 
                                                                 Constants.SwerveDriveConstants.BACK_RIGHT_TURN_MOTOR_ID, 
                                                                 Constants.SwerveDriveConstants.BACK_RIGHT_ENC_ID, 
                                                                 Constants.SwerveDriveConstants.BACK_RIGHT_OFFSET);
-   private SwerveDriveModule backLeftModule = new SwerveDriveModule(Constants.SwerveDriveConstants.BACK_LEFT_MODULE_NAME, 
+    private SwerveDriveModule backLeftModule = new SwerveDriveModule(Constants.SwerveDriveConstants.BACK_LEFT_MODULE_NAME, 
                                                                 Constants.SwerveDriveConstants.BACK_LEFT_DRIVE_MOTOR_ID, 
                                                                 Constants.SwerveDriveConstants.BACK_LEFT_TURN_MOTOR_ID, 
                                                                 Constants.SwerveDriveConstants.BACK_LEFT_ENC_ID,
                                                                 Constants.SwerveDriveConstants.BACK_LEFT_OFFSET);
 
-   private Pigeon2 pigeon = new Pigeon2(Constants.SwerveDriveConstants.PIDGEON_ID, Constants.CANBUSNAME);
+    private Pigeon2 pigeon = new Pigeon2(Constants.SwerveDriveConstants.PIDGEON_ID, Constants.CANBUS_NAME);
 
     //Global variable for drive rate speed
-   private double g_driveRate;
+    private double g_driveRate;
 
     private SwerveDriveSubsystem() {
         pigeon.setYaw(0);
@@ -149,19 +149,6 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         positions[3] = backLeftModule.getPosition();  
        return positions;
         
-    }
-
-    public static double convertTicksToDegrees(double ticks) {
-        // Cancoder: 2048 ticks per rotation
-        // Steering gear ratio: 150/7:1
-        double degrees = ticks * (1.0 / 2048.0) * (1.0 / (150 / 7)) * (360.0 / 1.0);
-        return degrees;
-    }
-
-    public static double convertDegreesToTicks(double degrees) {
-
-        double ticks = degrees * 1 / ((1.0 / 2048.0) * (1.0 / (150 / 7)) * (360.0 / 1.0));
-        return ticks;
     }
 
     public void DriveWithJoystick(XboxController m_driver) {
@@ -254,5 +241,4 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     public double getDriveRate() {
         return g_driveRate;
     }
-
 }
