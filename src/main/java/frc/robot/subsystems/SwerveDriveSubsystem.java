@@ -30,10 +30,10 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     private static SwerveDriveSubsystem m_inst = null;
 
     // Locations for the swerve drive modules relative to the robot center.
-   private Translation2d m_frontLeftLocation = new Translation2d(Constants.SwerveDriveConstants.WHEELBASE, Constants.SwerveDriveConstants.WHEELBASE);
-   private Translation2d m_frontRightLocation = new Translation2d(Constants.SwerveDriveConstants.WHEELBASE, -Constants.SwerveDriveConstants.WHEELBASE);
-   private Translation2d m_backLeftLocation = new Translation2d(-Constants.SwerveDriveConstants.WHEELBASE, Constants.SwerveDriveConstants.WHEELBASE);
-   private Translation2d m_backRightLocation = new Translation2d(-Constants.SwerveDriveConstants.WHEELBASE, -Constants.SwerveDriveConstants.WHEELBASE);
+   private Translation2d m_frontLeftLocation = new Translation2d(Constants.SwerveDriveConstants.WHEEL_BASE, Constants.SwerveDriveConstants.WHEEL_BASE);
+   private Translation2d m_frontRightLocation = new Translation2d(Constants.SwerveDriveConstants.WHEEL_BASE, -Constants.SwerveDriveConstants.WHEEL_BASE);
+   private Translation2d m_backLeftLocation = new Translation2d(-Constants.SwerveDriveConstants.WHEEL_BASE, Constants.SwerveDriveConstants.WHEEL_BASE);
+   private Translation2d m_backRightLocation = new Translation2d(-Constants.SwerveDriveConstants.WHEEL_BASE, -Constants.SwerveDriveConstants.WHEEL_BASE);
 
     // Creating my kinematics object using the module locations
   private SwerveDriveKinematics m_kinematics = new SwerveDriveKinematics(
@@ -50,34 +50,34 @@ public class SwerveDriveSubsystem extends SubsystemBase {
 
    private Joystick driveController = new Joystick(Constants.XboxControllerConstants.DRIVER_CONTROLLER);
 
-   private SwerveDriveModule frontLeftModule = new SwerveDriveModule(Constants.SwerveDriveConstants.FRONTLEFTMODULENAME, 
-                                                                Constants.SwerveDriveConstants.FRONTLEFTDRIVEMOTORID, 
-                                                                Constants.SwerveDriveConstants.FRONTLEFTTURNMOTORID, 
-                                                                Constants.SwerveDriveConstants.FRONTLEFTENCID, 
-                                                                Constants.SwerveDriveConstants.FRONTLEFTOFFSET);
-   private SwerveDriveModule frontRightModule = new SwerveDriveModule(Constants.SwerveDriveConstants.FRONTRIGHTMODULENAME, 
-                                                                Constants.SwerveDriveConstants.FRONTRIGHTDRIVEMOTORID, 
-                                                                Constants.SwerveDriveConstants.FRONTRIGHTTURNMOTORID, 
-                                                                Constants.SwerveDriveConstants.FRONTRIGHTENCID, 
-                                                                Constants.SwerveDriveConstants.FRONTRIGHTOFFSET);
-   private SwerveDriveModule backRightModule = new SwerveDriveModule(Constants.SwerveDriveConstants.BACKRIGHTMODULENAME, 
-                                                                Constants.SwerveDriveConstants.BACKRIGHTDRIVEMOTORID, 
-                                                                Constants.SwerveDriveConstants.BACKRIGHTTURNMOTORID, 
-                                                                Constants.SwerveDriveConstants.BACKRIGHTENCID, 
-                                                                Constants.SwerveDriveConstants.BACKRIGHTOFFSET);
-   private SwerveDriveModule backLeftModule = new SwerveDriveModule(Constants.SwerveDriveConstants.BACKLEFTMODULENAME, 
-                                                                Constants.SwerveDriveConstants.BACKLEFTDRIVEMOTORID, 
-                                                                Constants.SwerveDriveConstants.BACKLEFTTURNMOTORID, 
-                                                                Constants.SwerveDriveConstants.BACKLEFTENCID,
-                                                                Constants.SwerveDriveConstants.BACKLEFTOFFSET);
+   private SwerveDriveModule frontLeftModule = new SwerveDriveModule(Constants.SwerveDriveConstants.FRONT_LEFT_MODULE_NAME, 
+                                                                Constants.SwerveDriveConstants.FRONT_LEFT_DRIVE_MOTOR_ID, 
+                                                                Constants.SwerveDriveConstants.FRONT_LEFT_TURN_MOTOR_ID, 
+                                                                Constants.SwerveDriveConstants.FRONT_LEFT_ENC_ID, 
+                                                                Constants.SwerveDriveConstants.FRONT_LEFT_OFFSET);
+   private SwerveDriveModule frontRightModule = new SwerveDriveModule(Constants.SwerveDriveConstants.FRONT_RIGHT_MODULE_NAME, 
+                                                                Constants.SwerveDriveConstants.FRONT_RIGHT_DRIVE_MOTOR_ID, 
+                                                                Constants.SwerveDriveConstants.FRONT_RIGHT_TURN_MOTOR_ID, 
+                                                                Constants.SwerveDriveConstants.FRONT_RIGHT_ENC_ID, 
+                                                                Constants.SwerveDriveConstants.FRONT_RIGHT_OFFSET);
+   private SwerveDriveModule backRightModule = new SwerveDriveModule(Constants.SwerveDriveConstants.BACK_RIGHT_MODULE_NAME, 
+                                                                Constants.SwerveDriveConstants.BACK_RIGHT_DRIVE_MOTOR_ID, 
+                                                                Constants.SwerveDriveConstants.BACK_RIGHT_TURN_MOTOR_ID, 
+                                                                Constants.SwerveDriveConstants.BACK_RIGHT_ENC_ID, 
+                                                                Constants.SwerveDriveConstants.BACK_RIGHT_OFFSET);
+   private SwerveDriveModule backLeftModule = new SwerveDriveModule(Constants.SwerveDriveConstants.BACK_LEFT_MODULE_NAME, 
+                                                                Constants.SwerveDriveConstants.BACK_LEFT_DRIVE_MOTOR_ID, 
+                                                                Constants.SwerveDriveConstants.BACK_LEFT_TURN_MOTOR_ID, 
+                                                                Constants.SwerveDriveConstants.BACK_LEFT_ENC_ID,
+                                                                Constants.SwerveDriveConstants.BACK_LEFT_OFFSET);
 
    private ShuffleboardTab drivetrainTab;
 
-   private SlewRateLimiter fwdBakRateLimiter = new SlewRateLimiter(Constants.SwerveDriveConstants.SLEWRATELIMIT);
-   private SlewRateLimiter leftRightRateLimiter = new SlewRateLimiter(Constants.SwerveDriveConstants.SLEWRATELIMIT);
-   private SlewRateLimiter turnRateLimiter = new SlewRateLimiter(Constants.SwerveDriveConstants.SLEWRATELIMIT);
+   private SlewRateLimiter fwdBakRateLimiter = new SlewRateLimiter(Constants.SwerveDriveConstants.SLEW_RATE_LIMIT);
+   private SlewRateLimiter leftRightRateLimiter = new SlewRateLimiter(Constants.SwerveDriveConstants.SLEW_RATE_LIMIT);
+   private SlewRateLimiter turnRateLimiter = new SlewRateLimiter(Constants.SwerveDriveConstants.SLEW_RATE_LIMIT);
 
-   private Pigeon2 pigeon = new Pigeon2(Constants.SwerveDriveConstants.PIDGEONID, Constants.CANBUSNAME);
+   private Pigeon2 pigeon = new Pigeon2(Constants.SwerveDriveConstants.PIDGEON_ID, Constants.CANBUSNAME);
 
     //Global variable for drive rate speed
    private double g_driveRate;
@@ -85,12 +85,10 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     private SwerveDriveSubsystem() {
         pigeon.setYaw(0);
 
-        m_odometry = new SwerveDriveOdometry(
-                m_kinematics,
-                getGyroHeading(),
-             getModulePositions(),
-                
-                new Pose2d(0, 0, new Rotation2d()));
+        m_odometry = new SwerveDriveOdometry( m_kinematics,
+                                            getGyroHeading(),
+                                            getModulePositions(),
+                                            new Pose2d(0, 0, new Rotation2d()));
         
         SmartDashboard.putBoolean("Done", false);
     }
@@ -207,9 +205,9 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         
 
         ChassisSpeeds speeds = ChassisSpeeds.fromFieldRelativeSpeeds(
-                fwdBackDir * Constants.SwerveDriveConstants.MAXVELOCITYMETERSPERSECOND,
-                leftRightDir * Constants.SwerveDriveConstants.MAXVELOCITYMETERSPERSECOND,
-                turn * Constants.SwerveDriveConstants.MAXOMEGARADIANSPERSECOND,
+                fwdBackDir * Constants.SwerveDriveConstants.MAX_VELOCITY_METERS_PER_SECOND,
+                leftRightDir * Constants.SwerveDriveConstants.MAX_VELOCITY_METERS_PER_SECOND,
+                turn * Constants.SwerveDriveConstants.MAX_OMEGA_RADIANS_PER_SECOND,
                 Rotation2d.fromDegrees(pigeon.getYaw()));
 
         // Convert to module states
@@ -221,7 +219,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
 
     public void setModuleStates(SwerveModuleState[] moduleStates) {
 
-        SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates, Constants.SwerveDriveConstants.MAXVELOCITYMETERSPERSECOND);
+        SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates, Constants.SwerveDriveConstants.MAX_VELOCITY_METERS_PER_SECOND);
 
         SwerveModuleState frontLeft = moduleStates[0];
         SwerveModuleState frontRight = moduleStates[1];
