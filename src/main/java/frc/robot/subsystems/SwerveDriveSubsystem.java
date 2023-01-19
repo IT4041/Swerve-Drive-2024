@@ -85,12 +85,10 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     private SwerveDriveSubsystem() {
         pigeon.setYaw(0);
 
-        m_odometry = new SwerveDriveOdometry(
-                m_kinematics,
-                getGyroHeading(),
-             getModulePositions(),
-                
-                new Pose2d(0, 0, new Rotation2d()));
+        m_odometry = new SwerveDriveOdometry( m_kinematics,
+                                            getGyroHeading(),
+                                            getModulePositions(),
+                                            new Pose2d(0, 0, new Rotation2d()));
         
         SmartDashboard.putBoolean("Done", false);
     }
