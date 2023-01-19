@@ -151,19 +151,6 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         
     }
 
-    public static double convertTicksToDegrees(double ticks) {
-        // Cancoder: 2048 ticks per rotation
-        // Steering gear ratio: 150/7:1
-        double degrees = ticks * (1.0 / 2048.0) * (1.0 / (150 / 7)) * (360.0 / 1.0);
-        return degrees;
-    }
-
-    public static double convertDegreesToTicks(double degrees) {
-
-        double ticks = degrees * 1 / ((1.0 / 2048.0) * (1.0 / (150 / 7)) * (360.0 / 1.0));
-        return ticks;
-    }
-
     public void DriveWithJoystick(XboxController m_driver) {
 
         double leftRightDir = -1 * getDriveRate() * m_driver.getRawAxis(0); // positive number means left
