@@ -41,13 +41,13 @@ public class SwerveDriveModule {
 
         SmartDashboard.putNumber(m_name + " initial heading", getHeading());
 
-        turnMotor.setInverted(Constants.SwerveModuleConstants.TURNMOTORINVERTED);
-        turnMotor.config_kP(0, Constants.SwerveModuleConstants.TURNMOTORKP);
-        turnMotor.config_kI(0, Constants.SwerveModuleConstants.TURNMOTORKI);
-        turnMotor.config_kD(0, Constants.SwerveModuleConstants.TURNMOTORKD);
+        turnMotor.setInverted(Constants.SwerveModuleConstants.TURN_MOTOR_INVERTED);
+        turnMotor.config_kP(0, Constants.SwerveModuleConstants.TURN_MOTOR_KP);
+        turnMotor.config_kI(0, Constants.SwerveModuleConstants.TURN_MOTOR_KI);
+        turnMotor.config_kD(0, Constants.SwerveModuleConstants.TURN_MOTOR_KD);
         turnMotor.configIntegratedSensorAbsoluteRange(AbsoluteSensorRange.Unsigned_0_to_360);
 
-        driveMotor.setInverted(Constants.SwerveModuleConstants.DRIVEMOTORINVERTED);
+        driveMotor.setInverted(Constants.SwerveModuleConstants.DRIVE_MOTOR_INVERTED);
         driveMotor.setNeutralMode(NeutralMode.Brake);
     }
   
@@ -71,7 +71,7 @@ public class SwerveDriveModule {
 
         SmartDashboard.putNumber(m_name + " Heading", desiredState.angle.getDegrees());
 
-        double desiredPercentOutput = (desiredState.speedMetersPerSecond / Constants.SwerveDriveConstants.MAXVELOCITYMETERSPERSECOND) * (Constants.SwerveModuleConstants.MAX_VOLTAGE / Constants.SwerveModuleConstants.NOMINAL_VOLTAGE);
+        double desiredPercentOutput = (desiredState.speedMetersPerSecond / Constants.SwerveDriveConstants.MAX_VELOCITY_METERS_PER_SECOND) * (Constants.SwerveModuleConstants.MAX_VOLTAGE / Constants.SwerveModuleConstants.NOMINAL_VOLTAGE);
         SmartDashboard.putNumber(m_name + " desiredVoltage", desiredPercentOutput);
 
         driveMotor.set(ControlMode.PercentOutput, desiredPercentOutput);

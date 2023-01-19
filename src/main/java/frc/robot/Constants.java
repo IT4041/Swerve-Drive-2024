@@ -19,43 +19,43 @@ public final class Constants {
     public class SwerveModuleConstants{
         public static final double MAX_VOLTAGE = 8.0;
         public static final double NOMINAL_VOLTAGE = 12;
-        public static final double TURNMOTORKP = 0.2;
-        public static final double TURNMOTORKI = 0.0;
-        public static final double TURNMOTORKD = 0.1;
-        public static final boolean TURNMOTORINVERTED = true;
-        public static final boolean DRIVEMOTORINVERTED = false;
+        public static final double TURN_MOTOR_KP = 0.2;
+        public static final double TURN_MOTOR_KI = 0.0;
+        public static final double TURN_MOTOR_KD = 0.1;
+        public static final boolean TURN_MOTOR_INVERTED = true;
+        public static final boolean DRIVE_MOTOR_INVERTED = false;
     }
 
     public class SwerveDriveConstants{
-        public static final String FRONTLEFTMODULENAME = "FrontLeft";
-        public static final int FRONTLEFTDRIVEMOTORID = 45;
-        public static final int FRONTLEFTTURNMOTORID = 40;
-        public static final int FRONTLEFTENCID = 50;
-        public static final double FRONTLEFTOFFSET = 322.82;
+        public static final String FRONT_LEFT_MODULE_NAME = "FrontLeft";
+        public static final int FRONT_LEFT_DRIVE_MOTOR_ID = 45;
+        public static final int FRONT_LEFT_TURN_MOTOR_ID = 40;
+        public static final int FRONT_LEFT_ENC_ID = 50;
+        public static final double FRONT_LEFT_OFFSET = 322.82;
 
-        public static final String FRONTRIGHTMODULENAME = "FrontRight";
-        public static final int FRONTRIGHTDRIVEMOTORID = 43;
-        public static final int FRONTRIGHTTURNMOTORID = 44;
-        public static final int FRONTRIGHTENCID = 51;
-        public static final double FRONTRIGHTOFFSET = 339.87;
+        public static final String FRONT_RIGHT_MODULE_NAME = "FrontRight";
+        public static final int FRONT_RIGHT_DRIVE_MOTOR_ID = 43;
+        public static final int FRONT_RIGHT_TURN_MOTOR_ID = 44;
+        public static final int FRONT_RIGHT_ENC_ID = 51;
+        public static final double FRONT_RIGHT_OFFSET = 339.87;
 
-        public static final String BACKRIGHTMODULENAME = "BackRight";
-        public static final int BACKRIGHTDRIVEMOTORID = 23;
-        public static final int BACKRIGHTTURNMOTORID = 41;
-        public static final int BACKRIGHTENCID = 52;
-        public static final double BACKRIGHTOFFSET = 122.52;
+        public static final String BACK_RIGHT_MODULE_NAME = "BackRight";
+        public static final int BACK_RIGHT_DRIVE_MOTOR_ID = 23;
+        public static final int BACK_RIGHT_TURN_MOTOR_ID = 41;
+        public static final int BACK_RIGHT_ENC_ID = 52;
+        public static final double BACK_RIGHT_OFFSET = 122.52;
 
-        public static final String BACKLEFTMODULENAME = "BackLeft";
-        public static final int BACKLEFTDRIVEMOTORID = 20;
-        public static final int BACKLEFTTURNMOTORID = 22;
-        public static final int BACKLEFTENCID = 53;
-        public static final double BACKLEFTOFFSET = 153.10;
+        public static final String BACK_LEFT_MODULE_NAME = "BackLeft";
+        public static final int BACK_LEFT_DRIVE_MOTOR_ID = 20;
+        public static final int BACK_LEFT_TURN_MOTOR_ID = 22;
+        public static final int BACK_LEFT_ENC_ID = 53;
+        public static final double BACK_LEFT_OFFSET = 153.10;
 
-        public static final double WHEELBASE = 19.325 * 0.0254;
-        public static final double SLEWRATELIMIT = 0.5;
-        public static final int PIDGEONID = 13;
-        public static final double MAXVELOCITYMETERSPERSECOND = 4;
-        public static final double MAXOMEGARADIANSPERSECOND = 2.5;
+        public static final double WHEEL_BASE = 19.325 * 0.0254;
+        public static final double SLEW_RATE_LIMIT = 0.5;
+        public static final int PIDGEON_ID = 13;
+        public static final double MAX_VELOCITY_METERS_PER_SECOND = 4;
+        public static final double MAX_OMEGA_RADIANS_PER_SECOND = 2.5;
     }
 
     public class XboxControllerConstants{
