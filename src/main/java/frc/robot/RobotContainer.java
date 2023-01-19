@@ -26,7 +26,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
   // private final XboxController m_controller = new XboxController(0);
-  private final XboxController m_driver = new XboxController(0);
+  private final XboxController m_driver = new XboxController(Constants.XboxControllerConstants.DRIVER_CONTROLLER);
 
   private final SwerveDriveSubsystem m_drivetrainSubsystem;
 

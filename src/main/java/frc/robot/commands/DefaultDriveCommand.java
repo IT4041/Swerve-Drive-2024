@@ -8,7 +8,7 @@ public class DefaultDriveCommand extends CommandBase {
 
     private final SwerveDriveSubsystem m_drivetrainSubsystem;
 
-    XboxController m_driver;
+    private XboxController m_driver;
 
     public DefaultDriveCommand(XboxController m_driver2) {
         m_drivetrainSubsystem = SwerveDriveSubsystem.getInstance();

@@ -69,5 +69,7 @@ public final class Constants {
         public static final int RIGHT_BUMPER = 6;
         public static final int TWO_SQUARES = 7;
         public static final int THREE_LINES = 8;
+        public static final int LEFT_STICK_PRESS = 9;
+        public static final int RIGHT_STICK_PRESS = 10;
     }
 }
