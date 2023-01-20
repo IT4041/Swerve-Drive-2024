@@ -63,7 +63,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
 
-    return m_drivetrainSubsystem.traj(PathPlanner.loadPath("TestPath2", new PathConstraints(1, 1)), true);
+    return m_drivetrainSubsystem.traj(PathPlanner.loadPath("Our Path", new PathConstraints(4, 3)), true);
     
   }
 }
