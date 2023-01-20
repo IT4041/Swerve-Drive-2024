@@ -9,7 +9,10 @@ import com.pathplanner.lib.PathPlanner;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.DefaultDriveCommand;
+import frc.robot.commands.autonomous.FirstPath;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -25,11 +28,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
-  // private final XboxController m_controller = new XboxController(0);
   private final XboxController m_driver = new XboxController(Constants.XboxControllerConstants.DRIVER_CONTROLLER);
 
   private final SwerveDriveSubsystem m_drivetrainSubsystem;
-
+  private SendableChooser<Command> m_TrajectoryChooser;
+  private FirstPath firstPath;
+  
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -43,6 +47,8 @@ public class RobotContainer {
     // Left stick X axis -> left and right movement
     // Right stick X axis -> rotation
     configureButtonBindings();
+    setupTrajectoryDashboardChooser();
+    firstPath = new FirstPath(m_drivetrainSubsystem);
   }
 
   /**
@@ -63,7 +69,15 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
 
-    return m_drivetrainSubsystem.traj(PathPlanner.loadPath("TestPath2", new PathConstraints(1, 1)), true);
+    return m_TrajectoryChooser.getSelected();
     
+  }
+  private void setupTrajectoryDashboardChooser()
+  {
+    m_TrajectoryChooser = new SendableChooser<Command>();
+    m_TrajectoryChooser.setDefaultOption("firstPath", firstPath.getCommand());
+    m_TrajectoryChooser.addOption("secondPath", firstPath.getCommand());
+
+    SmartDashboard.putData(m_TrajectoryChooser);
   }
 }
