@@ -16,7 +16,7 @@ public class FirstPath extends SequentialCommandGroup {
     }
     
     public Command getCommand(){
-        return m_drivetrainSubsystem.traj(PathPlanner.loadPath("TestPath2", new PathConstraints(1, 1)), true);
+        return m_drivetrainSubsystem.traj(PathPlanner.loadPath("Our Path", new PathConstraints(1, 1)), true);
      
     }
 }

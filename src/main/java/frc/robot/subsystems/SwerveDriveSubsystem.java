@@ -100,6 +100,8 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         backRightModule.periodic();
        
         SmartDashboard.putNumber("Pidgeon yaw", pigeon.getYaw());
+        SmartDashboard.putNumber("Pidgeon pitch", pigeon.getPitch());
+        SmartDashboard.putNumber("Pidgeon roll", pigeon.getRoll());
 
         // Update the pose
         // button 8 on xbox is three lines button

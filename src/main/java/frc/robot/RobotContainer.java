@@ -4,9 +4,6 @@
 
 package frc.robot;
 
-import com.pathplanner.lib.PathConstraints;
-import com.pathplanner.lib.PathPlanner;
-
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -47,8 +44,8 @@ public class RobotContainer {
     // Left stick X axis -> left and right movement
     // Right stick X axis -> rotation
     configureButtonBindings();
-    setupTrajectoryDashboardChooser();
     firstPath = new FirstPath(m_drivetrainSubsystem);
+    setupTrajectoryDashboardChooser();
   }
 
   /**
