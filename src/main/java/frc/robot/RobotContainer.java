@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.DefaultDriveCommand;
-import frc.robot.commands.autonomous.FirstPath;
+import frc.robot.commands.autonomous.AutoPaths;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -29,7 +29,7 @@ public class RobotContainer {
 
   private final SwerveDriveSubsystem m_drivetrainSubsystem;
   private SendableChooser<Command> m_TrajectoryChooser;
-  private FirstPath firstPath;
+  private AutoPaths autoPath;
   
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -44,7 +44,7 @@ public class RobotContainer {
     // Left stick X axis -> left and right movement
     // Right stick X axis -> rotation
     configureButtonBindings();
-    firstPath = new FirstPath(m_drivetrainSubsystem);
+    autoPath = new AutoPaths(m_drivetrainSubsystem);
     setupTrajectoryDashboardChooser();
   }
 
@@ -72,8 +72,10 @@ public class RobotContainer {
   private void setupTrajectoryDashboardChooser()
   {
     m_TrajectoryChooser = new SendableChooser<Command>();
-    m_TrajectoryChooser.setDefaultOption("firstPath", firstPath.getCommand());
-    m_TrajectoryChooser.addOption("secondPath", firstPath.getCommand());
+    m_TrajectoryChooser.setDefaultOption("CenterConeCubePath", autoPath.CenterConeCubePath());
+    m_TrajectoryChooser.addOption("CenterConeCubeTablePath", autoPath.CenterConeCubeTablePath());
+    m_TrajectoryChooser.addOption("CubeTablePath", autoPath.CubeTablePath());
+    m_TrajectoryChooser.addOption("SideConeCubePath", autoPath.SideConeCubePath());
 
     SmartDashboard.putData(m_TrajectoryChooser);
   }
