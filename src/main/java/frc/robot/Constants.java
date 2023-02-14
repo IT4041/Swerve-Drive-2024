@@ -4,6 +4,10 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.util.Units;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -16,7 +20,99 @@ public final class Constants {
 
     public static final String CANBUS_NAME = "CANivore1";
 
-    public class SwerveModuleConstants{
+    private static final Pose2d RED1_Pose2d = new Pose2d(Units.inchesToMeters(656.49), Units.inchesToMeters(20.19), Rotation2d.fromDegrees(0));
+    private static final Pose2d RED2_Pose2d = new Pose2d(Units.inchesToMeters(656.49), Units.inchesToMeters(42.19), Rotation2d.fromDegrees(0));
+    private static final Pose2d RED3_Pose2d = new Pose2d(Units.inchesToMeters(656.49), Units.inchesToMeters(64.19), Rotation2d.fromDegrees(0));
+    private static final Pose2d RED4_Pose2d = new Pose2d(Units.inchesToMeters(656.49), Units.inchesToMeters(86.74), Rotation2d.fromDegrees(0));
+    private static final Pose2d RED5_Pose2d = new Pose2d(Units.inchesToMeters(656.49), Units.inchesToMeters(108.74), Rotation2d.fromDegrees(0));
+    private static final Pose2d RED6_Pose2d = new Pose2d(Units.inchesToMeters(656.49), Units.inchesToMeters(130.19), Rotation2d.fromDegrees(0));
+    private static final Pose2d RED7_Pose2d = new Pose2d(Units.inchesToMeters(656.49), Units.inchesToMeters(152.19), Rotation2d.fromDegrees(0));
+    private static final Pose2d RED8_Pose2d = new Pose2d(Units.inchesToMeters(656.49), Units.inchesToMeters(174.19), Rotation2d.fromDegrees(0));
+    private static final Pose2d RED9_Pose2d = new Pose2d(Units.inchesToMeters(656.49), Units.inchesToMeters(196.19), Rotation2d.fromDegrees(0));
+
+    private static final Pose2d BLUE1_Pose2d = new Pose2d(Units.inchesToMeters(54.73), Units.inchesToMeters(196.19), Rotation2d.fromDegrees(180));
+    private static final Pose2d BLUE2_Pose2d = new Pose2d(Units.inchesToMeters(54.73), Units.inchesToMeters(174.19), Rotation2d.fromDegrees(180));
+    private static final Pose2d BLUE3_Pose2d = new Pose2d(Units.inchesToMeters(54.73), Units.inchesToMeters(152.19), Rotation2d.fromDegrees(180));
+    private static final Pose2d BLUE4_Pose2d = new Pose2d(Units.inchesToMeters(54.73), Units.inchesToMeters(130.74), Rotation2d.fromDegrees(180));
+    private static final Pose2d BLUE5_Pose2d = new Pose2d(Units.inchesToMeters(54.73), Units.inchesToMeters(108.74), Rotation2d.fromDegrees(180));
+    private static final Pose2d BLUE6_Pose2d = new Pose2d(Units.inchesToMeters(54.73), Units.inchesToMeters(86.19), Rotation2d.fromDegrees(180));
+    private static final Pose2d BLUE7_Pose2d = new Pose2d(Units.inchesToMeters(54.73), Units.inchesToMeters(64.19), Rotation2d.fromDegrees(180));
+    private static final Pose2d BLUE8_Pose2d = new Pose2d(Units.inchesToMeters(54.73), Units.inchesToMeters(42.19), Rotation2d.fromDegrees(180));
+    private static final Pose2d BLUE9_Pose2d = new Pose2d(Units.inchesToMeters(54.73), Units.inchesToMeters(20.19), Rotation2d.fromDegrees(180));
+
+    public static enum ElementType{
+        CUBE,
+        CONE
+    }
+
+    public static final class ScoringLocationDetails{
+        public Pose2d pose;
+        public ElementType item;
+
+        public ScoringLocationDetails(Pose2d in_pose, ElementType in_item){
+
+            this.pose = in_pose;
+            this.item = in_item;
+        }
+    }
+
+    public static final class ScoringLocations {
+
+        private static final ScoringLocationDetails[] RedLocations = {
+            new ScoringLocationDetails(RED1_Pose2d, ElementType.CONE),
+            new ScoringLocationDetails(RED2_Pose2d, ElementType.CUBE),
+            new ScoringLocationDetails(RED3_Pose2d, ElementType.CONE),
+            new ScoringLocationDetails(RED4_Pose2d, ElementType.CONE),
+            new ScoringLocationDetails(RED5_Pose2d, ElementType.CUBE),
+            new ScoringLocationDetails(RED6_Pose2d, ElementType.CONE),
+            new ScoringLocationDetails(RED7_Pose2d, ElementType.CONE),
+            new ScoringLocationDetails(RED8_Pose2d, ElementType.CUBE),
+            new ScoringLocationDetails(RED9_Pose2d, ElementType.CONE)
+        };
+
+        private static final ScoringLocationDetails[] BlueLocations = {
+            new ScoringLocationDetails(BLUE1_Pose2d, ElementType.CONE),
+            new ScoringLocationDetails(BLUE2_Pose2d, ElementType.CUBE),
+            new ScoringLocationDetails(BLUE3_Pose2d, ElementType.CONE),
+            new ScoringLocationDetails(BLUE4_Pose2d, ElementType.CONE),
+            new ScoringLocationDetails(BLUE5_Pose2d, ElementType.CUBE),
+            new ScoringLocationDetails(BLUE6_Pose2d, ElementType.CONE),
+            new ScoringLocationDetails(BLUE7_Pose2d, ElementType.CONE),
+            new ScoringLocationDetails(BLUE8_Pose2d, ElementType.CUBE),
+            new ScoringLocationDetails(BLUE9_Pose2d, ElementType.CONE)
+        };
+
+        public static final ScoringLocationDetails getLocation(int ID, boolean isRed){
+            if(isRed){
+                return RedLocations[ID-1];
+            }
+            else{
+                return BlueLocations[ID-1];
+            }
+            
+        }
+    }
+
+    public static final class AprilTagCoordinates {
+
+        private static final Pose2d ID1 = new Pose2d(Units.inchesToMeters(610.77), Units.inchesToMeters(42.19), Rotation2d.fromDegrees(180));
+        private static final Pose2d ID2 = new Pose2d(Units.inchesToMeters(610.77), Units.inchesToMeters(108.19), Rotation2d.fromDegrees(180));
+        private static final Pose2d ID3 = new Pose2d(Units.inchesToMeters(610.77), Units.inchesToMeters(174.19), Rotation2d.fromDegrees(180));
+        private static final Pose2d ID4 = new Pose2d(Units.inchesToMeters(636.96), Units.inchesToMeters(265.74), Rotation2d.fromDegrees(180));
+        private static final Pose2d ID5 = new Pose2d(Units.inchesToMeters(14.25), Units.inchesToMeters(265.74), Rotation2d.fromDegrees(0));
+        private static final Pose2d ID6 = new Pose2d(Units.inchesToMeters(40.45), Units.inchesToMeters(174.19), Rotation2d.fromDegrees(0));
+        private static final Pose2d ID7 = new Pose2d(Units.inchesToMeters(40.45), Units.inchesToMeters(108.19), Rotation2d.fromDegrees(0));
+        private static final Pose2d ID8 = new Pose2d(Units.inchesToMeters(40.45), Units.inchesToMeters(42.19), Rotation2d.fromDegrees(0));
+
+        private static final Pose2d[] AprilTagsPoses = {ID1,ID2,ID3,ID4,ID5,ID6,ID7,ID8};
+
+        public static final Pose2d getAprilTagPose(int targetID){
+
+            return AprilTagsPoses[targetID-1];
+        }
+    }
+
+    public static final class SwerveModuleConstants{
         public static final double MAX_VOLTAGE = 8.0;
         public static final double NOMINAL_VOLTAGE = 12;
         public static final double TURN_MOTOR_KP = 0.2;
@@ -26,7 +122,7 @@ public final class Constants {
         public static final boolean DRIVE_MOTOR_INVERTED = false;
     }
 
-    public class SwerveDriveConstants{
+    public static final class SwerveDriveConstants{
         public static final String FRONT_LEFT_MODULE_NAME = "FrontLeft";
         public static final int FRONT_LEFT_DRIVE_MOTOR_ID = 45;
         public static final int FRONT_LEFT_TURN_MOTOR_ID = 40;
@@ -58,9 +154,8 @@ public final class Constants {
         public static final double MAX_OMEGA_RADIANS_PER_SECOND = 2.5;
     }
 
-    public class XboxControllerConstants{
-        public static final int DRIVER_CONTROLLER = 0;
-        public static final int ASSISTANT_CONTROLLER = 1;
+    public static final class XboxControllerConstants{
+        public static final int DRIVER_CONTROLLER_USB_ID = 0;
         public static final int A_BUTTON = 1;
         public static final int B_BUTTON = 2;
         public static final int X_BUTTON = 3;
@@ -72,4 +167,21 @@ public final class Constants {
         public static final int LEFT_STICK_PRESS = 9;
         public static final int RIGHT_STICK_PRESS = 10;
     }
+
+    public static final class AutoPilotController{
+        public static final int AUTOPILOT_CONTROLLER_USB_ID = 1;
+        public static final int GREEN_LEFT = 1;
+        public static final int GREEN_CENTER  = 2;
+        public static final int GREEN_RIGHT  = 3;
+        public static final int YELLOW_LEFT  = 4;
+        public static final int YELLOW_CENTER  = 5;
+        public static final int YELLOW_RIGHT  = 6;
+        public static final int BLUE_LEFT  = 7;
+        public static final int BLUE_CENTER  = 8;
+        public static final int BLUE_RIGHT  = 9;
+        public static final int CLEAR_BOTTOM = 10;
+        public static final int CLEAR_MIDDLE = 11;
+        public static final int CLEAR_TOP = 12;
+    }
+
 }

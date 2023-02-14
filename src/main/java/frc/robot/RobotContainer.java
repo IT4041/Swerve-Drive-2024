@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.commands.autonomous.AutoPaths;
+import frc.robot.subsystems.AutoPilot;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -25,9 +26,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
-  private final XboxController m_driver = new XboxController(Constants.XboxControllerConstants.DRIVER_CONTROLLER);
+  private final XboxController m_driver = new XboxController(Constants.XboxControllerConstants.DRIVER_CONTROLLER_USB_ID);
 
   private final SwerveDriveSubsystem m_drivetrainSubsystem;
+  private final AutoPilot m_autoPilot;
   private SendableChooser<Command> m_TrajectoryChooser;
   private AutoPaths autoPath;
   
@@ -36,6 +38,7 @@ public class RobotContainer {
    */
   public RobotContainer() {
     m_drivetrainSubsystem = SwerveDriveSubsystem.getInstance();
+    m_autoPilot = AutoPilot.getInstance();
 
     m_drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(m_driver));
     // Set up the default command for the drivetrain.

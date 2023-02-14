@@ -45,7 +45,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     // center of the field along the short end, facing forward.
     private SwerveDriveOdometry m_odometry;
 
-    private Joystick driveController = new Joystick(Constants.XboxControllerConstants.DRIVER_CONTROLLER);
+    private Joystick driveController = new Joystick(Constants.XboxControllerConstants.DRIVER_CONTROLLER_USB_ID);
 
     private SwerveDriveModule frontLeftModule = new SwerveDriveModule(Constants.SwerveDriveConstants.FRONT_LEFT_MODULE_NAME, 
                                                                 Constants.SwerveDriveConstants.FRONT_LEFT_DRIVE_MOTOR_ID, 
