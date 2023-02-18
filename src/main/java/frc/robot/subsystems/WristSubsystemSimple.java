@@ -11,28 +11,28 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-public class IntakeSubsystem extends SubsystemBase {
+public class WristSubsystemSimple extends SubsystemBase {
 
-  private static IntakeSubsystem m_inst = null;
+  private static WristSubsystemSimple m_inst = null;
 
   private CANSparkMax m_motor;
-  // private SparkMaxPIDController m_pidController;
-  // public double kP, kI, kD, kIz, kFF, kMaxOutput, kMinOutput;
 
-  public static IntakeSubsystem getInstance() {
+  public static WristSubsystemSimple getInstance() {
     if (m_inst == null) {
-      m_inst = new IntakeSubsystem();
+      m_inst = new WristSubsystemSimple();
     }
     return m_inst;
   }
 
   /** Creates a new Arm. */
-  private IntakeSubsystem() {
+  private WristSubsystemSimple() {
 
-    m_motor = new CANSparkMax(Constants.IntakeSubsystemConstants.SparkMaxDeviceID, MotorType.kBrushless);
+    m_motor = new CANSparkMax(Constants.WristSubsystemConstants.SparkMaxDeviceID, MotorType.kBrushed);
     m_motor.restoreFactoryDefaults();
-    m_motor.setIdleMode(IdleMode.kCoast);
+    m_motor.setIdleMode(IdleMode.kBrake);
     m_motor.setSmartCurrentLimit(12);
+    m_motor.setOpenLoopRampRate(1);
+
     m_motor.burnFlash();
   }
 
@@ -40,16 +40,17 @@ public class IntakeSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
   }
-  
+
   public void in() {
-    m_motor.set(0.5);
+    m_motor.set(1);
   }
 
   public void out() {
-    m_motor.set(-0.5);
+    m_motor.set(-1);
   }
-
+  
   public void stop() {
     m_motor.set(0.0);
   }
+
 }
