@@ -190,12 +190,26 @@ public final class Constants {
 
         public static final int SparkMaxDeviceID = 32;
         public static final int EncoderID = 0;
+
+        public static final class ArmPositions{
+                public static final int top = 70;
+                public static final int middle = 35;
+                public static final int floor = 15;    
+        }
     }
 
     public static final class WristSubsystemConstants {
 
         public static final int SparkMaxDeviceID = 4;
         public static final int EncoderID = 1;
+
+        public static final class WristPositions{
+                public static final int top = 80;
+                public static final int middle = 60;
+                public static final int floorCube = 50;
+                public static final int floorCone = 35; 
+                public static final int tiltedCone = 25;   
+        }
     }
 
     public static final class IntakeSubsystemConstants {
@@ -230,9 +244,9 @@ public final class Constants {
         public static final int BLUE_LEFT = 7;
         public static final int BLUE_CENTER = 8;
         public static final int BLUE_RIGHT = 9;
-        public static final int CLEAR_BOTTOM = 10;
+        public static final int CLEAR_BOTTOM = 12;
         public static final int CLEAR_MIDDLE = 11;
-        public static final int CLEAR_TOP = 12;
+        public static final int CLEAR_TOP = 10;
     }
 
 }

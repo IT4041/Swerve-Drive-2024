@@ -24,7 +24,7 @@ public class WristSubsystemPID extends SubsystemBase {
   private CANSparkMax m_motor;
   private SparkMaxPIDController m_pidController;
   private SparkMaxAbsoluteEncoder m_AbsoluteEncoder;
-  public double kP, kI, kD, kIz, kFF, kMaxOutput, kMinOutput;
+  public double kP, kI, kD, kIz, kFF, kMaxOutput, kMinOutput, targetPosition;
 
   public static WristSubsystemPID getInstance() {
     if (m_inst == null) {
@@ -43,48 +43,54 @@ public class WristSubsystemPID extends SubsystemBase {
     m_AbsoluteEncoder.setPositionConversionFactor(360);
     m_AbsoluteEncoder.setVelocityConversionFactor(1);
     m_AbsoluteEncoder.setInverted(false);
-    m_AbsoluteEncoder.setZeroOffset(180);
+    m_AbsoluteEncoder.setZeroOffset(10.1688311);
   
     m_pidController = m_motor.getPIDController();
     m_pidController.setFeedbackDevice(m_AbsoluteEncoder);
-    m_pidController.setPositionPIDWrappingEnabled(false);
-    m_pidController.setP(0.00995);
+    // m_pidController.setPositionPIDWrappingEnabled(true);
+    // m_pidController.setPositionPIDWrappingMaxInput(kMaxOutput);
+    // m_pidController.setPositionPIDWrappingMinInput(kMaxOutput);
+
+    m_pidController.setP(0.13);
     m_pidController.setI(0);
-    m_pidController.setD(0);
+    m_pidController.setD(1.5);
     m_pidController.setFF(0);
     m_pidController.setOutputRange(-1, 1);
 
     m_motor.setIdleMode(IdleMode.kBrake);
     m_motor.setSmartCurrentLimit(80);
     m_motor.setClosedLoopRampRate(.5);
-    m_motor.setSoftLimit(SoftLimitDirection.kForward, 330);
-    m_motor.setSoftLimit(SoftLimitDirection.kReverse, 30);
+    //m_motor.setSoftLimit(SoftLimitDirection.kForward, 100);
+    //m_motor.setSoftLimit(SoftLimitDirection.kReverse, 0);
+    // m_motor.enableSoftLimit(SoftLimitDirection.kForward, true);
+    // m_motor.enableSoftLimit(SoftLimitDirection.kReverse, true);
+
 
     // Save the SPARK MAX configurations. If a SPARK MAX browns out during
     // operation, it will maintain the above configurations.
     m_motor.burnFlash();
 
+    this.targetPosition = 0;
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Wrist Encoder", m_AbsoluteEncoder.getPosition());
+    SmartDashboard.putNumber("Wrist target position", targetPosition);
+
   }
 
   public void in() {
     m_pidController.setReference(1, CANSparkMax.ControlType.kDutyCycle);
-    // m_motor.set(1);
   }
 
   public void out() {
     m_pidController.setReference(-1, CANSparkMax.ControlType.kDutyCycle);
-    // m_motor.set(-1);
   }
 
   public void stop() {
     m_pidController.setReference(0.0, CANSparkMax.ControlType.kDutyCycle);
-    // m_motor.set(0.0);
   }
 
   public void setPosition(double position){
@@ -92,22 +98,27 @@ public class WristSubsystemPID extends SubsystemBase {
   }
 
   public void top(){
-    this.setPosition(200);
+    this.targetPosition = Constants.WristSubsystemConstants.WristPositions.top;
+    this.setPosition(Constants.WristSubsystemConstants.WristPositions.top);
   }
 
   public void middle(){
-    this.setPosition(100);
+    this.targetPosition = Constants.WristSubsystemConstants.WristPositions.middle;
+    this.setPosition(Constants.WristSubsystemConstants.WristPositions.middle);
   }
 
   public void floorCube(){
-    this.setPosition(30);
+    this.targetPosition = Constants.WristSubsystemConstants.WristPositions.floorCube;
+    this.setPosition(Constants.WristSubsystemConstants.WristPositions.floorCube);
   }
 
   public void floorCone(){
-    this.setPosition(30);
+    this.targetPosition = Constants.WristSubsystemConstants.WristPositions.floorCone;
+    this.setPosition(Constants.WristSubsystemConstants.WristPositions.floorCone);
   }
 
   public void tiltedCone(){
-    this.setPosition(30);
+    this.targetPosition = Constants.WristSubsystemConstants.WristPositions.tiltedCone;
+    this.setPosition(Constants.WristSubsystemConstants.WristPositions.tiltedCone);
   }
 }

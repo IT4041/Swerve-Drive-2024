@@ -7,7 +7,6 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj.motorcontrol.Spark; 
 
 public class IntakeSubsystemPWM extends SubsystemBase {
@@ -27,47 +26,32 @@ public class IntakeSubsystemPWM extends SubsystemBase {
 
   /** Creates a new Arm. */
   private IntakeSubsystemPWM() {
-
     m_motor = new Spark(Constants.IntakeSubsystemConstants.SparkMaxPWMChannel);
-    //m_motor = new PWMSparkMax(Constants.IntakeSubsystemConstants.SparkMaxPWMChannel);
-    // m_motor.enableDeadbandElimination(true);
-    // m_motor.setSafetyEnabled(true);
-    // m_motor.setExpiration(10);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    //m_motor.setVoltage(12);
-    //m_motor.feed();
     m_motor.set(this.speed);
   }
   
   public void in() {
     this.speed = .5;
-    //m_motor.set(1);
-    System.out.println("in");
   }
+
   public void in_hold() {
-    this.speed = 0.02;
-    //m_motor.set(0.1);
-    System.out.println("in_hold");
+    this.speed = 0.03;
   }
 
   public void out() {
     this.speed = -0.5;
-    //m_motor.set(-1);
-    System.out.println("out");
   }
 
   public void out_hold() {
-    this.speed = -0.02;
-    //m_motor.set(-0.1);
-    System.out.println("out_hold");
+    this.speed = -0.03;
   }
 
   public void stop() {
     this.speed = 0.0;
-    //m_motor.stopMotor();
   }
 }
