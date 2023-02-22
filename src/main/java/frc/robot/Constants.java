@@ -200,6 +200,7 @@ public final class Constants {
 
     public static final class IntakeSubsystemConstants {
 
+        public static final int SparkMaxPWMChannel = 0;
         public static final int SparkMaxDeviceID = 8;
     }
 

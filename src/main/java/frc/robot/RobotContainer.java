@@ -4,18 +4,16 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.commands.autonomous.AutoPaths;
-// import frc.robot.subsystems.ArmSubsystemPID;
-import frc.robot.subsystems.ArmSubsystemSimple;
+import frc.robot.subsystems.ArmSubsystemPID;
 // import frc.robot.subsystems.AutoPilot;
-import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.IntakeSubsystemPWM;
 import frc.robot.subsystems.SwerveDriveSubsystem;
-// import frc.robot.subsystems.WristSubsystemPID;
-import frc.robot.subsystems.WristSubsystemSimple;
+import frc.robot.subsystems.WristSubsystemPID;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -34,12 +32,14 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
   private final XboxController m_driver = new XboxController(Constants.XboxControllerConstants.DRIVER_CONTROLLER_USB_ID);
-  private final XboxController m_assist = new XboxController(Constants.XboxControllerConstants.ASSIST_CONTROLLER_USB_ID);
+  //private final XboxController m_assist = new XboxController(Constants.XboxControllerConstants.ASSIST_CONTROLLER_USB_ID);
+  private final Joystick autoPilotController = new Joystick(Constants.XboxControllerConstants.ASSIST_CONTROLLER_USB_ID);
 
   private final SwerveDriveSubsystem m_drivetrainSubsystem;
-  private final WristSubsystemSimple m_WristSubsystemSimple;
-  private final ArmSubsystemSimple m_ArmSubsystemSimple;
-  private final IntakeSubsystem m_IntakeSubsystem;
+  private final WristSubsystemPID m_WristSubsystemPID;
+  // private final ArmSubsystemSimple m_ArmSubsystemSimple;
+  private final ArmSubsystemPID m_ArmSubsystemPID;
+  private final IntakeSubsystemPWM m_IntakeSubsystem;
 
   // private final AutoPilot m_autoPilot;
   private SendableChooser<Command> m_TrajectoryChooser;
@@ -51,11 +51,10 @@ public class RobotContainer {
   public RobotContainer() {
     m_drivetrainSubsystem = SwerveDriveSubsystem.getInstance();
     // m_autoPilot = AutoPilot.getInstance();
-    m_WristSubsystemSimple = WristSubsystemSimple.getInstance();
-    m_ArmSubsystemSimple = ArmSubsystemSimple.getInstance();
-    m_IntakeSubsystem = IntakeSubsystem.getInstance();
+    m_WristSubsystemPID = WristSubsystemPID.getInstance();
+    m_IntakeSubsystem = IntakeSubsystemPWM.getInstance();
+    m_ArmSubsystemPID = ArmSubsystemPID.getInstance();
 
-    //m_drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(m_driver));
     m_drivetrainSubsystem.setDefaultCommand(new RunCommand(() -> m_drivetrainSubsystem.DriveWithJoystick(m_driver),m_drivetrainSubsystem));
 
     // Set up the default command for the drivetrain.
@@ -87,10 +86,10 @@ public class RobotContainer {
     // JoystickButton LEFT_STICK_PRESS = new JoystickButton(m_driver, Constants.XboxControllerConstants.LEFT_STICK_PRESS);
     // JoystickButton RIGHT_STICK_PRESS = new JoystickButton(m_driver, Constants.XboxControllerConstants.RIGHT_STICK_PRESS);
 
-    JoystickButton A_BUTTON_AS = new JoystickButton(m_assist, Constants.XboxControllerConstants.A_BUTTON);
-    JoystickButton B_BUTTON_AS = new JoystickButton(m_assist, Constants.XboxControllerConstants.B_BUTTON);
-    JoystickButton X_BUTTON_AS = new JoystickButton(m_assist, Constants.XboxControllerConstants.X_BUTTON);
-    JoystickButton Y_BUTTON_AS = new JoystickButton(m_assist, Constants.XboxControllerConstants.Y_BUTTON);
+    // JoystickButton A_BUTTON_AS = new JoystickButton(m_assist, Constants.XboxControllerConstants.A_BUTTON);
+    // JoystickButton B_BUTTON_AS = new JoystickButton(m_assist, Constants.XboxControllerConstants.B_BUTTON);
+    // JoystickButton X_BUTTON_AS = new JoystickButton(m_assist, Constants.XboxControllerConstants.X_BUTTON);
+    // JoystickButton Y_BUTTON_AS = new JoystickButton(m_assist, Constants.XboxControllerConstants.Y_BUTTON);
     // JoystickButton LEFT_BUMPER_AS = new JoystickButton(m_assist, Constants.XboxControllerConstants.LEFT_BUMPER);
     // JoystickButton RIGHT_BUMPER_AS = new JoystickButton(m_assist, Constants.XboxControllerConstants.RIGHT_BUMPER);
     // JoystickButton TWO_SQUARES_AS = new JoystickButton(m_assist, Constants.XboxControllerConstants.TWO_SQUARES);
@@ -98,28 +97,52 @@ public class RobotContainer {
     // JoystickButton LEFT_STICK_PRESS_AS = new JoystickButton(m_assist, Constants.XboxControllerConstants.LEFT_STICK_PRESS);
     // JoystickButton RIGHT_STICK_PRESS_AS = new JoystickButton(m_assist, Constants.XboxControllerConstants.RIGHT_STICK_PRESS);
 
+    JoystickButton GREEN_LEFT = new JoystickButton(autoPilotController, Constants.AutoPilotController.GREEN_LEFT);
+    JoystickButton GREEN_CENTER = new JoystickButton(autoPilotController, Constants.AutoPilotController.GREEN_CENTER);
+    JoystickButton GREEN_RIGHT = new JoystickButton(autoPilotController, Constants.AutoPilotController.GREEN_RIGHT);
+    JoystickButton YELLOW_LEFT = new JoystickButton(autoPilotController, Constants.AutoPilotController.YELLOW_LEFT);
+    // JoystickButton YELLOW_CENTER = new JoystickButton(autoPilotController, Constants.AutoPilotController.YELLOW_CENTER);
+    JoystickButton YELLOW_RIGHT = new JoystickButton(autoPilotController, Constants.AutoPilotController.YELLOW_RIGHT);
+    JoystickButton BLUE_LEFT = new JoystickButton(autoPilotController, Constants.AutoPilotController.BLUE_LEFT);
+    JoystickButton BLUE_CENTER = new JoystickButton(autoPilotController, Constants.AutoPilotController.BLUE_CENTER);
+    JoystickButton BLUE_RIGHT = new JoystickButton(autoPilotController, Constants.AutoPilotController.BLUE_RIGHT);
+    JoystickButton CLEAR_BOTTOM = new JoystickButton(autoPilotController, Constants.AutoPilotController.CLEAR_BOTTOM);
+    JoystickButton CLEAR_MIDDLE = new JoystickButton(autoPilotController, Constants.AutoPilotController.CLEAR_MIDDLE);
+    JoystickButton CLEAR_TOP = new JoystickButton(autoPilotController, Constants.AutoPilotController.CLEAR_TOP);
+
     //-----------DRIVER
     //----------intake-----------------------------------------------------------
     LEFT_BUMPER.whileTrue(new InstantCommand(m_IntakeSubsystem::in,m_IntakeSubsystem));
-    LEFT_BUMPER.onFalse(new InstantCommand(m_IntakeSubsystem::stop,m_IntakeSubsystem));
+    LEFT_BUMPER.onFalse(new InstantCommand(m_IntakeSubsystem::in_hold,m_IntakeSubsystem));
 
     RIGHT_BUMPER.whileTrue(new InstantCommand(m_IntakeSubsystem::out,m_IntakeSubsystem));
-    RIGHT_BUMPER.onFalse(new InstantCommand(m_IntakeSubsystem::stop,m_IntakeSubsystem));
+    RIGHT_BUMPER.onFalse(new InstantCommand(m_IntakeSubsystem::out_hold,m_IntakeSubsystem));
 
     //----------ASSISTANT
-    //----------arm-----------------------------------------------------------
-    Y_BUTTON_AS.whileTrue(new InstantCommand(m_ArmSubsystemSimple::up,m_ArmSubsystemSimple));
-    Y_BUTTON_AS.onFalse(new InstantCommand(m_ArmSubsystemSimple::stop,m_ArmSubsystemSimple));
+    //----------arm manual-----------------------------------------------------------
+    GREEN_CENTER.whileTrue(new InstantCommand(m_ArmSubsystemPID::up,m_ArmSubsystemPID));
+    GREEN_CENTER.onFalse(new InstantCommand(m_ArmSubsystemPID::stop,m_ArmSubsystemPID));
 
-    A_BUTTON_AS.whileTrue(new InstantCommand(m_ArmSubsystemSimple::down,m_ArmSubsystemSimple));
-    A_BUTTON_AS.onFalse(new InstantCommand(m_ArmSubsystemSimple::stop,m_ArmSubsystemSimple));
+    GREEN_LEFT.whileTrue(new InstantCommand(m_ArmSubsystemPID::down,m_ArmSubsystemPID));
+    GREEN_LEFT.onFalse(new InstantCommand(m_ArmSubsystemPID::stop,m_ArmSubsystemPID));
+
+    //----------wrist manual-----------------------------------------------------------
+    GREEN_RIGHT.whileTrue(new InstantCommand(m_WristSubsystemPID::in,m_WristSubsystemPID));
+    GREEN_RIGHT.onFalse(new InstantCommand(m_WristSubsystemPID::stop,m_WristSubsystemPID));
+
+    YELLOW_LEFT.whileTrue(new InstantCommand(m_WristSubsystemPID::out,m_WristSubsystemPID));
+    YELLOW_LEFT.onFalse(new InstantCommand(m_WristSubsystemPID::stop,m_WristSubsystemPID));
+
+    //----------arm-----------------------------------------------------------
+    CLEAR_BOTTOM.onTrue(new InstantCommand(m_ArmSubsystemPID::floor,m_ArmSubsystemPID));
+    CLEAR_MIDDLE.onTrue(new InstantCommand(m_ArmSubsystemPID::middle,m_ArmSubsystemPID));
+    CLEAR_TOP.onTrue(new InstantCommand(m_ArmSubsystemPID::top,m_ArmSubsystemPID));
 
     //----------wrist-----------------------------------------------------------
-    B_BUTTON_AS.whileTrue(new InstantCommand(m_WristSubsystemSimple::in,m_WristSubsystemSimple));
-    B_BUTTON_AS.onFalse(new InstantCommand(m_WristSubsystemSimple::stop,m_WristSubsystemSimple));
-
-    X_BUTTON_AS.whileTrue(new InstantCommand(m_WristSubsystemSimple::out,m_WristSubsystemSimple));
-    X_BUTTON_AS.onFalse(new InstantCommand(m_WristSubsystemSimple::stop,m_WristSubsystemSimple));
+    YELLOW_RIGHT.onTrue(new InstantCommand(m_WristSubsystemPID::top,m_WristSubsystemPID));
+    BLUE_LEFT.onTrue(new InstantCommand(m_WristSubsystemPID::middle,m_WristSubsystemPID));
+    BLUE_CENTER.onTrue(new InstantCommand(m_WristSubsystemPID::floorCone,m_WristSubsystemPID));
+    BLUE_RIGHT.onTrue(new InstantCommand(m_WristSubsystemPID::floorCube,m_WristSubsystemPID));
 
   }
 

@@ -45,11 +45,21 @@ public class IntakeSubsystem extends SubsystemBase {
     m_motor.set(0.5);
   }
 
+  public void in_hold() {
+    m_motor.set(0.1);
+    System.out.println("in_hold");
+  }
+
   public void out() {
     m_motor.set(-0.5);
   }
 
+  public void out_hold() {
+    m_motor.set(-0.1);
+    System.out.println("out_hold");
+  }
+
   public void stop() {
-    m_motor.set(0.0);
+    m_motor.stopMotor();
   }
 }
