@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.autonomous.AutoPaths;
 import frc.robot.subsystems.ArmSubsystemPID;
-// import frc.robot.subsystems.AutoPilot;
+import frc.robot.subsystems.AutoPilot;
 import frc.robot.subsystems.IntakeSubsystemPWM;
 import frc.robot.subsystems.MasterController;
 import frc.robot.subsystems.SwerveDriveSubsystem;
@@ -42,7 +42,7 @@ public class RobotContainer {
   private final IntakeSubsystemPWM m_IntakeSubsystem;
   private final MasterController m_MasterController;
 
-  // private final AutoPilot m_autoPilot;
+  private final AutoPilot m_autoPilot;
   private SendableChooser<Command> m_TrajectoryChooser;
   private AutoPaths autoPath;
   
@@ -51,11 +51,11 @@ public class RobotContainer {
    */
   public RobotContainer() {
     m_drivetrainSubsystem = SwerveDriveSubsystem.getInstance();
-    // m_autoPilot = AutoPilot.getInstance();
+    m_autoPilot = AutoPilot.getInstance();
     m_WristSubsystemPID = WristSubsystemPID.getInstance();
     m_IntakeSubsystem = IntakeSubsystemPWM.getInstance();
     m_ArmSubsystemPID = ArmSubsystemPID.getInstance();
-    m_MasterController = MasterController.getInstance(m_WristSubsystemPID, m_ArmSubsystemPID);
+    m_MasterController = MasterController.getInstance(m_WristSubsystemPID, m_ArmSubsystemPID, m_autoPilot);
 
     m_drivetrainSubsystem.setDefaultCommand(new RunCommand(() -> m_drivetrainSubsystem.DriveWithJoystick(m_driver),m_drivetrainSubsystem));
 
@@ -114,25 +114,25 @@ public class RobotContainer {
 
     //-----------DRIVER
     //----------intake-----------------------------------------------------------
-    // LEFT_BUMPER.whileTrue(new InstantCommand(m_IntakeSubsystem::in,m_IntakeSubsystem));
-    // LEFT_BUMPER.onFalse(new InstantCommand(m_IntakeSubsystem::in_hold,m_IntakeSubsystem));
+    LEFT_BUMPER.whileTrue(new InstantCommand(m_IntakeSubsystem::in,m_IntakeSubsystem));
+    LEFT_BUMPER.onFalse(new InstantCommand(m_IntakeSubsystem::in_hold,m_IntakeSubsystem));
 
-    // RIGHT_BUMPER.whileTrue(new InstantCommand(m_IntakeSubsystem::out,m_IntakeSubsystem));
-    // RIGHT_BUMPER.onFalse(new InstantCommand(m_IntakeSubsystem::out_hold,m_IntakeSubsystem));
+    RIGHT_BUMPER.whileTrue(new InstantCommand(m_IntakeSubsystem::out,m_IntakeSubsystem));
+    RIGHT_BUMPER.onFalse(new InstantCommand(m_IntakeSubsystem::out_hold,m_IntakeSubsystem));
 
     //----------arm manual-----------------------------------------------------------
-    // Y_BUTTON.whileTrue(new InstantCommand(m_ArmSubsystemPID::up,m_ArmSubsystemPID));
-    // Y_BUTTON.onFalse(new InstantCommand(m_ArmSubsystemPID::stop,m_ArmSubsystemPID));
+    Y_BUTTON.whileTrue(new InstantCommand(m_ArmSubsystemPID::up,m_ArmSubsystemPID));
+    Y_BUTTON.onFalse(new InstantCommand(m_ArmSubsystemPID::stop,m_ArmSubsystemPID));
 
-    // A_BUTTON.whileTrue(new InstantCommand(m_ArmSubsystemPID::down,m_ArmSubsystemPID));
-    // A_BUTTON.onFalse(new InstantCommand(m_ArmSubsystemPID::stop,m_ArmSubsystemPID));
+    A_BUTTON.whileTrue(new InstantCommand(m_ArmSubsystemPID::down,m_ArmSubsystemPID));
+    A_BUTTON.onFalse(new InstantCommand(m_ArmSubsystemPID::stop,m_ArmSubsystemPID));
 
-    // //----------wrist manual-----------------------------------------------------------
-    // X_BUTTON.whileTrue(new InstantCommand(m_WristSubsystemPID::in,m_WristSubsystemPID));
-    // X_BUTTON.onFalse(new InstantCommand(m_WristSubsystemPID::stop,m_WristSubsystemPID));
+    //----------wrist manual-----------------------------------------------------------
+    X_BUTTON.whileTrue(new InstantCommand(m_WristSubsystemPID::in,m_WristSubsystemPID));
+    X_BUTTON.onFalse(new InstantCommand(m_WristSubsystemPID::stop,m_WristSubsystemPID));
 
-    // B_BUTTON.whileTrue(new InstantCommand(m_WristSubsystemPID::out,m_WristSubsystemPID));
-    // B_BUTTON.onFalse(new InstantCommand(m_WristSubsystemPID::stop,m_WristSubsystemPID));
+    B_BUTTON.whileTrue(new InstantCommand(m_WristSubsystemPID::out,m_WristSubsystemPID));
+    B_BUTTON.onFalse(new InstantCommand(m_WristSubsystemPID::stop,m_WristSubsystemPID));
 
     // //----------ASSISTANT--------------------------------------------------------------
     // //---------------------------------------------------------------------------------

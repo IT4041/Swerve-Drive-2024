@@ -9,7 +9,6 @@ import edu.wpi.first.networktables.BooleanTopic;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.PubSubOption;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ScoringLocationDetails;
 import frc.robot.Constants.ScoringLocations;
@@ -20,6 +19,7 @@ public class MasterController extends SubsystemBase {
 
   private WristSubsystemPID m_WristSubsystemPID;
   private ArmSubsystemPID m_ArmSubsystemPID;
+  private AutoPilot m_AutoPilot;
   private ScoringLocationDetails selectedLocation = null;
 
   private NetworkTableInstance inst = NetworkTableInstance.getDefault();
@@ -32,27 +32,19 @@ public class MasterController extends SubsystemBase {
   private int height = 0;
 
   public static MasterController getInstance(WristSubsystemPID in_WristSubsystemPID,
-      ArmSubsystemPID in_ArmSubsystemPID) {
+      ArmSubsystemPID in_ArmSubsystemPID, AutoPilot in_AutoPilot) {
     if (m_inst == null) {
-      m_inst = new MasterController(in_WristSubsystemPID, in_ArmSubsystemPID);
+      m_inst = new MasterController(in_WristSubsystemPID, in_ArmSubsystemPID, in_AutoPilot);
     }
     return m_inst;
   }
 
   /** Creates a new MasterController. */
-  private MasterController(WristSubsystemPID in_WristSubsystemPID, ArmSubsystemPID in_ArmSubsystemPID) {
+  private MasterController(WristSubsystemPID in_WristSubsystemPID, ArmSubsystemPID in_ArmSubsystemPID, AutoPilot in_AutoPilot) {
     m_WristSubsystemPID = in_WristSubsystemPID;
     m_ArmSubsystemPID = in_ArmSubsystemPID;
+    m_AutoPilot = in_AutoPilot;
     this.isRed = IsRed.get();
-
-    SmartDashboard.putString("target item", "");
-    SmartDashboard.putNumber("target pose x",0);
-    SmartDashboard.putNumber("target pose y",0);
-    SmartDashboard.putNumber("target degrees",0);
-    SmartDashboard.putNumber("target trans x",0);
-    SmartDashboard.putNumber("target trans y",0);
-    SmartDashboard.putNumber("target height", this.height);
-    SmartDashboard.putNumber("location ID", this.locationID);
   }
 
   @Override
@@ -62,19 +54,6 @@ public class MasterController extends SubsystemBase {
     if (this.locationID > 0) {
       this.selectedLocation = this.getLocationDetails(this.locationID, this.isRed);
     }
-
-    if (this.selectedLocation != null) {
-      SmartDashboard.putString("target item", this.selectedLocation.item.toString());
-      SmartDashboard.putNumber("target pose x",this.selectedLocation.pose.getX());
-      SmartDashboard.putNumber("target pose y",this.selectedLocation.pose.getY());
-      SmartDashboard.putNumber("target degrees",this.selectedLocation.pose.getRotation().getDegrees());
-      SmartDashboard.putNumber("target trans x",this.selectedLocation.pose.getTranslation().getX());
-      SmartDashboard.putNumber("target trans y",this.selectedLocation.pose.getTranslation().getY());
-    }
-
-    SmartDashboard.putNumber("target height", this.height);
-    SmartDashboard.putNumber("location ID", this.locationID);
-
   }
 
   // ------Buttons for setting location -------------
