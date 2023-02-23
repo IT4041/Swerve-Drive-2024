@@ -13,8 +13,6 @@ public class IntakeSubsystemPWM extends SubsystemBase {
 
   private static IntakeSubsystemPWM m_inst = null;
   private double speed = 0;
-
-  //private PWMSparkMax m_motor;
   private Spark m_motor;
 
   public static IntakeSubsystemPWM getInstance() {

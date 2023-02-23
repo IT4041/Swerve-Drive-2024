@@ -244,9 +244,9 @@ public final class Constants {
         public static final int BLUE_LEFT = 7;
         public static final int BLUE_CENTER = 8;
         public static final int BLUE_RIGHT = 9;
-        public static final int CLEAR_BOTTOM = 12;
-        public static final int CLEAR_MIDDLE = 11;
         public static final int CLEAR_TOP = 10;
+        public static final int CLEAR_MIDDLE = 11;
+        public static final int CLEAR_BOTTOM = 12; 
     }
 
 }
