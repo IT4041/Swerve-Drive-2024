@@ -30,8 +30,8 @@ import frc.robot.Constants;
 public class AutoPilot extends SubsystemBase {
 
   //private PhotonCamera camera = new PhotonCamera("Microsoft_LifeCam_HD-3000");
-  private PhotonCamera camera = new PhotonCamera("irontigercamera");
-  private PhotonPipelineResult result;
+  //private PhotonCamera camera = new PhotonCamera("irontigercamera");
+  //private PhotonPipelineResult result;
   private static AutoPilot m_inst = null;
 
   private final Joystick autoPilotController = new Joystick(Constants.AutoPilotController.AUTOPILOT_CONTROLLER_USB_ID);
@@ -72,29 +72,29 @@ public class AutoPilot extends SubsystemBase {
     // This method will be called once per scheduler run
 
     // Query the latest result from PhotonVision
-    result = camera.getLatestResult();
+    //result = camera.getLatestResult();
 
     // Check if the latest result has any targets
-    boolean hasTargets = result.hasTargets();
+    boolean hasTargets = false;//result.hasTargets();
 
     if(hasTargets){
 
       // Get the current best target.
-      PhotonTrackedTarget target = result.getBestTarget();
+      //PhotonTrackedTarget target = result.getBestTarget();
       // Get information from target.
-      int targetID = target.getFiducialId();
-      double poseAmbiguity = target.getPoseAmbiguity();
-      Transform3d bestCameraToTarget = target.getBestCameraToTarget();
+      // int targetID = target.getFiducialId();
+      // double poseAmbiguity = target.getPoseAmbiguity();
+      // Transform3d bestCameraToTarget = target.getBestCameraToTarget();
 
-      if(poseAmbiguity < 0.2){
-        Pose2d currentPosition = calculateRobotPose(targetID, bestCameraToTarget);
-        if(this.locationSpecified() && this.heightSpecifed()){      
-          Pose2d getTargetPosition = getScoringLocation();
+      // if(poseAmbiguity < 0.2){
+      //   Pose2d currentPosition = calculateRobotPose(targetID, bestCameraToTarget);
+      //   if(this.locationSpecified() && this.heightSpecifed()){      
+      //     Pose2d getTargetPosition = getScoringLocation();
   
-          Trajectory autoPath = TrajectoryGenerator.generateTrajectory(currentPosition, null, getTargetPosition, new TrajectoryConfig(3.0, 4.0));
-        }
-      }
-      SmartDashboard.putString("BestCameraToTarget",bestCameraToTarget.toString());
+      //     Trajectory autoPath = TrajectoryGenerator.generateTrajectory(currentPosition, null, getTargetPosition, new TrajectoryConfig(3.0, 4.0));
+      //   }
+      // }
+      // SmartDashboard.putString("BestCameraToTarget",bestCameraToTarget.toString());
     }
   }
 

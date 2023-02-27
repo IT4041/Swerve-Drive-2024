@@ -14,6 +14,8 @@ public class IntakeSubsystemPWM extends SubsystemBase {
   private static IntakeSubsystemPWM m_inst = null;
   private double speed = 0;
   private Spark m_motor;
+  private boolean in_on = false;
+  private boolean out_on = false;
 
   public static IntakeSubsystemPWM getInstance() {
     if (m_inst == null) {
@@ -51,5 +53,23 @@ public class IntakeSubsystemPWM extends SubsystemBase {
 
   public void stop() {
     this.speed = 0.0;
+  }
+
+  public void in_persist(){
+    if(in_on){
+      this.speed = 0.03;
+    }else{
+      this.speed = 0.5;
+    }
+    in_on = !in_on;
+
+  }
+  public void out_persist(){
+    if(out_on){
+      this.speed = -0.03;
+    }else{
+      this.speed = -0.5;
+    }
+    out_on = !out_on;
   }
 }

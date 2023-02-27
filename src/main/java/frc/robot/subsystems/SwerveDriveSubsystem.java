@@ -113,23 +113,16 @@ public class SwerveDriveSubsystem extends SubsystemBase {
 
         // Update the pose
         // button 8 on xbox is three lines button
-        if (driveController.getRawButton(Constants.XboxControllerConstants.THREE_LINES)) {
+        if (driveController.getRawButton(Constants.XboxControllerConstants.TWO_SQUARES)) {
             frontLeftModule.resetTurnEncoders();
             frontRightModule.resetTurnEncoders();
             backRightModule.resetTurnEncoders();
             backLeftModule.resetTurnEncoders();
-        }
-        // button 7 on xbox it two squares
-        if (driveController.getRawButton(Constants.XboxControllerConstants.TWO_SQUARES)) {
             pigeon.setYaw(0);
         }
-        // Button 6 is Y button
-        // Speed is multiplied by 0.5 when Y-Button toogeled 
-        //if (driveController.getRawButton(Constants.XboxControllerConstants.Y_BUTTON) && getDriveRate() == 1) {
-            setDriveRate(.8);
-        // else if (driveController.getRawButton(Constants.XboxControllerConstants.Y_BUTTON) && getDriveRate() != 1){
-            //setDriveRate(1);
-        //}
+
+        // adjust overall speed adn rotation of the robot
+        this.setDriveRate(.8);
 
         SmartDashboard.putString("odo", m_odometry.getPoseMeters().toString());
         SmartDashboard.putString("odo", m_odometry.getPoseMeters().toString());
@@ -170,7 +163,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         // leftRightDir = leftRightRateLimiter.calculate(leftRightDir);
         // turn = turnRateLimiter.calculate(turn);
 
-        double deadband = .05;
+        double deadband = .1;
 
         if (-deadband < leftRightDir && leftRightDir < deadband) {
             leftRightDir = 0;

@@ -22,9 +22,11 @@ public class WristSubsystemPID extends SubsystemBase {
   private static WristSubsystemPID m_inst = null;
 
   private CANSparkMax m_motor;
+  private CANSparkMax m_follower;
   private SparkMaxPIDController m_pidController;
   private SparkMaxAbsoluteEncoder m_AbsoluteEncoder;
   public double kP, kI, kD, kIz, kFF, kMaxOutput, kMinOutput, targetPosition;
+  private int currWristPoseIndex = 0;
 
   public static WristSubsystemPID getInstance() {
     if (m_inst == null) {
@@ -37,30 +39,38 @@ public class WristSubsystemPID extends SubsystemBase {
   private WristSubsystemPID() {
 
     m_motor = new CANSparkMax(Constants.WristSubsystemConstants.SparkMaxDeviceID, MotorType.kBrushed);
+    m_follower = new CANSparkMax(Constants.WristSubsystemConstants.SparkMaxFollowerDeviceID, MotorType.kBrushless);
     m_motor.restoreFactoryDefaults();
+    m_follower.restoreFactoryDefaults();
 
     m_AbsoluteEncoder = m_motor.getAbsoluteEncoder(Type.kDutyCycle);
     m_AbsoluteEncoder.setPositionConversionFactor(360);
     m_AbsoluteEncoder.setVelocityConversionFactor(1);
-    m_AbsoluteEncoder.setInverted(false);
-    m_AbsoluteEncoder.setZeroOffset(10.1688311);
+    m_AbsoluteEncoder.setInverted(true);
+    m_AbsoluteEncoder.setZeroOffset(211.4551878);
   
     m_pidController = m_motor.getPIDController();
     m_pidController.setFeedbackDevice(m_AbsoluteEncoder);
-    // m_pidController.setPositionPIDWrappingEnabled(true);
-    // m_pidController.setPositionPIDWrappingMaxInput(kMaxOutput);
-    // m_pidController.setPositionPIDWrappingMinInput(kMaxOutput);
+    m_pidController.setPositionPIDWrappingEnabled(true);
+    m_pidController.setPositionPIDWrappingMaxInput(360);
+    m_pidController.setPositionPIDWrappingMinInput(0);
 
-    m_pidController.setP(0.13);
+    m_pidController.setP(0.125);
     m_pidController.setI(0);
-    m_pidController.setD(1.5);
+    m_pidController.setD(-0.2);
     m_pidController.setFF(0);
     m_pidController.setOutputRange(-1, 1);
 
     m_motor.setIdleMode(IdleMode.kBrake);
     m_motor.setSmartCurrentLimit(80);
     m_motor.setClosedLoopRampRate(.5);
-    //m_motor.setSoftLimit(SoftLimitDirection.kForward, 100);
+
+    m_follower.setIdleMode(IdleMode.kBrake);
+    m_follower.setSmartCurrentLimit(80);
+    m_follower.setClosedLoopRampRate(.5);
+
+    m_follower.follow(m_motor);
+    //m_motor.setSoftLimit(SoftLimitDirection.kForward, 153);
     //m_motor.setSoftLimit(SoftLimitDirection.kReverse, 0);
     // m_motor.enableSoftLimit(SoftLimitDirection.kForward, true);
     // m_motor.enableSoftLimit(SoftLimitDirection.kReverse, true);
@@ -69,6 +79,7 @@ public class WristSubsystemPID extends SubsystemBase {
     // Save the SPARK MAX configurations. If a SPARK MAX browns out during
     // operation, it will maintain the above configurations.
     m_motor.burnFlash();
+    m_follower.burnFlash();
 
     this.targetPosition = 0;
   }
@@ -120,5 +131,30 @@ public class WristSubsystemPID extends SubsystemBase {
   public void tiltedCone(){
     this.targetPosition = Constants.WristSubsystemConstants.WristPositions.tiltedCone;
     this.setPosition(Constants.WristSubsystemConstants.WristPositions.tiltedCone);
+  }
+
+  public void zero(){
+    this.targetPosition = 0;
+    this.setPosition(0);
+  }
+
+  public void stepDown() {
+
+    if (currWristPoseIndex > 0) {
+      currWristPoseIndex--;
+    }
+
+    this.targetPosition = Constants.WristSubsystemConstants.WristPositions.WristPoses[currWristPoseIndex];
+    this.setPosition(Constants.WristSubsystemConstants.WristPositions.WristPoses[currWristPoseIndex]);
+  }
+
+  public void stepUp() {
+
+    if (currWristPoseIndex < 4) {
+      currWristPoseIndex++;
+    }
+
+    this.targetPosition = Constants.WristSubsystemConstants.WristPositions.WristPoses[currWristPoseIndex];
+    this.setPosition(Constants.WristSubsystemConstants.WristPositions.WristPoses[currWristPoseIndex]);
   }
 }

@@ -15,20 +15,23 @@ public class AutoPaths extends SequentialCommandGroup {
         this.m_drivetrainSubsystem = drivetrainSubsystem;
     }
     
-    public Command CenterConeCubePath(){
-        return m_drivetrainSubsystem.traj(PathPlanner.loadPath("CenterConeCubePath", new PathConstraints(1, 1)), true);
-     
+    public Command CenterPath(){
+        return m_drivetrainSubsystem.traj(PathPlanner.loadPath("CenterPath", new PathConstraints(1.5, 1.5)), true);
     }
-    public Command CenterConeCubeTablePath(){
-        return m_drivetrainSubsystem.traj(PathPlanner.loadPath("CenterConeCubeTablePath", new PathConstraints(1, 1)), true);
-     
+
+    public Command CenterTablePath(){
+        return m_drivetrainSubsystem.traj(PathPlanner.loadPath("CenterTablePath", new PathConstraints(1, 1)), true);
     }
-    public Command CubeTablePath(){
-        return m_drivetrainSubsystem.traj(PathPlanner.loadPath("CubeTablePath", new PathConstraints(1, 1)), true);
-     
+
+    public Command TablePath(){
+        return m_drivetrainSubsystem.traj(PathPlanner.loadPath("TablePath", new PathConstraints(1, 1)), true);
     }
-    public Command SideConeCubePath(){
-        return m_drivetrainSubsystem.traj(PathPlanner.loadPath("SideConeCubePath", new PathConstraints(1, 1)), true);
-     
+
+    public Command SidePath(){
+        return m_drivetrainSubsystem.traj(PathPlanner.loadPath("SidePath", new PathConstraints(1, 1)), true);
+    }
+
+    public Command FinishPath(){
+        return m_drivetrainSubsystem.traj(PathPlanner.loadPath("FinishPath", new PathConstraints(1.5, 1.5)), false);
     }
 }

@@ -159,25 +159,25 @@ public final class Constants {
         public static final int FRONT_LEFT_DRIVE_MOTOR_ID = 45;
         public static final int FRONT_LEFT_TURN_MOTOR_ID = 40;
         public static final int FRONT_LEFT_ENC_ID = 50;
-        public static final double FRONT_LEFT_OFFSET = 322.82;
+        public static final double FRONT_LEFT_OFFSET = 321.6796875;
 
         public static final String FRONT_RIGHT_MODULE_NAME = "FrontRight";
         public static final int FRONT_RIGHT_DRIVE_MOTOR_ID = 43;
         public static final int FRONT_RIGHT_TURN_MOTOR_ID = 44;
         public static final int FRONT_RIGHT_ENC_ID = 51;
-        public static final double FRONT_RIGHT_OFFSET = 339.87;
+        public static final double FRONT_RIGHT_OFFSET = 338.90625;
 
         public static final String BACK_RIGHT_MODULE_NAME = "BackRight";
         public static final int BACK_RIGHT_DRIVE_MOTOR_ID = 23;
         public static final int BACK_RIGHT_TURN_MOTOR_ID = 41;
         public static final int BACK_RIGHT_ENC_ID = 52;
-        public static final double BACK_RIGHT_OFFSET = 122.52;
+        public static final double BACK_RIGHT_OFFSET = 121.46484375;
 
         public static final String BACK_LEFT_MODULE_NAME = "BackLeft";
         public static final int BACK_LEFT_DRIVE_MOTOR_ID = 20;
         public static final int BACK_LEFT_TURN_MOTOR_ID = 22;
         public static final int BACK_LEFT_ENC_ID = 53;
-        public static final double BACK_LEFT_OFFSET = 153.10;
+        public static final double BACK_LEFT_OFFSET = 153.017578125;
 
         public static final double WHEEL_BASE = 19.325 * 0.0254;
         public static final double SLEW_RATE_LIMIT = 0.5;
@@ -192,23 +192,26 @@ public final class Constants {
         public static final int EncoderID = 0;
 
         public static final class ArmPositions{
-                public static final int top = 70;
-                public static final int middle = 35;
-                public static final int floor = 15;    
+                public static final int top = 68;
+                public static final int middle = 46;
+                public static final int floor = 10;
+                public static final int[] ArmPoses = {0,10,46,68};    
         }
     }
 
     public static final class WristSubsystemConstants {
 
         public static final int SparkMaxDeviceID = 4;
+        public static final int SparkMaxFollowerDeviceID = 5;
         public static final int EncoderID = 1;
 
         public static final class WristPositions{
-                public static final int top = 80;
-                public static final int middle = 60;
-                public static final int floorCube = 50;
-                public static final int floorCone = 35; 
-                public static final int tiltedCone = 25;   
+                public static final int top = 40;
+                public static final int middle = 32;
+                public static final int floorCone = 122;
+                public static final int floorCube = 148; 
+                public static final int tiltedCone = 153;
+                public static final int[] WristPoses = {0,32,40,122,148,153};    
         }
     }
 
