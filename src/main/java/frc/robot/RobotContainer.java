@@ -100,7 +100,7 @@ public class RobotContainer {
     // JoystickButton LEFT_BUMPER_AS = new JoystickButton(m_assist, Constants.XboxControllerConstants.LEFT_BUMPER);
     // JoystickButton RIGHT_BUMPER_AS = new JoystickButton(m_assist, Constants.XboxControllerConstants.RIGHT_BUMPER);
     // JoystickButton TWO_SQUARES_AS = new JoystickButton(m_assist, Constants.XboxControllerConstants.TWO_SQUARES);
-    // JoystickButton THREE_LINES_AS = new JoystickButton(m_assist, Constants.XboxControllerConstants.THREE_LINES);
+    JoystickButton THREE_LINES_AS = new JoystickButton(m_assist, Constants.XboxControllerConstants.THREE_LINES);
     // JoystickButton LEFT_STICK_PRESS_AS = new JoystickButton(m_assist, Constants.XboxControllerConstants.LEFT_STICK_PRESS);
     // JoystickButton RIGHT_STICK_PRESS_AS = new JoystickButton(m_assist, Constants.XboxControllerConstants.RIGHT_STICK_PRESS);
 
@@ -143,11 +143,8 @@ public class RobotContainer {
     B_BUTTON.whileTrue(new InstantCommand(m_WristSubsystemPID::out, m_WristSubsystemPID));
     B_BUTTON.onFalse(new InstantCommand(m_WristSubsystemPID::stop, m_WristSubsystemPID));
 
-    // ----RETURN TO
-    // ZERO---------------------------------------------------------------
+    // ----RETURN TO ZERO---------------------------------------------------------------
     THREE_LINES.onTrue(new InstantCommand(m_MasterController::zero, m_MasterController));
-
-
 
     // //----------ASSISTANT--------------------------------------------------------------
     // ----------arm position-----------------------------------------------------------
@@ -157,6 +154,9 @@ public class RobotContainer {
     // ----------wrist position-----------------------------------------------------------
     X_BUTTON_AS.onTrue(new InstantCommand(m_WristSubsystemPID::stepUp, m_WristSubsystemPID));
     B_BUTTON_AS.onTrue(new InstantCommand(m_WristSubsystemPID::stepDown, m_WristSubsystemPID));
+
+    // ----RETURN TO ZERO---------------------------------------------------------------
+    THREE_LINES_AS.onTrue(new InstantCommand(m_MasterController::zero, m_MasterController));
 
     // GREEN_LEFT.onTrue(new InstantCommand(m_MasterController::button1, m_MasterController));// ID:1
     // GREEN_CENTER.onTrue(new InstantCommand(m_MasterController::button2, m_MasterController));// ID:2
@@ -190,6 +190,7 @@ public class RobotContainer {
     m_TrajectoryChooser.setDefaultOption("ConeTable", autoSequences.ConeTablePath());
     m_TrajectoryChooser.addOption("CubeTable", autoSequences.CubeTablePath());
     m_TrajectoryChooser.addOption("Center", autoSequences.CenterPath());
+    m_TrajectoryChooser.addOption("Side", autoSequences.SidePath());
 
     SmartDashboard.putData(m_TrajectoryChooser);
   }

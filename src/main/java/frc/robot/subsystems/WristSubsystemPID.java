@@ -13,7 +13,7 @@ import com.revrobotics.SparkMaxPIDController.ArbFFUnits;
 import com.revrobotics.SparkMaxAbsoluteEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.IdleMode;
-import com.revrobotics.CANSparkMax.SoftLimitDirection;
+// import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -47,7 +47,7 @@ public class WristSubsystemPID extends SubsystemBase {
     m_AbsoluteEncoder.setPositionConversionFactor(360);
     m_AbsoluteEncoder.setVelocityConversionFactor(1);
     m_AbsoluteEncoder.setInverted(true);
-    m_AbsoluteEncoder.setZeroOffset(211.4551878);
+    m_AbsoluteEncoder.setZeroOffset(180.8965015);
   
     m_pidController = m_motor.getPIDController();
     m_pidController.setFeedbackDevice(m_AbsoluteEncoder);
@@ -90,6 +90,12 @@ public class WristSubsystemPID extends SubsystemBase {
     SmartDashboard.putNumber("Wrist Encoder", m_AbsoluteEncoder.getPosition());
     SmartDashboard.putNumber("Wrist target position", targetPosition);
 
+    SmartDashboard.putBoolean("Wrist Titled Cone", currWristPoseIndex == 4);
+    SmartDashboard.putBoolean("Wrist Floor Cube", currWristPoseIndex == 3);
+    SmartDashboard.putBoolean("Wrist Floor Cone", currWristPoseIndex == 2);
+    SmartDashboard.putBoolean("Wrist Top", currWristPoseIndex == 1);
+    SmartDashboard.putBoolean("Wrist Zero", currWristPoseIndex == 0);
+
   }
 
   public void in() {
@@ -108,34 +114,15 @@ public class WristSubsystemPID extends SubsystemBase {
     m_pidController.setReference(position, CANSparkMax.ControlType.kPosition,0,.1, ArbFFUnits.kPercentOut);
   }
 
-  public void top(){
-    this.targetPosition = Constants.WristSubsystemConstants.WristPositions.top;
-    this.setPosition(Constants.WristSubsystemConstants.WristPositions.top);
-  }
-
-  public void middle(){
-    this.targetPosition = Constants.WristSubsystemConstants.WristPositions.middle;
-    this.setPosition(Constants.WristSubsystemConstants.WristPositions.middle);
-  }
-
-  public void floorCube(){
-    this.targetPosition = Constants.WristSubsystemConstants.WristPositions.floorCube;
-    this.setPosition(Constants.WristSubsystemConstants.WristPositions.floorCube);
-  }
-
-  public void floorCone(){
-    this.targetPosition = Constants.WristSubsystemConstants.WristPositions.floorCone;
-    this.setPosition(Constants.WristSubsystemConstants.WristPositions.floorCone);
-  }
-
-  public void tiltedCone(){
-    this.targetPosition = Constants.WristSubsystemConstants.WristPositions.tiltedCone;
-    this.setPosition(Constants.WristSubsystemConstants.WristPositions.tiltedCone);
+  public void autoIntake(){
+    this.targetPosition = Constants.WristSubsystemConstants.WristPositions.autoIntake;
+    this.setPosition(Constants.WristSubsystemConstants.WristPositions.autoIntake);
   }
 
   public void zero(){
     this.targetPosition = 0;
     this.setPosition(0);
+    currWristPoseIndex = 0;
   }
 
   public void stepDown() {

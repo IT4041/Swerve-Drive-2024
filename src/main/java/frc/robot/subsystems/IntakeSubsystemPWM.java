@@ -36,19 +36,11 @@ public class IntakeSubsystemPWM extends SubsystemBase {
   }
   
   public void in() {
-    this.speed = .5;
-  }
-
-  public void in_hold() {
-    this.speed = 0.03;
+    this.speed = 0.6;
   }
 
   public void out() {
-    this.speed = -0.5;
-  }
-
-  public void out_hold() {
-    this.speed = -0.03;
+    this.speed = -0.6;
   }
 
   public void stop() {
@@ -57,18 +49,19 @@ public class IntakeSubsystemPWM extends SubsystemBase {
 
   public void in_persist(){
     if(in_on){
-      this.speed = 0.03;
+      this.speed = 0.05;
     }else{
-      this.speed = 0.5;
+      this.speed = 0.6;
     }
     in_on = !in_on;
 
   }
+  
   public void out_persist(){
     if(out_on){
-      this.speed = -0.03;
+      this.speed = -0.05;
     }else{
-      this.speed = -0.5;
+      this.speed = -0.6;
     }
     out_on = !out_on;
   }

@@ -19,16 +19,12 @@ public class AutoPaths extends SequentialCommandGroup {
         return m_drivetrainSubsystem.traj(PathPlanner.loadPath("CenterPath", new PathConstraints(1.5, 1.5)), true);
     }
 
-    public Command CenterTablePath(){
-        return m_drivetrainSubsystem.traj(PathPlanner.loadPath("CenterTablePath", new PathConstraints(1, 1)), true);
-    }
-
     public Command TablePath(){
         return m_drivetrainSubsystem.traj(PathPlanner.loadPath("TablePath", new PathConstraints(1, 1)), true);
     }
 
     public Command SidePath(){
-        return m_drivetrainSubsystem.traj(PathPlanner.loadPath("SidePath", new PathConstraints(1, 1)), true);
+        return m_drivetrainSubsystem.traj(PathPlanner.loadPath("SidePath", new PathConstraints(1.5, 1.5)), true);
     }
 
     public Command FinishPath(){

@@ -195,7 +195,7 @@ public final class Constants {
                 public static final int top = 68;
                 public static final int middle = 46;
                 public static final int floor = 10;
-                public static final int[] ArmPoses = {0,10,46,68};    
+                public static final int[] ArmPoses = {0,floor,middle,top};    
         }
     }
 
@@ -206,12 +206,12 @@ public final class Constants {
         public static final int EncoderID = 1;
 
         public static final class WristPositions{
-                public static final int top = 40;
-                public static final int middle = 32;
-                public static final int floorCone = 122;
+                public static final int top = 32;
+                public static final int floorCone = 131;
+                public static final int autoIntake = 140;
                 public static final int floorCube = 148; 
                 public static final int tiltedCone = 153;
-                public static final int[] WristPoses = {0,32,40,122,148,153};    
+                public static final int[] WristPoses = {0,top,floorCone,floorCube,tiltedCone};    
         }
     }
 

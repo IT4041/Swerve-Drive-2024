@@ -122,7 +122,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         }
 
         // adjust overall speed adn rotation of the robot
-        this.setDriveRate(.8);
+        this.setDriveRate(.85);
 
         SmartDashboard.putString("odo", m_odometry.getPoseMeters().toString());
         SmartDashboard.putString("odo", m_odometry.getPoseMeters().toString());
@@ -163,7 +163,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         // leftRightDir = leftRightRateLimiter.calculate(leftRightDir);
         // turn = turnRateLimiter.calculate(turn);
 
-        double deadband = .1;
+        double deadband = .075;
 
         if (-deadband < leftRightDir && leftRightDir < deadband) {
             leftRightDir = 0;

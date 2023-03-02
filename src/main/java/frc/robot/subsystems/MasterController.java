@@ -41,7 +41,8 @@ public class MasterController extends SubsystemBase {
   }
 
   /** Creates a new MasterController. */
-  private MasterController(WristSubsystemPID in_WristSubsystemPID, ArmSubsystemPID in_ArmSubsystemPID, AutoPilot in_AutoPilot,IntakeSubsystemPWM in_IntakeSubsystemPWM) {
+  private MasterController(WristSubsystemPID in_WristSubsystemPID, ArmSubsystemPID in_ArmSubsystemPID,
+      AutoPilot in_AutoPilot, IntakeSubsystemPWM in_IntakeSubsystemPWM) {
     m_WristSubsystemPID = in_WristSubsystemPID;
     m_ArmSubsystemPID = in_ArmSubsystemPID;
     m_AutoPilot = in_AutoPilot;
@@ -97,57 +98,59 @@ public class MasterController extends SubsystemBase {
 
   // ------Buttons for setting height -------------
   public void buttonTop() {
-    //top
+    // top
     this.height = 3;
     m_ArmSubsystemPID.top();
   }
 
   public void buttonMiddle() {
-    //middle
+    // middle
     this.height = 2;
     m_ArmSubsystemPID.middle();
   }
 
   public void buttonBottom() {
-    //floor/bottom
+    // floor/bottom
     this.height = 1;
     m_ArmSubsystemPID.floor();
   }
 
-  //--- return to arm wrist to zero position --------------------------------------
+  // --- return to arm wrist to zero position
+  // --------------------------------------
   public void zero() {
-    //floor/bottom
     this.height = 0;
     m_ArmSubsystemPID.zero();
     m_WristSubsystemPID.zero();
   }
 
-  //---intake control----------------------------
-  public void cubeInConeOut(){
+  public void zeroCube() {
+    this.height = 0;
+    m_ArmSubsystemPID.zero();
+    m_WristSubsystemPID.autoIntake();
+  }
+
+  // ---intake control----------------------------
+  public void cubeInConeOut() {
     m_IntakeSubsystemPWM.in();
   }
 
-  public void cubeOutConeIn(){
-    m_IntakeSubsystemPWM.out();  
+  public void cubeOutConeIn() {
+    m_IntakeSubsystemPWM.out();
   }
 
-  public void intakeStop(){
+  public void intakeStop() {
     m_IntakeSubsystemPWM.stop();
   }
-  //----------------------------------------------
+  // ----------------------------------------------
 
-  public void floorCube(){
-    m_WristSubsystemPID.floorCube();
-  }
-
-  public void wristZero(){
+  public void wristZero() {
     m_WristSubsystemPID.zero();
   }
 
-  public void autoCubefloorPickUp(){
-    this.buttonBottom();
-    this.cubeInConeOut();
-    this.floorCube();
+  public void autoCubefloorPickUp() {
+    m_ArmSubsystemPID.floor();
+    m_IntakeSubsystemPWM.in();
+    m_WristSubsystemPID.autoIntake();
   }
 
   private ScoringLocationDetails getLocationDetails(int LocationID, boolean isRed) {

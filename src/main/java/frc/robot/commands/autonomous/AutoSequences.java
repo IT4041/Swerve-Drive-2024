@@ -9,10 +9,8 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.subsystems.ArmSubsystemPID;
 import frc.robot.subsystems.MasterController;
 import frc.robot.subsystems.SwerveDriveSubsystem;
-import frc.robot.subsystems.WristSubsystemPID;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -64,21 +62,39 @@ public class AutoSequences extends SequentialCommandGroup {
   public Command CenterPath(){
     return new SequentialCommandGroup(
       new InstantCommand(m_MasterController::buttonTop,m_MasterController),
-      new WaitCommand(3.5),
+      new WaitCommand(2.7),
       new InstantCommand(m_MasterController::cubeInConeOut,m_MasterController),
       new WaitCommand(.5),
-      new InstantCommand(m_MasterController::zero,m_MasterController),
+      new InstantCommand(m_MasterController::zeroCube,m_MasterController),
       new InstantCommand(m_MasterController::intakeStop,m_MasterController),
-      new WaitCommand(2.5),
+      new WaitCommand(.45),
       new ParallelCommandGroup(autoPaths.CenterPath(),new InstantCommand(m_MasterController::autoCubefloorPickUp,m_MasterController)),
       new InstantCommand(m_MasterController::intakeStop,m_MasterController),
-      new InstantCommand(m_MasterController::buttonTop,m_MasterController),
+      new InstantCommand(m_MasterController::buttonMiddle,m_MasterController),
       new InstantCommand(m_MasterController::wristZero,m_MasterController),
-      new WaitCommand(2.5),
+      new WaitCommand(1.5),
       autoPaths.FinishPath(),
       new InstantCommand(m_MasterController::cubeOutConeIn,m_MasterController)
     );
   }
 
+  public Command SidePath(){
+    return new SequentialCommandGroup(
+      new InstantCommand(m_MasterController::buttonTop,m_MasterController),
+      new WaitCommand(2.7),
+      new InstantCommand(m_MasterController::cubeInConeOut,m_MasterController),
+      new WaitCommand(.5),
+      new InstantCommand(m_MasterController::zeroCube,m_MasterController),
+      new InstantCommand(m_MasterController::intakeStop,m_MasterController),
+      new WaitCommand(.45),
+      new ParallelCommandGroup(autoPaths.SidePath(),new InstantCommand(m_MasterController::autoCubefloorPickUp,m_MasterController)),
+      new InstantCommand(m_MasterController::intakeStop,m_MasterController),
+      new InstantCommand(m_MasterController::buttonMiddle,m_MasterController),
+      new InstantCommand(m_MasterController::wristZero,m_MasterController),
+      new WaitCommand(1.35),
+      autoPaths.FinishPath(),
+      new InstantCommand(m_MasterController::cubeOutConeIn,m_MasterController)
+    );
+  }
 
 }
