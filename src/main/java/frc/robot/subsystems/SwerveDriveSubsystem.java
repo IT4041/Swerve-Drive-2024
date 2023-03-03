@@ -80,6 +80,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
 
     // Global variable for drive rate speed
     private double g_driveRate;
+    private boolean balance = false;
 
     private SwerveDriveSubsystem() {
         pigeon.setYaw(0);
@@ -128,13 +129,16 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         SmartDashboard.putString("odo", m_odometry.getPoseMeters().toString());
 
         m_odometry.update(getGyroHeading(), getModulePositions());
+
+        if(balance){
+            autoBalance();
+        }
     }
 
     public Rotation2d getGyroHeading() {
-        // // Get my gyro angle. We are negating the value because gyros return positive
-        // // values as the robot turns clockwise. This is not standard convention that
-        // is
-        // // used by the WPILib classes.
+        // Get my gyro angle. We are negating the value because gyros return positive
+        // values as the robot turns clockwise. This is not standard convention that
+        // is used by the WPILib classes.
         // var gyroAngle = Rotation2d.fromDegrees(-m_gyro.getAngle());
         return Rotation2d.fromDegrees(pigeon.getYaw());
     }
@@ -158,11 +162,6 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         double leftRightDir = -1 * getDriveRate() * m_driver.getRawAxis(0); // positive number means left
         double fwdBackDir = -1 * getDriveRate() * m_driver.getRawAxis(1); // positive number means fwd
         double turn = -1 * getDriveRate() * m_driver.getRawAxis(4); // positive number means clockwise
-
-        // fwdBackDir = fwdBakRateLimiter.calculate(fwdBackDir);
-        // leftRightDir = leftRightRateLimiter.calculate(leftRightDir);
-        // turn = turnRateLimiter.calculate(turn);
-
         double deadband = .075;
 
         if (-deadband < leftRightDir && leftRightDir < deadband) {
@@ -178,8 +177,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         }
 
         // Example chassis speeds: 1 meter per second forward, 3 meters
-        // per second to the left, and rotation at 1.5 radians per second
-        // counteclockwise.
+        // per second to the left, and rotation at 1.5 radians per second counteclockwise.
         // ChassisSpeeds speeds = new ChassisSpeeds(fwdBackDir, leftRightDir, turn);
         ChassisSpeeds speeds = ChassisSpeeds.fromFieldRelativeSpeeds(
                 fwdBackDir * Constants.SwerveDriveConstants.MAX_VELOCITY_METERS_PER_SECOND,
@@ -243,7 +241,38 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     }
 
     public void resetHeading() {
-        //re-orient robot heading to foward heading away from drive station
+        // re-orient robot heading to foward heading away from drive station
         pigeon.setYaw(-180);
+    }
+
+    public void enableAutoBalance(){
+        this.balance = true;
+    }
+
+    public void disableAutoBalance(){
+        this.balance = false;
+    }
+
+    private void autoBalance(){
+
+        double pitchAngleRadians = pigeon.getPitch() * (Math.PI / 180.0);
+        double xAxisRate = Math.sin(pitchAngleRadians) * -1;
+
+        double rollAngleRadians = pigeon.getYaw() * (Math.PI / 180.0);
+        double yAxisRate = Math.sin(rollAngleRadians) * -1;
+
+        // Example chassis speeds: 1 meter per second forward, 3 meters
+        // per second to the left, and rotation at 1.5 radians per second counteclockwise.
+        // ChassisSpeeds speeds = new ChassisSpeeds(fwdBackDir, leftRightDir, turn);
+        ChassisSpeeds speeds = ChassisSpeeds.fromFieldRelativeSpeeds(
+                xAxisRate * (Constants.SwerveDriveConstants.MAX_VELOCITY_METERS_PER_SECOND * 0.5),
+                0,
+                yAxisRate * (Constants.SwerveDriveConstants.MAX_OMEGA_RADIANS_PER_SECOND * 0.5),
+                Rotation2d.fromDegrees(pigeon.getYaw()));
+
+        // Convert to module states
+        SwerveModuleState[] moduleStates = m_kinematics.toSwerveModuleStates(speeds);
+        setModuleStates(moduleStates);
+
     }
 }

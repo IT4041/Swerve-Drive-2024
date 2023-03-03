@@ -7,7 +7,8 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-import edu.wpi.first.wpilibj.motorcontrol.Spark; 
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard; 
 
 public class IntakeSubsystemPWM extends SubsystemBase {
 
@@ -33,6 +34,8 @@ public class IntakeSubsystemPWM extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     m_motor.set(this.speed);
+
+    SmartDashboard.putBoolean("Intake-On",  Math.abs(this.speed) > 0.1);
   }
   
   public void in() {
