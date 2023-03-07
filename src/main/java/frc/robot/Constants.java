@@ -145,7 +145,8 @@ public final class Constants {
     }
 
     public static final class SwerveModuleConstants {
-        public static final double MAX_VOLTAGE = 8.0;
+        //change this voltage to make the robot move faster
+        public static final double MAX_VOLTAGE = 12.0;
         public static final double NOMINAL_VOLTAGE = 12;
         public static final double TURN_MOTOR_KP = 0.2;
         public static final double TURN_MOTOR_KI = 0.0;
@@ -182,8 +183,12 @@ public final class Constants {
         public static final double WHEEL_BASE = 19.325 * 0.0254;
         public static final double SLEW_RATE_LIMIT = 0.5;
         public static final int PIDGEON_ID = 13;
-        public static final double MAX_VELOCITY_METERS_PER_SECOND = 4;
+        public static final double MAX_VELOCITY_METERS_PER_SECOND = 5;
         public static final double MAX_OMEGA_RADIANS_PER_SECOND = 2.5;
+
+        public static final double balanceSpeedMultipier = -0.0825;
+        public static final int balanceRollThreshold = 2;
+        public static final double balanceMax = .99;
     }
 
     public static final class ArmSubsystemConstants {
@@ -211,7 +216,7 @@ public final class Constants {
                 public static final int autoIntake = 140;
                 public static final int floorCube = 148; 
                 public static final int tiltedCone = 153;
-                public static final int[] WristPoses = {0,top,floorCone,floorCube,tiltedCone};    
+                public static final int[] WristPoses = {0,top,floorCone,autoIntake,tiltedCone};    
         }
     }
 

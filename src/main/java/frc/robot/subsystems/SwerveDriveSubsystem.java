@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -80,7 +81,6 @@ public class SwerveDriveSubsystem extends SubsystemBase {
 
     // Global variable for drive rate speed
     private double g_driveRate;
-    private boolean balance = false;
 
     private SwerveDriveSubsystem() {
         pigeon.setYaw(0);
@@ -123,16 +123,12 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         }
 
         // adjust overall speed adn rotation of the robot
-        this.setDriveRate(.85);
+        this.setDriveRate(1);
 
         SmartDashboard.putString("odo", m_odometry.getPoseMeters().toString());
         SmartDashboard.putString("odo", m_odometry.getPoseMeters().toString());
 
         m_odometry.update(getGyroHeading(), getModulePositions());
-
-        if(balance){
-            autoBalance();
-        }
     }
 
     public Rotation2d getGyroHeading() {
@@ -159,6 +155,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
 
     public void DriveWithJoystick(XboxController m_driver) {
 
+        //drive rate = 0.85
         double leftRightDir = -1 * getDriveRate() * m_driver.getRawAxis(0); // positive number means left
         double fwdBackDir = -1 * getDriveRate() * m_driver.getRawAxis(1); // positive number means fwd
         double turn = -1 * getDriveRate() * m_driver.getRawAxis(4); // positive number means clockwise
@@ -245,34 +242,25 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         pigeon.setYaw(-180);
     }
 
-    public void enableAutoBalance(){
-        this.balance = true;
+    public Command autoBalance() {
+        return new RunCommand(this::SlowUntilLevel,this);
     }
 
-    public void disableAutoBalance(){
-        this.balance = false;
-    }
+    public void SlowUntilLevel(){
 
-    private void autoBalance(){
+        double roll = pigeon.getRoll();
+        if(roll > Constants.SwerveDriveConstants.balanceRollThreshold || roll < -Constants.SwerveDriveConstants.balanceRollThreshold){
+            double driveSpeed = Constants.SwerveDriveConstants.balanceSpeedMultipier * roll;
 
-        double pitchAngleRadians = pigeon.getPitch() * (Math.PI / 180.0);
-        double xAxisRate = Math.sin(pitchAngleRadians) * -1;
-
-        double rollAngleRadians = pigeon.getYaw() * (Math.PI / 180.0);
-        double yAxisRate = Math.sin(rollAngleRadians) * -1;
-
-        // Example chassis speeds: 1 meter per second forward, 3 meters
-        // per second to the left, and rotation at 1.5 radians per second counteclockwise.
-        // ChassisSpeeds speeds = new ChassisSpeeds(fwdBackDir, leftRightDir, turn);
-        ChassisSpeeds speeds = ChassisSpeeds.fromFieldRelativeSpeeds(
-                xAxisRate * (Constants.SwerveDriveConstants.MAX_VELOCITY_METERS_PER_SECOND * 0.5),
+            ChassisSpeeds speeds = ChassisSpeeds.fromFieldRelativeSpeeds(
+                driveSpeed < Constants.SwerveDriveConstants.balanceMax ? driveSpeed : Constants.SwerveDriveConstants.balanceMax,
                 0,
-                yAxisRate * (Constants.SwerveDriveConstants.MAX_OMEGA_RADIANS_PER_SECOND * 0.5),
+                0,
                 Rotation2d.fromDegrees(pigeon.getYaw()));
-
+    
         // Convert to module states
         SwerveModuleState[] moduleStates = m_kinematics.toSwerveModuleStates(speeds);
         setModuleStates(moduleStates);
-
+        }
     }
 }

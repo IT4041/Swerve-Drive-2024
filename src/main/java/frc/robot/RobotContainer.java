@@ -191,6 +191,9 @@ public class RobotContainer {
     m_TrajectoryChooser.addOption("CubeTable", autoSequences.CubeTablePath());
     m_TrajectoryChooser.addOption("Center", autoSequences.CenterPath());
     m_TrajectoryChooser.addOption("Side", autoSequences.SidePath());
+    
+    // drive over then back really slow until we balance
+    m_TrajectoryChooser.addOption("Balance", autoSequences.AutoBalance());
 
     SmartDashboard.putData(m_TrajectoryChooser);
   }

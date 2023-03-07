@@ -30,4 +30,8 @@ public class AutoPaths extends SequentialCommandGroup {
     public Command FinishPath(){
         return m_drivetrainSubsystem.traj(PathPlanner.loadPath("FinishPath", new PathConstraints(1.5, 1.5)), false);
     }
+
+    public Command AutoBalancePath(){
+        return m_drivetrainSubsystem.traj(PathPlanner.loadPath("AutoBalancePath", new PathConstraints(.85, 1.0)), true);
+    }
 }

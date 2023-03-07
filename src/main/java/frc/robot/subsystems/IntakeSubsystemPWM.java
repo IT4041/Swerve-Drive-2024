@@ -62,6 +62,7 @@ public class IntakeSubsystemPWM extends SubsystemBase {
   
   public void out_persist(){
     if(out_on){
+      
       this.speed = -0.05;
     }else{
       this.speed = -0.6;

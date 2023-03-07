@@ -82,8 +82,12 @@ public class ArmSubsystemPID extends SubsystemBase {
     SmartDashboard.putBoolean("Arm Middle", currArmPoseIndex == 2);
     SmartDashboard.putBoolean("Arm Low", currArmPoseIndex == 1);
     SmartDashboard.putBoolean("Arm Zero", currArmPoseIndex == 0);
-  }
 
+    if(currArmPoseIndex == 0 && (m_AbsoluteEncoder.getPosition() > 355 || m_AbsoluteEncoder.getPosition() < 5 )){
+      m_pidController.setReference(-.07, CANSparkMax.ControlType.kDutyCycle);
+    }
+  }
+  
   public void up() {
     m_pidController.setReference(1, CANSparkMax.ControlType.kDutyCycle);
   }
@@ -103,16 +107,19 @@ public class ArmSubsystemPID extends SubsystemBase {
   public void top() {
     this.targetPosition = Constants.ArmSubsystemConstants.ArmPositions.top;
     this.setPosition(Constants.ArmSubsystemConstants.ArmPositions.top);
+    currArmPoseIndex = 3;
   }
 
   public void middle() {
     this.targetPosition = Constants.ArmSubsystemConstants.ArmPositions.middle;
     this.setPosition(Constants.ArmSubsystemConstants.ArmPositions.middle);
+    currArmPoseIndex = 2;
   }
 
   public void floor() {
     this.targetPosition = Constants.ArmSubsystemConstants.ArmPositions.floor;
     this.setPosition(Constants.ArmSubsystemConstants.ArmPositions.floor);
+    currArmPoseIndex = 1;
   }
 
   public void zero() {
@@ -140,4 +147,5 @@ public class ArmSubsystemPID extends SubsystemBase {
     this.targetPosition = Constants.ArmSubsystemConstants.ArmPositions.ArmPoses[currArmPoseIndex];
     this.setPosition(Constants.ArmSubsystemConstants.ArmPositions.ArmPoses[currArmPoseIndex]);
   }
+
 }
