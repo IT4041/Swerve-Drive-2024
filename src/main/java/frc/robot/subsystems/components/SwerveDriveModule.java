@@ -49,6 +49,7 @@ public class SwerveDriveModule {
 
         driveMotor.setInverted(Constants.SwerveModuleConstants.DRIVE_MOTOR_INVERTED);
         driveMotor.setNeutralMode(NeutralMode.Brake);
+        
     }
   
     public void periodic() {
@@ -105,5 +106,9 @@ public class SwerveDriveModule {
     public void resetTurnEncoders() {
 
         turnMotor.set(ControlMode.Position, 0);
+    }
+
+    public void setClosedLoopRampRate(double rate){
+        driveMotor.configClosedloopRamp(rate);
     }
 }

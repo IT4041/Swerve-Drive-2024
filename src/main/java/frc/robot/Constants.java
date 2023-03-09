@@ -186,7 +186,7 @@ public final class Constants {
         public static final double MAX_VELOCITY_METERS_PER_SECOND = 5;
         public static final double MAX_OMEGA_RADIANS_PER_SECOND = 2.5;
 
-        public static final double balanceSpeedMultipier = -0.0825;
+        public static final double balanceSpeedMultipier = -0.075;
         public static final int balanceRollThreshold = 2;
         public static final double balanceMax = .99;
     }

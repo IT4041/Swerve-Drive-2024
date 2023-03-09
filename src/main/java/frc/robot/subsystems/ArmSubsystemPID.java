@@ -84,7 +84,7 @@ public class ArmSubsystemPID extends SubsystemBase {
     SmartDashboard.putBoolean("Arm Zero", currArmPoseIndex == 0);
 
     if(currArmPoseIndex == 0 && (m_AbsoluteEncoder.getPosition() > 355 || m_AbsoluteEncoder.getPosition() < 5 )){
-      m_pidController.setReference(-.07, CANSparkMax.ControlType.kDutyCycle);
+      m_pidController.setReference(-.05, CANSparkMax.ControlType.kDutyCycle);
     }
   }
   

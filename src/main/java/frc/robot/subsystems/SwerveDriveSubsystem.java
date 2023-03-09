@@ -246,21 +246,45 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         return new RunCommand(this::SlowUntilLevel,this);
     }
 
-    public void SlowUntilLevel(){
+    private void SlowUntilLevel(){
 
         double roll = pigeon.getRoll();
         if(roll > Constants.SwerveDriveConstants.balanceRollThreshold || roll < -Constants.SwerveDriveConstants.balanceRollThreshold){
-            double driveSpeed = Constants.SwerveDriveConstants.balanceSpeedMultipier * roll;
 
+            double driveSpeed = Constants.SwerveDriveConstants.balanceSpeedMultipier * roll;
+            driveSpeed = driveSpeed < Constants.SwerveDriveConstants.balanceMax ? driveSpeed : Constants.SwerveDriveConstants.balanceMax;
+            
             ChassisSpeeds speeds = ChassisSpeeds.fromFieldRelativeSpeeds(
-                driveSpeed < Constants.SwerveDriveConstants.balanceMax ? driveSpeed : Constants.SwerveDriveConstants.balanceMax,
+                driveSpeed,
                 0,
                 0,
                 Rotation2d.fromDegrees(pigeon.getYaw()));
     
-        // Convert to module states
-        SwerveModuleState[] moduleStates = m_kinematics.toSwerveModuleStates(speeds);
-        setModuleStates(moduleStates);
+            // Convert to module states
+            SwerveModuleState[] moduleStates = m_kinematics.toSwerveModuleStates(speeds);
+            setModuleStates(moduleStates);
         }
+    }
+
+    public Command setAutoRampRate() {
+        return new InstantCommand(this::setAutoRate,this);
+    }
+
+    public Command resetAutoRampRate() {
+        return new InstantCommand(this::resetAutoRate,this);
+    }
+
+    private void setAutoRate(){ 
+        frontLeftModule.setClosedLoopRampRate(2);
+        frontRightModule.setClosedLoopRampRate(2);
+        backLeftModule.setClosedLoopRampRate(2);
+        backRightModule.setClosedLoopRampRate(2);
+    }
+
+    private void resetAutoRate(){ 
+        frontLeftModule.setClosedLoopRampRate(0);
+        frontRightModule.setClosedLoopRampRate(0);
+        backLeftModule.setClosedLoopRampRate(0);
+        backRightModule.setClosedLoopRampRate(0);
     }
 }
