@@ -90,7 +90,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
                 getModulePositions(),
                 new Pose2d(0, 0, new Rotation2d()));
 
-        SmartDashboard.putBoolean("Done", false);
+        // SmartDashboard.putBoolean("Done", false);
     }
 
     public static SwerveDriveSubsystem getInstance() {
@@ -108,9 +108,9 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         backLeftModule.periodic();
         backRightModule.periodic();
 
-        SmartDashboard.putNumber("Pidgeon yaw", pigeon.getYaw());
-        SmartDashboard.putNumber("Pidgeon pitch", pigeon.getPitch());
-        SmartDashboard.putNumber("Pidgeon roll", pigeon.getRoll());
+        // SmartDashboard.putNumber("Pidgeon yaw", pigeon.getYaw());
+        // SmartDashboard.putNumber("Pidgeon pitch", pigeon.getPitch());
+        // SmartDashboard.putNumber("Pidgeon roll", pigeon.getRoll());
 
         // Update the pose
         // button 8 on xbox is three lines button
@@ -125,8 +125,8 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         // adjust overall speed adn rotation of the robot
         this.setDriveRate(1);
 
-        SmartDashboard.putString("odo", m_odometry.getPoseMeters().toString());
-        SmartDashboard.putString("odo", m_odometry.getPoseMeters().toString());
+        // SmartDashboard.putString("odo", m_odometry.getPoseMeters().toString());
+        // SmartDashboard.putString("odo", m_odometry.getPoseMeters().toString());
 
         m_odometry.update(getGyroHeading(), getModulePositions());
     }
@@ -248,10 +248,10 @@ public class SwerveDriveSubsystem extends SubsystemBase {
 
     private void SlowUntilLevel(){
 
-        double roll = pigeon.getRoll();
-        if(roll > Constants.SwerveDriveConstants.balanceRollThreshold || roll < -Constants.SwerveDriveConstants.balanceRollThreshold){
+        double pitch = pigeon.getPitch();
+        if(pitch > Constants.SwerveDriveConstants.balanceRollThreshold || pitch < -Constants.SwerveDriveConstants.balanceRollThreshold){
 
-            double driveSpeed = Constants.SwerveDriveConstants.balanceSpeedMultipier * roll;
+            double driveSpeed = Constants.SwerveDriveConstants.balanceSpeedMultipier * pitch;
             driveSpeed = driveSpeed < Constants.SwerveDriveConstants.balanceMax ? driveSpeed : Constants.SwerveDriveConstants.balanceMax;
             
             ChassisSpeeds speeds = ChassisSpeeds.fromFieldRelativeSpeeds(

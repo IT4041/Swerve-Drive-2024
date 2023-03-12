@@ -201,6 +201,6 @@ public class RobotContainer {
   public void teleopInit() {
     // re-orient robot heading to foward heading away from drive station
     m_drivetrainSubsystem.resetHeading();
-    m_drivetrainSubsystem.resetAutoRampRate();
+    //m_drivetrainSubsystem.resetAutoRampRate();
   }
 }

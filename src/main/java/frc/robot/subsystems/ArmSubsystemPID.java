@@ -45,7 +45,9 @@ public class ArmSubsystemPID extends SubsystemBase {
     m_AbsoluteEncoder.setPositionConversionFactor(360);
     m_AbsoluteEncoder.setVelocityConversionFactor(1);
     m_AbsoluteEncoder.setInverted(false);
-    m_AbsoluteEncoder.setZeroOffset(249.4004416);
+
+    //----OFFSET-------------
+    m_AbsoluteEncoder.setZeroOffset(186.5);
 
     m_pidController = m_motor.getPIDController();
     m_pidController.setFeedbackDevice(m_AbsoluteEncoder);
@@ -76,16 +78,16 @@ public class ArmSubsystemPID extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("Arm Encoder", m_AbsoluteEncoder.getPosition());
-    SmartDashboard.putNumber("Arm target position", targetPosition);
+    // SmartDashboard.putNumber("Arm Encoder", m_AbsoluteEncoder.getPosition());
+    // SmartDashboard.putNumber("Arm target position", targetPosition);
     SmartDashboard.putBoolean("Arm Top", currArmPoseIndex == 3);
     SmartDashboard.putBoolean("Arm Middle", currArmPoseIndex == 2);
     SmartDashboard.putBoolean("Arm Low", currArmPoseIndex == 1);
     SmartDashboard.putBoolean("Arm Zero", currArmPoseIndex == 0);
 
-    if(currArmPoseIndex == 0 && (m_AbsoluteEncoder.getPosition() > 355 || m_AbsoluteEncoder.getPosition() < 5 )){
-      m_pidController.setReference(-.05, CANSparkMax.ControlType.kDutyCycle);
-    }
+    // if(currArmPoseIndex == 0 && (m_AbsoluteEncoder.getPosition() > 355 || m_AbsoluteEncoder.getPosition() < 5 )){
+    //   m_pidController.setReference(-.05, CANSparkMax.ControlType.kDutyCycle);
+    // }
   }
   
   public void up() {

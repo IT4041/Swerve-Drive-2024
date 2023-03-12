@@ -39,7 +39,7 @@ public class WristSubsystemPID extends SubsystemBase {
   private WristSubsystemPID() {
 
     m_motor = new CANSparkMax(Constants.WristSubsystemConstants.SparkMaxDeviceID, MotorType.kBrushed);
-    m_follower = new CANSparkMax(Constants.WristSubsystemConstants.SparkMaxFollowerDeviceID, MotorType.kBrushless);
+    m_follower = new CANSparkMax(Constants.WristSubsystemConstants.SparkMaxFollowerDeviceID, MotorType.kBrushed);
     m_motor.restoreFactoryDefaults();
     m_follower.restoreFactoryDefaults();
 
@@ -47,7 +47,9 @@ public class WristSubsystemPID extends SubsystemBase {
     m_AbsoluteEncoder.setPositionConversionFactor(360);
     m_AbsoluteEncoder.setVelocityConversionFactor(1);
     m_AbsoluteEncoder.setInverted(true);
-    m_AbsoluteEncoder.setZeroOffset(180.8965015);
+
+     //----OFFSET-------------
+    m_AbsoluteEncoder.setZeroOffset(42.8664207);
   
     m_pidController = m_motor.getPIDController();
     m_pidController.setFeedbackDevice(m_AbsoluteEncoder);
@@ -55,9 +57,9 @@ public class WristSubsystemPID extends SubsystemBase {
     m_pidController.setPositionPIDWrappingMaxInput(360);
     m_pidController.setPositionPIDWrappingMinInput(0);
 
-    m_pidController.setP(0.125);
+    m_pidController.setP(0.15);
     m_pidController.setI(0);
-    m_pidController.setD(-0.2);
+    m_pidController.setD(0.5);
     m_pidController.setFF(0);
     m_pidController.setOutputRange(-1, 1);
 
@@ -87,8 +89,8 @@ public class WristSubsystemPID extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Wrist Encoder", m_AbsoluteEncoder.getPosition());
-    SmartDashboard.putNumber("Wrist target position", targetPosition);
+    // SmartDashboard.putNumber("Wrist Encoder", m_AbsoluteEncoder.getPosition());
+    // SmartDashboard.putNumber("Wrist target position", targetPosition);
 
     SmartDashboard.putBoolean("Wrist Titled Cone", currWristPoseIndex == 4);
     SmartDashboard.putBoolean("Wrist Floor Cube", currWristPoseIndex == 3);
@@ -99,11 +101,11 @@ public class WristSubsystemPID extends SubsystemBase {
   }
 
   public void in() {
-    m_pidController.setReference(1, CANSparkMax.ControlType.kDutyCycle);
+    m_pidController.setReference(.45, CANSparkMax.ControlType.kDutyCycle);
   }
 
   public void out() {
-    m_pidController.setReference(-1, CANSparkMax.ControlType.kDutyCycle);
+    m_pidController.setReference(-.45, CANSparkMax.ControlType.kDutyCycle);
   }
 
   public void stop() {
@@ -115,8 +117,8 @@ public class WristSubsystemPID extends SubsystemBase {
   }
 
   public void autoIntake(){
-    this.targetPosition = Constants.WristSubsystemConstants.WristPositions.autoIntake;
-    this.setPosition(Constants.WristSubsystemConstants.WristPositions.autoIntake);
+    this.targetPosition = Constants.WristSubsystemConstants.WristPositions.floorCube;
+    this.setPosition(Constants.WristSubsystemConstants.WristPositions.floorCube);
   }
 
   public void zero(){

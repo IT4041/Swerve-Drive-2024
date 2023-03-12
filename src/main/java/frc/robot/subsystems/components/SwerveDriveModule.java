@@ -10,7 +10,7 @@ import com.ctre.phoenix.sensors.SensorInitializationStrategy;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+// import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.RobotMath;
 
@@ -19,10 +19,10 @@ public class SwerveDriveModule {
     private TalonFX turnMotor;
     private double m_offset ; 
     private CANCoder enc;
-    private String m_name;
+    // private String m_name;
 
     public SwerveDriveModule(String name, int driveMotorCanId, int turnMotorCanId, int encoderCanId, double encOffset) {
-        m_name = name;
+        // m_name = name;
         m_offset = encOffset;
 
         driveMotor = new TalonFX(driveMotorCanId, Constants.CANBUS_NAME); 
@@ -39,7 +39,7 @@ public class SwerveDriveModule {
         turnMotor.setSelectedSensorPosition(currentHeadingTicks);
         turnMotor.set(ControlMode.Position, currentHeadingTicks);
 
-        SmartDashboard.putNumber(m_name + " initial heading", getHeading());
+        // SmartDashboard.putNumber(m_name + " initial heading", getHeading());
 
         turnMotor.setInverted(Constants.SwerveModuleConstants.TURN_MOTOR_INVERTED);
         turnMotor.config_kP(0, Constants.SwerveModuleConstants.TURN_MOTOR_KP);
@@ -53,11 +53,11 @@ public class SwerveDriveModule {
     }
   
     public void periodic() {
-        SmartDashboard.putNumber(m_name + " Cancoder",  enc.getPosition());
-        SmartDashboard.putNumber(m_name + " Cancoder with offset",  getHeading());
-        SmartDashboard.putNumber(m_name + " error", turnMotor.getClosedLoopError());
-        SmartDashboard.putNumber(m_name + " error deg", RobotMath.convertTicksToDegrees(turnMotor.getClosedLoopError()));
-        SmartDashboard.putNumber(m_name + " turnMotor", RobotMath.convertTicksToDegrees(turnMotor.getSelectedSensorPosition()));
+        // SmartDashboard.putNumber(m_name + " Cancoder",  enc.getPosition());
+        // SmartDashboard.putNumber(m_name + " Cancoder with offset",  getHeading());
+        // SmartDashboard.putNumber(m_name + " error", turnMotor.getClosedLoopError());
+        // SmartDashboard.putNumber(m_name + " error deg", RobotMath.convertTicksToDegrees(turnMotor.getClosedLoopError()));
+        // SmartDashboard.putNumber(m_name + " turnMotor", RobotMath.convertTicksToDegrees(turnMotor.getSelectedSensorPosition()));
     }
 
     public double getHeading() {
@@ -70,10 +70,10 @@ public class SwerveDriveModule {
 
         desiredState = SwerveModuleState.optimize(desiredState, Rotation2d.fromDegrees(getHeading()));
 
-        SmartDashboard.putNumber(m_name + " Heading", desiredState.angle.getDegrees());
+        // SmartDashboard.putNumber(m_name + " Heading", desiredState.angle.getDegrees());
 
         double desiredPercentOutput = (desiredState.speedMetersPerSecond / Constants.SwerveDriveConstants.MAX_VELOCITY_METERS_PER_SECOND) * (Constants.SwerveModuleConstants.MAX_VOLTAGE / Constants.SwerveModuleConstants.NOMINAL_VOLTAGE);
-        SmartDashboard.putNumber(m_name + " desiredVoltage", desiredPercentOutput);
+        // SmartDashboard.putNumber(m_name + " desiredVoltage", desiredPercentOutput);
 
         driveMotor.set(ControlMode.PercentOutput, desiredPercentOutput);
         turnMotor.set(ControlMode.Position, RobotMath.convertDegreesToTicks(desiredState.angle.getDegrees()));
@@ -82,15 +82,12 @@ public class SwerveDriveModule {
     public SwerveModuleState getState() {
 
         double speedTicksPer100miliSeconds = driveMotor.getSelectedSensorVelocity();
-
         double speedMetersPerSecond = RobotMath.calculateSpeedMetersPer100ms(speedTicksPer100miliSeconds);
          
-
-        SmartDashboard.putNumber(m_name + "St", speedTicksPer100miliSeconds);
-        SmartDashboard.putNumber(m_name + "Sm", speedMetersPerSecond);
+        // SmartDashboard.putNumber(m_name + "St", speedTicksPer100miliSeconds);
+        // SmartDashboard.putNumber(m_name + "Sm", speedMetersPerSecond);
 
         return new SwerveModuleState(speedMetersPerSecond, Rotation2d.fromDegrees( getHeading()));
-
     }
     
     public SwerveModulePosition getPosition () {

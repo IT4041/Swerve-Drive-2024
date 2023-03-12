@@ -186,9 +186,9 @@ public final class Constants {
         public static final double MAX_VELOCITY_METERS_PER_SECOND = 5;
         public static final double MAX_OMEGA_RADIANS_PER_SECOND = 2.5;
 
-        public static final double balanceSpeedMultipier = -0.075;
-        public static final int balanceRollThreshold = 2;
-        public static final double balanceMax = .99;
+        public static final double balanceSpeedMultipier = 0.0575;
+        public static final int balanceRollThreshold = 7;
+        public static final double balanceMax = .75;
     }
 
     public static final class ArmSubsystemConstants {
@@ -197,9 +197,9 @@ public final class Constants {
         public static final int EncoderID = 0;
 
         public static final class ArmPositions{
-                public static final int top = 68;
-                public static final int middle = 46;
-                public static final int floor = 10;
+                public static final int top = 74;
+                public static final int middle = 52;
+                public static final int floor = 16;
                 public static final int[] ArmPoses = {0,floor,middle,top};    
         }
     }
@@ -211,12 +211,11 @@ public final class Constants {
         public static final int EncoderID = 1;
 
         public static final class WristPositions{
-                public static final int top = 32;
-                public static final int floorCone = 131;
-                public static final int autoIntake = 140;
-                public static final int floorCube = 148; 
-                public static final int tiltedCone = 153;
-                public static final int[] WristPoses = {0,top,floorCone,autoIntake,tiltedCone};    
+                public static final int top = 24;
+                public static final int floorCone = 76;
+                public static final int floorCube = 78; 
+                public static final int tiltedCone = 89;
+                public static final int[] WristPoses = {0,top,floorCone,floorCube,tiltedCone};    
         }
     }
 

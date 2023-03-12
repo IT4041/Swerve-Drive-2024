@@ -100,14 +100,14 @@ public class AutoSequences extends SequentialCommandGroup {
   public Command AutoBalance(){
     return new SequentialCommandGroup(
       new InstantCommand(m_MasterController::buttonTop,m_MasterController),
-      new WaitCommand(3.2),
+      new WaitCommand(3),
       new InstantCommand(m_MasterController::cubeInConeOut,m_MasterController),
-      new WaitCommand(.5),
+      new WaitCommand(1),
       new InstantCommand(m_MasterController::zero,m_MasterController),
       new InstantCommand(m_MasterController::intakeStop,m_MasterController),
       new WaitCommand(.45),
       autoPaths.AutoBalancePath(),
-      m_drivetrainSubsystem.setAutoRampRate(),
+      //m_drivetrainSubsystem.setAutoRampRate(),
       m_drivetrainSubsystem.autoBalance()
       );
   }
