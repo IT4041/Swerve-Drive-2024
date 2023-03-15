@@ -47,7 +47,7 @@ public class ArmSubsystemPID extends SubsystemBase {
     m_AbsoluteEncoder.setInverted(false);
 
     //----OFFSET-------------
-    m_AbsoluteEncoder.setZeroOffset(186.5);
+    m_AbsoluteEncoder.setZeroOffset(189.6456742);
 
     m_pidController = m_motor.getPIDController();
     m_pidController.setFeedbackDevice(m_AbsoluteEncoder);

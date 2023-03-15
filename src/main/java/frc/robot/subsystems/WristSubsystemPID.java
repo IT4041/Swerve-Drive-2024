@@ -49,7 +49,7 @@ public class WristSubsystemPID extends SubsystemBase {
     m_AbsoluteEncoder.setInverted(true);
 
      //----OFFSET-------------
-    m_AbsoluteEncoder.setZeroOffset(42.8664207);
+    m_AbsoluteEncoder.setZeroOffset(317.1771812);
   
     m_pidController = m_motor.getPIDController();
     m_pidController.setFeedbackDevice(m_AbsoluteEncoder);
