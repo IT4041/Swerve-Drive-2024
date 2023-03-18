@@ -16,7 +16,7 @@ public class AutoPaths extends SequentialCommandGroup {
     }
     
     public Command CenterPath(){
-        return m_drivetrainSubsystem.traj(PathPlanner.loadPath("CenterPath", new PathConstraints(1.5, 1.5)), true);
+        return m_drivetrainSubsystem.traj(PathPlanner.loadPath("CenterPath", new PathConstraints(1.65, 1.25)), true);
     }
 
     public Command TablePath(){

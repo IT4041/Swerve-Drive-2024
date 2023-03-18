@@ -108,9 +108,9 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         backLeftModule.periodic();
         backRightModule.periodic();
 
-        // SmartDashboard.putNumber("Pidgeon yaw", pigeon.getYaw());
-        // SmartDashboard.putNumber("Pidgeon pitch", pigeon.getPitch());
-        // SmartDashboard.putNumber("Pidgeon roll", pigeon.getRoll());
+        SmartDashboard.putNumber("Pidgeon yaw", pigeon.getYaw());
+        SmartDashboard.putNumber("Pidgeon pitch", pigeon.getPitch());
+        SmartDashboard.putNumber("Pidgeon roll", pigeon.getRoll());
 
         // Update the pose
         // button 8 on xbox is three lines button
@@ -249,21 +249,24 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     private void SlowUntilLevel(){
 
         double pitch = pigeon.getPitch();
-        if(pitch > Constants.SwerveDriveConstants.balanceRollThreshold || pitch < -Constants.SwerveDriveConstants.balanceRollThreshold){
+        double driveSpeed = 0;
 
-            double driveSpeed = Constants.SwerveDriveConstants.balanceSpeedMultipier * pitch;
-            driveSpeed = driveSpeed < Constants.SwerveDriveConstants.balanceMax ? driveSpeed : Constants.SwerveDriveConstants.balanceMax;
-            
-            ChassisSpeeds speeds = ChassisSpeeds.fromFieldRelativeSpeeds(
-                driveSpeed,
-                0,
-                0,
-                Rotation2d.fromDegrees(pigeon.getYaw()));
-    
-            // Convert to module states
-            SwerveModuleState[] moduleStates = m_kinematics.toSwerveModuleStates(speeds);
-            setModuleStates(moduleStates);
+        if(Math.abs(pitch) > Constants.SwerveDriveConstants.balanceRollThreshold){
+
+            driveSpeed = Math.signum(pitch) * Constants.SwerveDriveConstants.balanceSpeed;
         }
+
+        SmartDashboard.putNumber("driveSpeed", driveSpeed);
+
+        ChassisSpeeds speeds = ChassisSpeeds.fromFieldRelativeSpeeds(
+            driveSpeed,
+            0,
+            0,
+            Rotation2d.fromDegrees(pigeon.getYaw()));
+            
+        // Convert to module states
+        SwerveModuleState[] moduleStates = m_kinematics.toSwerveModuleStates(speeds);
+        setModuleStates(moduleStates);
     }
 
     public Command setAutoRampRate() {

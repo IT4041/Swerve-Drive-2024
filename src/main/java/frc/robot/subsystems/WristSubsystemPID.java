@@ -13,6 +13,9 @@ import com.revrobotics.SparkMaxPIDController.ArbFFUnits;
 import com.revrobotics.SparkMaxAbsoluteEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.IdleMode;
+
+import java.util.concurrent.locks.Condition;
+
 // import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -47,9 +50,7 @@ public class WristSubsystemPID extends SubsystemBase {
     m_AbsoluteEncoder.setPositionConversionFactor(360);
     m_AbsoluteEncoder.setVelocityConversionFactor(1);
     m_AbsoluteEncoder.setInverted(true);
-
-     //----OFFSET-------------
-    m_AbsoluteEncoder.setZeroOffset(317.1771812);
+    m_AbsoluteEncoder.setZeroOffset(Constants.WristSubsystemConstants.offset);
   
     m_pidController = m_motor.getPIDController();
     m_pidController.setFeedbackDevice(m_AbsoluteEncoder);
@@ -57,11 +58,11 @@ public class WristSubsystemPID extends SubsystemBase {
     m_pidController.setPositionPIDWrappingMaxInput(360);
     m_pidController.setPositionPIDWrappingMinInput(0);
 
-    m_pidController.setP(0.15);
-    m_pidController.setI(0);
-    m_pidController.setD(0.5);
-    m_pidController.setFF(0);
-    m_pidController.setOutputRange(-1, 1);
+    m_pidController.setP(Constants.WristSubsystemConstants.kP);
+    m_pidController.setI(Constants.WristSubsystemConstants.kI);
+    m_pidController.setD(Constants.WristSubsystemConstants.kD);
+    m_pidController.setFF(Constants.WristSubsystemConstants.kFF);
+    m_pidController.setOutputRange(Constants.WristSubsystemConstants.minOutput, Constants.WristSubsystemConstants.maxOutput);
 
     m_motor.setIdleMode(IdleMode.kBrake);
     m_motor.setSmartCurrentLimit(80);
@@ -77,7 +78,6 @@ public class WristSubsystemPID extends SubsystemBase {
     // m_motor.enableSoftLimit(SoftLimitDirection.kForward, true);
     // m_motor.enableSoftLimit(SoftLimitDirection.kReverse, true);
 
-
     // Save the SPARK MAX configurations. If a SPARK MAX browns out during
     // operation, it will maintain the above configurations.
     m_motor.burnFlash();
@@ -89,12 +89,13 @@ public class WristSubsystemPID extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    // SmartDashboard.putNumber("Wrist Encoder", m_AbsoluteEncoder.getPosition());
-    // SmartDashboard.putNumber("Wrist target position", targetPosition);
+    SmartDashboard.putNumber("Wrist Encoder", m_AbsoluteEncoder.getPosition());
+    SmartDashboard.putNumber("Wrist target position", targetPosition);
 
-    SmartDashboard.putBoolean("Wrist Titled Cone", currWristPoseIndex == 4);
-    SmartDashboard.putBoolean("Wrist Floor Cube", currWristPoseIndex == 3);
-    SmartDashboard.putBoolean("Wrist Floor Cone", currWristPoseIndex == 2);
+    SmartDashboard.putBoolean("Wrist Titled Cone", currWristPoseIndex == 5);
+    SmartDashboard.putBoolean("Wrist Floor Cube", currWristPoseIndex == 4);
+    SmartDashboard.putBoolean("Wrist Floor Cone", currWristPoseIndex == 3);
+    SmartDashboard.putBoolean("Wrist Shelf", currWristPoseIndex == 2);
     SmartDashboard.putBoolean("Wrist Top", currWristPoseIndex == 1);
     SmartDashboard.putBoolean("Wrist Zero", currWristPoseIndex == 0);
 
@@ -113,7 +114,7 @@ public class WristSubsystemPID extends SubsystemBase {
   }
 
   public void setPosition(double position){
-    m_pidController.setReference(position, CANSparkMax.ControlType.kPosition,0,.1, ArbFFUnits.kPercentOut);
+    m_pidController.setReference(position, CANSparkMax.ControlType.kPosition,0,Constants.WristSubsystemConstants.arbFeedFoward, ArbFFUnits.kPercentOut);
   }
 
   public void autoIntake(){
@@ -125,6 +126,12 @@ public class WristSubsystemPID extends SubsystemBase {
     this.targetPosition = 0;
     this.setPosition(0);
     currWristPoseIndex = 0;
+  }
+
+  public void top(){
+    this.targetPosition = 1;
+    this.setPosition(Constants.WristSubsystemConstants.WristPositions.top);
+    currWristPoseIndex = 1;
   }
 
   public void stepDown() {
@@ -139,7 +146,7 @@ public class WristSubsystemPID extends SubsystemBase {
 
   public void stepUp() {
 
-    if (currWristPoseIndex < 4) {
+    if (currWristPoseIndex < 5) {
       currWristPoseIndex++;
     }
 

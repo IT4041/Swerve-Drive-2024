@@ -186,14 +186,20 @@ public final class Constants {
         public static final double MAX_VELOCITY_METERS_PER_SECOND = 5;
         public static final double MAX_OMEGA_RADIANS_PER_SECOND = 2.5;
 
-        public static final double balanceSpeedMultipier = 0.0575;
-        public static final int balanceRollThreshold = 7;
-        public static final double balanceMax = .75;
+        public static final double balanceSpeedMultipier = 0.0625;
+        public static final int balanceRollThreshold = 3;
+        public static final double balanceSpeed = .65;
     }
 
     public static final class ArmSubsystemConstants {
 
+        //----OFFSET-------------------------------
+        public static final double zeroOffset = 30;
+        public static final double offset = 190.3774238;
+        //-----------------------------------------
+
         public static final int SparkMaxDeviceID = 32;
+        public static final int SparkMaxFollowerDeviceID = 2;
         public static final int EncoderID = 0;
 
         public static final class ArmPositions{
@@ -202,21 +208,44 @@ public final class Constants {
                 public static final int floor = 16;
                 public static final int[] ArmPoses = {0,floor,middle,top};    
         }
+
+        public static final double kP = 0.055;
+        public static final double kI = 0.0;
+        public static final double kD = -0.05;
+        public static final double kFF = 0.0;
+        public static final double maxOutput = 1;
+        public static final double minOutput = -1;
+
+        
     }
 
     public static final class WristSubsystemConstants {
+
+        //----OFFSET-------------------------------
+        public static final double zeroOffset = 30;
+        public static final double offset = 321.0526514;
+        //-----------------------------------------
 
         public static final int SparkMaxDeviceID = 4;
         public static final int SparkMaxFollowerDeviceID = 5;
         public static final int EncoderID = 1;
 
         public static final class WristPositions{
-                public static final int top = 24;
-                public static final int floorCone = 76;
-                public static final int floorCube = 78; 
-                public static final int tiltedCone = 89;
-                public static final int[] WristPoses = {0,top,floorCone,floorCube,tiltedCone};    
+                public static final int top = 12;
+                public static final int shelf = 29;
+                public static final int floorCone = 87;
+                public static final int floorCube = 90; 
+                public static final int tiltedCone = 97;
+                public static final int[] WristPoses = {0,top,shelf,floorCone,floorCube,tiltedCone};    
         }
+
+        public static final double kP = 0.09;
+        public static final double kI = 0.0;
+        public static final double kD = -1;
+        public static final double kFF = 0.0;
+        public static final double maxOutput = 1;
+        public static final double minOutput = -1;
+        public static final double arbFeedFoward = 0;
     }
 
     public static final class IntakeSubsystemConstants {

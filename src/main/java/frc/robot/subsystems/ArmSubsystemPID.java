@@ -12,6 +12,7 @@ import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
 import com.revrobotics.SparkMaxPIDController.ArbFFUnits;
 import com.revrobotics.SparkMaxAbsoluteEncoder;
 import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.CANSparkMax.ExternalFollower;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMax;
@@ -22,6 +23,7 @@ public class ArmSubsystemPID extends SubsystemBase {
   private static ArmSubsystemPID m_inst = null;
 
   private CANSparkMax m_motor;
+  private CANSparkMax m_follower;
 
   private SparkMaxPIDController m_pidController;
   private SparkMaxAbsoluteEncoder m_AbsoluteEncoder;
@@ -39,15 +41,16 @@ public class ArmSubsystemPID extends SubsystemBase {
   private ArmSubsystemPID() {
 
     m_motor = new CANSparkMax(Constants.ArmSubsystemConstants.SparkMaxDeviceID, MotorType.kBrushless);
+    m_follower = new CANSparkMax(Constants.ArmSubsystemConstants.SparkMaxFollowerDeviceID, MotorType.kBrushless);
+
     m_motor.restoreFactoryDefaults();
+    m_follower.restoreFactoryDefaults();
 
     m_AbsoluteEncoder = m_motor.getAbsoluteEncoder(Type.kDutyCycle);
     m_AbsoluteEncoder.setPositionConversionFactor(360);
     m_AbsoluteEncoder.setVelocityConversionFactor(1);
     m_AbsoluteEncoder.setInverted(false);
-
-    //----OFFSET-------------
-    m_AbsoluteEncoder.setZeroOffset(189.6456742);
+    m_AbsoluteEncoder.setZeroOffset(Constants.ArmSubsystemConstants.offset);
 
     m_pidController = m_motor.getPIDController();
     m_pidController.setFeedbackDevice(m_AbsoluteEncoder);
@@ -55,23 +58,31 @@ public class ArmSubsystemPID extends SubsystemBase {
     m_pidController.setPositionPIDWrappingMaxInput(360);
     m_pidController.setPositionPIDWrappingMinInput(0);
 
-    m_pidController.setP(0.055);
-    m_pidController.setI(0.0);
-    m_pidController.setD(-0.05);
-    m_pidController.setFF(0.0);
-    m_pidController.setOutputRange(-1, 1);
+    m_pidController.setP(Constants.ArmSubsystemConstants.kP);
+    m_pidController.setI(Constants.ArmSubsystemConstants.kI);
+    m_pidController.setD(Constants.ArmSubsystemConstants.kD);
+    m_pidController.setFF(Constants.ArmSubsystemConstants.kFF);
+    m_pidController.setOutputRange(Constants.ArmSubsystemConstants.minOutput, Constants.ArmSubsystemConstants.maxOutput);
 
     m_motor.setIdleMode(IdleMode.kBrake);
     m_motor.setSmartCurrentLimit(80);
     m_motor.setClosedLoopRampRate(1);
+
+    m_follower.setIdleMode(IdleMode.kBrake);
+    m_follower.setSmartCurrentLimit(80);
+    m_follower.setClosedLoopRampRate(1);
     // m_motor.setSoftLimit(SoftLimitDirection.kForward, 75);
     // m_motor.setSoftLimit(SoftLimitDirection.kReverse, 0);
     // m_motor.enableSoftLimit(SoftLimitDirection.kForward, true);
     // m_motor.enableSoftLimit(SoftLimitDirection.kReverse, true);
 
+    m_motor.follow(ExternalFollower.kFollowerDisabled, 0);
+    m_follower.follow(m_motor);
+
     // Save the SPARK MAX configurations. If a SPARK MAX browns out during
     // operation, it will maintain the above configurations.
     m_motor.burnFlash();
+    m_follower.burnFlash();
 
     this.targetPosition = 0;
   }
