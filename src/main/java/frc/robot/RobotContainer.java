@@ -187,8 +187,9 @@ public class RobotContainer {
 
   private void setupTrajectoryDashboardChooser() {
     m_TrajectoryChooser = new SendableChooser<Command>();
-    m_TrajectoryChooser.setDefaultOption("ConeTable", autoSequences.ConeTablePath());
-    m_TrajectoryChooser.addOption("CubeTable", autoSequences.CubeTablePath());
+    m_TrajectoryChooser.setDefaultOption("Auto-Balance", autoSequences.AutoBalance());
+    m_TrajectoryChooser.setDefaultOption("Side To Station", autoSequences.SideToStationPath());
+    m_TrajectoryChooser.addOption("Center To Station", autoSequences.CenterToStationPath());
     m_TrajectoryChooser.addOption("Center", autoSequences.CenterPath());
     m_TrajectoryChooser.addOption("Side", autoSequences.SidePath());
     

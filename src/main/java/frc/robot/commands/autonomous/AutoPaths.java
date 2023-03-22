@@ -14,24 +14,38 @@ public class AutoPaths extends SequentialCommandGroup {
     public AutoPaths(SwerveDriveSubsystem drivetrainSubsystem) {
         this.m_drivetrainSubsystem = drivetrainSubsystem;
     }
+
+    public Command AutoBalancePath(){
+        return m_drivetrainSubsystem.traj(PathPlanner.loadPath("AutoBalancePath", new PathConstraints(.85, 1.0)), true);
+    }
+
+    public Command CenterFinishPath(){
+        return m_drivetrainSubsystem.traj(PathPlanner.loadPath("CenterFinishPath", new PathConstraints(1.5, 1.5)), false);
+    }
     
     public Command CenterPath(){
         return m_drivetrainSubsystem.traj(PathPlanner.loadPath("CenterPath", new PathConstraints(1.65, 1.25)), true);
     }
 
-    public Command TablePath(){
-        return m_drivetrainSubsystem.traj(PathPlanner.loadPath("TablePath", new PathConstraints(1, 1)), true);
+    public Command CenterToStationPath(){
+        return m_drivetrainSubsystem.traj(PathPlanner.loadPath("CenterToStationPath", new PathConstraints(1.65, 1.25)), true);
+    }
+
+    public Command SideFinishPath(){
+        return m_drivetrainSubsystem.traj(PathPlanner.loadPath("SideFinishPath", new PathConstraints(1.5, 1.5)), false);
     }
 
     public Command SidePath(){
         return m_drivetrainSubsystem.traj(PathPlanner.loadPath("SidePath", new PathConstraints(1.5, 1.5)), true);
     }
 
-    public Command FinishPath(){
-        return m_drivetrainSubsystem.traj(PathPlanner.loadPath("FinishPath", new PathConstraints(1.5, 1.5)), false);
+    public Command SideToStationPath(){
+        return m_drivetrainSubsystem.traj(PathPlanner.loadPath("SideToStationPath", new PathConstraints(1, 1)), true);
     }
 
-    public Command AutoBalancePath(){
-        return m_drivetrainSubsystem.traj(PathPlanner.loadPath("AutoBalancePath", new PathConstraints(.85, 1.0)), true);
-    }
+
+
+
+
+
 }

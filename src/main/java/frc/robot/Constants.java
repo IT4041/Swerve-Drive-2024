@@ -233,7 +233,7 @@ public final class Constants {
         public static final class WristPositions{
                 public static final int top = 12;
                 public static final int shelf = 29;
-                public static final int floorCone = 87;
+                public static final int floorCone = 85;
                 public static final int floorCube = 90; 
                 public static final int tiltedCone = 97;
                 public static final int[] WristPoses = {0,top,shelf,floorCone,floorCube,tiltedCone};    

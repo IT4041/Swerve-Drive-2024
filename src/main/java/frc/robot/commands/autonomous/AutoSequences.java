@@ -33,29 +33,31 @@ public class AutoSequences extends SequentialCommandGroup {
     addCommands();
   }
 
-  public Command ConeTablePath(){
+  public Command SideToStationPath(){
     return new SequentialCommandGroup(
       new InstantCommand(m_MasterController::buttonTop,m_MasterController),
       new WaitCommand(2.5),
       new InstantCommand(m_MasterController::cubeInConeOut,m_MasterController),
-      new WaitCommand(1),
+      new WaitCommand(0.35),
       new InstantCommand(m_MasterController::zero,m_MasterController),
       new InstantCommand(m_MasterController::intakeStop,m_MasterController),
-      new WaitCommand(3),
-      autoPaths.TablePath()
+      new WaitCommand(0.25),
+      autoPaths.SideToStationPath(),
+      m_drivetrainSubsystem.autoBalance()
     );
   }
 
-  public Command CubeTablePath(){
+  public Command CenterToStationPath(){
     return new SequentialCommandGroup(
       new InstantCommand(m_MasterController::buttonTop,m_MasterController),
       new WaitCommand(2.5),
-      new InstantCommand(m_MasterController::cubeOutConeIn,m_MasterController),
-      new WaitCommand(1),
+      new InstantCommand(m_MasterController::cubeInConeOut,m_MasterController),
+      new WaitCommand(0.35),
       new InstantCommand(m_MasterController::zero,m_MasterController),
       new InstantCommand(m_MasterController::intakeStop,m_MasterController),
-      new WaitCommand(3),
-      autoPaths.TablePath()
+      new WaitCommand(0.25),
+      autoPaths.CenterToStationPath(),
+      m_drivetrainSubsystem.autoBalance()
     );
   }
 
@@ -73,7 +75,7 @@ public class AutoSequences extends SequentialCommandGroup {
       new InstantCommand(m_MasterController::buttonTop,m_MasterController),
       new InstantCommand(m_MasterController::wristZero,m_MasterController),
       new ParallelCommandGroup(
-        new SequentialCommandGroup(new WaitCommand(0.825),autoPaths.FinishPath()), 
+        new SequentialCommandGroup(new WaitCommand(0.825),autoPaths.CenterFinishPath()), 
         new SequentialCommandGroup(new WaitCommand(1.65),new InstantCommand(m_MasterController::cubeOutConeIn,m_MasterController)))
     );
   }
@@ -83,31 +85,30 @@ public class AutoSequences extends SequentialCommandGroup {
       new InstantCommand(m_MasterController::buttonTop,m_MasterController),
       new WaitCommand(2.5),
       new InstantCommand(m_MasterController::cubeInConeOut,m_MasterController),
-      new WaitCommand(.5),
+      new WaitCommand(0.35),
       new InstantCommand(m_MasterController::zero,m_MasterController),
       new InstantCommand(m_MasterController::intakeStop,m_MasterController),
-      new WaitCommand(.45),
+      new WaitCommand(0.25),
       new ParallelCommandGroup(autoPaths.SidePath(),new InstantCommand(m_MasterController::autoCubefloorPickUp,m_MasterController)),
       new InstantCommand(m_MasterController::intakeStop,m_MasterController),
-      new InstantCommand(m_MasterController::buttonMiddle,m_MasterController),
+      new InstantCommand(m_MasterController::buttonTop,m_MasterController),
       new InstantCommand(m_MasterController::wristZero,m_MasterController),
-      new WaitCommand(1.35),
-      autoPaths.FinishPath(),
-      new InstantCommand(m_MasterController::cubeOutConeIn,m_MasterController)
+      new ParallelCommandGroup(
+        new SequentialCommandGroup(new WaitCommand(0.825),autoPaths.SideFinishPath()), 
+        new SequentialCommandGroup(new WaitCommand(1.65),new InstantCommand(m_MasterController::cubeOutConeIn,m_MasterController)))
     );
   }
 
   public Command AutoBalance(){
     return new SequentialCommandGroup(
       new InstantCommand(m_MasterController::buttonTop,m_MasterController),
-      new WaitCommand(2.75),
+      new WaitCommand(2.5),
       new InstantCommand(m_MasterController::cubeInConeOut,m_MasterController),
-      new WaitCommand(.5),
+      new WaitCommand(0.35),
       new InstantCommand(m_MasterController::zero,m_MasterController),
       new InstantCommand(m_MasterController::intakeStop,m_MasterController),
-      new WaitCommand(.45),
+      new WaitCommand(0.25),
       autoPaths.AutoBalancePath(),
-      //m_drivetrainSubsystem.setAutoRampRate(),
       m_drivetrainSubsystem.autoBalance()
       );
   }
