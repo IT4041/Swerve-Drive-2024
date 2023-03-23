@@ -14,7 +14,6 @@ import com.revrobotics.SparkMaxAbsoluteEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.IdleMode;
 
-import java.util.concurrent.locks.Condition;
 
 // import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMax;
@@ -71,12 +70,7 @@ public class WristSubsystemPID extends SubsystemBase {
     m_follower.setIdleMode(IdleMode.kBrake);
     m_follower.setSmartCurrentLimit(80);
     m_follower.setClosedLoopRampRate(.5);
-
     m_follower.follow(m_motor);
-    //m_motor.setSoftLimit(SoftLimitDirection.kForward, 153);
-    //m_motor.setSoftLimit(SoftLimitDirection.kReverse, 0);
-    // m_motor.enableSoftLimit(SoftLimitDirection.kForward, true);
-    // m_motor.enableSoftLimit(SoftLimitDirection.kReverse, true);
 
     // Save the SPARK MAX configurations. If a SPARK MAX browns out during
     // operation, it will maintain the above configurations.

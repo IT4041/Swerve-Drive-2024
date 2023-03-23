@@ -35,7 +35,7 @@ public class AutoSequences extends SequentialCommandGroup {
 
   public Command SideToStationPath(){
     return new SequentialCommandGroup(
-      new InstantCommand(m_MasterController::buttonTop,m_MasterController),
+      new InstantCommand(m_MasterController::gotoTop,m_MasterController),
       new WaitCommand(2.5),
       new InstantCommand(m_MasterController::cubeInConeOut,m_MasterController),
       new WaitCommand(0.35),
@@ -49,7 +49,7 @@ public class AutoSequences extends SequentialCommandGroup {
 
   public Command CenterToStationPath(){
     return new SequentialCommandGroup(
-      new InstantCommand(m_MasterController::buttonTop,m_MasterController),
+      new InstantCommand(m_MasterController::gotoTop,m_MasterController),
       new WaitCommand(2.5),
       new InstantCommand(m_MasterController::cubeInConeOut,m_MasterController),
       new WaitCommand(0.35),
@@ -63,7 +63,7 @@ public class AutoSequences extends SequentialCommandGroup {
 
   public Command CenterPath(){
     return new SequentialCommandGroup(
-      new InstantCommand(m_MasterController::buttonTop,m_MasterController),
+      new InstantCommand(m_MasterController::gotoTop,m_MasterController),
       new WaitCommand(2.5),
       new InstantCommand(m_MasterController::cubeInConeOut,m_MasterController),
       new WaitCommand(0.35),
@@ -72,7 +72,7 @@ public class AutoSequences extends SequentialCommandGroup {
       new WaitCommand(0.25),
       new ParallelCommandGroup(autoPaths.CenterPath(),new InstantCommand(m_MasterController::autoCubefloorPickUp,m_MasterController)),
       new InstantCommand(m_MasterController::intakeStop,m_MasterController),
-      new InstantCommand(m_MasterController::buttonTop,m_MasterController),
+      new InstantCommand(m_MasterController::gotoTop,m_MasterController),
       new InstantCommand(m_MasterController::wristZero,m_MasterController),
       new ParallelCommandGroup(
         new SequentialCommandGroup(new WaitCommand(0.825),autoPaths.CenterFinishPath()), 
@@ -82,7 +82,7 @@ public class AutoSequences extends SequentialCommandGroup {
 
   public Command SidePath(){
     return new SequentialCommandGroup(
-      new InstantCommand(m_MasterController::buttonTop,m_MasterController),
+      new InstantCommand(m_MasterController::gotoTop,m_MasterController),
       new WaitCommand(2.5),
       new InstantCommand(m_MasterController::cubeInConeOut,m_MasterController),
       new WaitCommand(0.35),
@@ -91,7 +91,7 @@ public class AutoSequences extends SequentialCommandGroup {
       new WaitCommand(0.25),
       new ParallelCommandGroup(autoPaths.SidePath(),new InstantCommand(m_MasterController::autoCubefloorPickUp,m_MasterController)),
       new InstantCommand(m_MasterController::intakeStop,m_MasterController),
-      new InstantCommand(m_MasterController::buttonTop,m_MasterController),
+      new InstantCommand(m_MasterController::gotoTop,m_MasterController),
       new InstantCommand(m_MasterController::wristZero,m_MasterController),
       new ParallelCommandGroup(
         new SequentialCommandGroup(new WaitCommand(0.825),autoPaths.SideFinishPath()), 
@@ -101,7 +101,7 @@ public class AutoSequences extends SequentialCommandGroup {
 
   public Command AutoBalance(){
     return new SequentialCommandGroup(
-      new InstantCommand(m_MasterController::buttonTop,m_MasterController),
+      new InstantCommand(m_MasterController::gotoTop,m_MasterController),
       new WaitCommand(2.5),
       new InstantCommand(m_MasterController::cubeInConeOut,m_MasterController),
       new WaitCommand(0.35),

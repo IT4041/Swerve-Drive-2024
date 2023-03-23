@@ -50,8 +50,6 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     // center of the field along the short end, facing forward.
     private SwerveDriveOdometry m_odometry;
 
-    private Joystick driveController = new Joystick(Constants.XboxControllerConstants.DRIVER_CONTROLLER_USB_ID);
-
     private SwerveDriveModule frontLeftModule = new SwerveDriveModule(
             Constants.SwerveDriveConstants.FRONT_LEFT_MODULE_NAME,
             Constants.SwerveDriveConstants.FRONT_LEFT_DRIVE_MOTOR_ID,
@@ -89,8 +87,6 @@ public class SwerveDriveSubsystem extends SubsystemBase {
                 getGyroHeading(),
                 getModulePositions(),
                 new Pose2d(0, 0, new Rotation2d()));
-
-        // SmartDashboard.putBoolean("Done", false);
     }
 
     public static SwerveDriveSubsystem getInstance() {
@@ -112,23 +108,19 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Pidgeon pitch", pigeon.getPitch());
         SmartDashboard.putNumber("Pidgeon roll", pigeon.getRoll());
 
-        // Update the pose
-        // button 8 on xbox is three lines button
-        if (driveController.getRawButton(Constants.XboxControllerConstants.TWO_SQUARES)) {
-            frontLeftModule.resetTurnEncoders();
-            frontRightModule.resetTurnEncoders();
-            backRightModule.resetTurnEncoders();
-            backLeftModule.resetTurnEncoders();
-            pigeon.setYaw(0);
-        }
-
         // adjust overall speed adn rotation of the robot
         this.setDriveRate(1);
 
-        // SmartDashboard.putString("odo", m_odometry.getPoseMeters().toString());
-        // SmartDashboard.putString("odo", m_odometry.getPoseMeters().toString());
-
         m_odometry.update(getGyroHeading(), getModulePositions());
+    }
+
+    public void updatePose(){
+        //resd
+        frontLeftModule.resetTurnEncoders();
+        frontRightModule.resetTurnEncoders();
+        backRightModule.resetTurnEncoders();
+        backLeftModule.resetTurnEncoders();
+        pigeon.setYaw(0);
     }
 
     public Rotation2d getGyroHeading() {

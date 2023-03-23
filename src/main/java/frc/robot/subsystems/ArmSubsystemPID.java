@@ -14,7 +14,6 @@ import com.revrobotics.SparkMaxAbsoluteEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.ExternalFollower;
 import com.revrobotics.CANSparkMax.IdleMode;
-import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -71,10 +70,6 @@ public class ArmSubsystemPID extends SubsystemBase {
     m_follower.setIdleMode(IdleMode.kBrake);
     m_follower.setSmartCurrentLimit(80);
     m_follower.setClosedLoopRampRate(1);
-    // m_motor.setSoftLimit(SoftLimitDirection.kForward, 75);
-    // m_motor.setSoftLimit(SoftLimitDirection.kReverse, 0);
-    // m_motor.enableSoftLimit(SoftLimitDirection.kForward, true);
-    // m_motor.enableSoftLimit(SoftLimitDirection.kReverse, true);
 
     m_motor.follow(ExternalFollower.kFollowerDisabled, 0);
     m_follower.follow(m_motor);
@@ -89,8 +84,8 @@ public class ArmSubsystemPID extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // SmartDashboard.putNumber("Arm Encoder", m_AbsoluteEncoder.getPosition());
-    // SmartDashboard.putNumber("Arm target position", targetPosition);
+    SmartDashboard.putNumber("Arm Encoder", m_AbsoluteEncoder.getPosition());
+    SmartDashboard.putNumber("Arm target position", targetPosition);
     SmartDashboard.putBoolean("Arm Top", currArmPoseIndex == 3);
     SmartDashboard.putBoolean("Arm Middle", currArmPoseIndex == 2);
     SmartDashboard.putBoolean("Arm Low", currArmPoseIndex == 1);

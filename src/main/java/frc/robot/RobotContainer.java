@@ -4,14 +4,11 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.autonomous.AutoPaths;
 import frc.robot.commands.autonomous.AutoSequences;
 import frc.robot.subsystems.ArmSubsystemPID;
-import frc.robot.subsystems.AutoPilot;
 import frc.robot.subsystems.IntakeSubsystemPWM;
 import frc.robot.subsystems.MasterController;
 import frc.robot.subsystems.SwerveDriveSubsystem;
@@ -20,6 +17,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.networktables.BooleanSubscriber;
+import edu.wpi.first.networktables.BooleanTopic;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.PubSubOption;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -43,21 +45,24 @@ public class RobotContainer {
   private final IntakeSubsystemPWM m_IntakeSubsystem;
   private final MasterController m_MasterController;
 
-  private final AutoPilot m_autoPilot;
   private SendableChooser<Command> m_TrajectoryChooser;
   //private AutoPaths autoPath;
   private AutoSequences autoSequences;
+  
+  private NetworkTableInstance inst = NetworkTableInstance.getDefault();
+  private NetworkTable table = inst.getTable("FMSInfo");
+  private BooleanTopic isRedAlliance = table.getBooleanTopic("IsRedAlliance");
+  private BooleanSubscriber IsRed = isRedAlliance.subscribe(false, PubSubOption.keepDuplicates(false),PubSubOption.pollStorage(6));
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
     m_drivetrainSubsystem = SwerveDriveSubsystem.getInstance();
-    m_autoPilot = AutoPilot.getInstance();
     m_WristSubsystemPID = WristSubsystemPID.getInstance();
     m_IntakeSubsystem = IntakeSubsystemPWM.getInstance();
     m_ArmSubsystemPID = ArmSubsystemPID.getInstance();
-    m_MasterController = MasterController.getInstance(m_WristSubsystemPID, m_ArmSubsystemPID, m_autoPilot, m_IntakeSubsystem);
+    m_MasterController = MasterController.getInstance(m_WristSubsystemPID, m_ArmSubsystemPID, m_IntakeSubsystem);
 
     m_drivetrainSubsystem.setDefaultCommand(new RunCommand(() -> m_drivetrainSubsystem.DriveWithJoystick(m_driver), m_drivetrainSubsystem));
 
@@ -88,43 +93,18 @@ public class RobotContainer {
     JoystickButton Y_BUTTON = new JoystickButton(m_driver, Constants.XboxControllerConstants.Y_BUTTON);
     JoystickButton LEFT_BUMPER = new JoystickButton(m_driver, Constants.XboxControllerConstants.LEFT_BUMPER);
     JoystickButton RIGHT_BUMPER = new JoystickButton(m_driver, Constants.XboxControllerConstants.RIGHT_BUMPER);
-    // JoystickButton TWO_SQUARES = new JoystickButton(m_driver,Constants.XboxControllerConstants.TWO_SQUARES);
     JoystickButton THREE_LINES = new JoystickButton(m_driver, Constants.XboxControllerConstants.THREE_LINES);
-    // JoystickButton LEFT_STICK_PRESS = new JoystickButton(m_driver, Constants.XboxControllerConstants.LEFT_STICK_PRESS);
-    // JoystickButton RIGHT_STICK_PRESS = new JoystickButton(m_driver, Constants.XboxControllerConstants.RIGHT_STICK_PRESS);
+    JoystickButton TWO_SQUARES = new JoystickButton(m_driver, Constants.XboxControllerConstants.TWO_SQUARES);
 
     JoystickButton A_BUTTON_AS = new JoystickButton(m_assist,Constants.XboxControllerConstants.A_BUTTON);
     JoystickButton B_BUTTON_AS = new JoystickButton(m_assist,Constants.XboxControllerConstants.B_BUTTON);
     JoystickButton X_BUTTON_AS = new JoystickButton(m_assist,Constants.XboxControllerConstants.X_BUTTON);
     JoystickButton Y_BUTTON_AS = new JoystickButton(m_assist,Constants.XboxControllerConstants.Y_BUTTON);
-    // JoystickButton LEFT_BUMPER_AS = new JoystickButton(m_assist, Constants.XboxControllerConstants.LEFT_BUMPER);
-    // JoystickButton RIGHT_BUMPER_AS = new JoystickButton(m_assist, Constants.XboxControllerConstants.RIGHT_BUMPER);
-    // JoystickButton TWO_SQUARES_AS = new JoystickButton(m_assist, Constants.XboxControllerConstants.TWO_SQUARES);
     JoystickButton THREE_LINES_AS = new JoystickButton(m_assist, Constants.XboxControllerConstants.THREE_LINES);
-    // JoystickButton LEFT_STICK_PRESS_AS = new JoystickButton(m_assist, Constants.XboxControllerConstants.LEFT_STICK_PRESS);
-    // JoystickButton RIGHT_STICK_PRESS_AS = new JoystickButton(m_assist, Constants.XboxControllerConstants.RIGHT_STICK_PRESS);
 
-    // JoystickButton GREEN_LEFT = new JoystickButton(autoPilotController, Constants.AutoPilotController.GREEN_LEFT);
-    // JoystickButton GREEN_CENTER = new JoystickButton(autoPilotController, Constants.AutoPilotController.GREEN_CENTER);
-    // JoystickButton GREEN_RIGHT = new JoystickButton(autoPilotController, Constants.AutoPilotController.GREEN_RIGHT);
-    // JoystickButton YELLOW_LEFT = new JoystickButton(autoPilotController, Constants.AutoPilotController.YELLOW_LEFT);
-    // JoystickButton YELLOW_CENTER = new JoystickButton(autoPilotController, Constants.AutoPilotController.YELLOW_CENTER);
-    // JoystickButton YELLOW_RIGHT = new JoystickButton(autoPilotController, Constants.AutoPilotController.YELLOW_RIGHT);
-    // JoystickButton BLUE_LEFT = new JoystickButton(autoPilotController, Constants.AutoPilotController.BLUE_LEFT);
-    // JoystickButton BLUE_CENTER = new JoystickButton(autoPilotController, Constants.AutoPilotController.BLUE_CENTER);
-    // JoystickButton BLUE_RIGHT = new JoystickButton(autoPilotController, Constants.AutoPilotController.BLUE_RIGHT);
-    // JoystickButton CLEAR_BOTTOM = new JoystickButton(autoPilotController, Constants.AutoPilotController.CLEAR_BOTTOM);
-    // JoystickButton CLEAR_MIDDLE = new JoystickButton(autoPilotController, Constants.AutoPilotController.CLEAR_MIDDLE);
-    // JoystickButton CLEAR_TOP = new JoystickButton(autoPilotController, Constants.AutoPilotController.CLEAR_TOP);
 
     // -----------DRIVER
     // ----------intake-----------------------------------------------------------
-    // LEFT_BUMPER.whileTrue(new InstantCommand(m_IntakeSubsystem::in, m_IntakeSubsystem));
-    // LEFT_BUMPER.onFalse(new InstantCommand(m_IntakeSubsystem::in_hold, m_IntakeSubsystem));
-
-    // RIGHT_BUMPER.whileTrue(new InstantCommand(m_IntakeSubsystem::out, m_IntakeSubsystem));
-    // RIGHT_BUMPER.onFalse(new InstantCommand(m_IntakeSubsystem::out_hold, m_IntakeSubsystem));
-
     RIGHT_BUMPER.onTrue(new InstantCommand(m_IntakeSubsystem::out_persist, m_IntakeSubsystem));
     LEFT_BUMPER.onTrue(new InstantCommand(m_IntakeSubsystem::in_persist, m_IntakeSubsystem));
     // ----------arm
@@ -146,6 +126,9 @@ public class RobotContainer {
     // ----RETURN TO ZERO---------------------------------------------------------------
     THREE_LINES.onTrue(new InstantCommand(m_MasterController::zero, m_MasterController));
 
+    // ----RESET POSE---------------------------------------------------------------
+    TWO_SQUARES.onTrue(new InstantCommand(m_drivetrainSubsystem::updatePose, m_drivetrainSubsystem));
+
     // //----------ASSISTANT--------------------------------------------------------------
     // ----------arm position-----------------------------------------------------------
     Y_BUTTON_AS.onTrue(new InstantCommand(m_ArmSubsystemPID::stepUp, m_ArmSubsystemPID));
@@ -157,23 +140,6 @@ public class RobotContainer {
 
     // ----RETURN TO ZERO---------------------------------------------------------------
     THREE_LINES_AS.onTrue(new InstantCommand(m_MasterController::zero, m_MasterController));
-
-    // GREEN_LEFT.onTrue(new InstantCommand(m_MasterController::button1, m_MasterController));// ID:1
-    // GREEN_CENTER.onTrue(new InstantCommand(m_MasterController::button2, m_MasterController));// ID:2
-    // GREEN_RIGHT.onTrue(new InstantCommand(m_MasterController::button3, m_MasterController));// ID:3
-
-    // YELLOW_LEFT.onTrue(new InstantCommand(m_MasterController::button4, m_MasterController));// ID:4
-    // YELLOW_CENTER.onTrue(new InstantCommand(m_MasterController::button5, m_MasterController));// ID:5
-    // YELLOW_RIGHT.onTrue(new InstantCommand(m_MasterController::button6, m_MasterController));// ID:6
-
-    // BLUE_LEFT.onTrue(new InstantCommand(m_MasterController::button7, m_MasterController));// ID:7
-    // BLUE_CENTER.onTrue(new InstantCommand(m_MasterController::button8, m_MasterController));// ID:8
-    // BLUE_RIGHT.onTrue(new InstantCommand(m_MasterController::button9, m_MasterController));// ID:9
-
-    // CLEAR_TOP.onTrue(new InstantCommand(m_MasterController::buttonTop, m_MasterController));// ID:10
-    // CLEAR_MIDDLE.onTrue(new InstantCommand(m_MasterController::buttonMiddle, m_MasterController));// ID:11
-    // CLEAR_BOTTOM.onTrue(new InstantCommand(m_MasterController::buttonBottom, m_MasterController));// ID:12
-    // ------------------------------------------------------------------------------------------
   }
 
   /**
@@ -188,13 +154,10 @@ public class RobotContainer {
   private void setupTrajectoryDashboardChooser() {
     m_TrajectoryChooser = new SendableChooser<Command>();
     m_TrajectoryChooser.setDefaultOption("Auto-Balance", autoSequences.AutoBalance());
-    m_TrajectoryChooser.setDefaultOption("Side To Station", autoSequences.SideToStationPath());
+    m_TrajectoryChooser.addOption("Side To Station", autoSequences.SideToStationPath());
     m_TrajectoryChooser.addOption("Center To Station", autoSequences.CenterToStationPath());
     m_TrajectoryChooser.addOption("Center", autoSequences.CenterPath());
     m_TrajectoryChooser.addOption("Side", autoSequences.SidePath());
-    
-    // drive over then back really slow until we balance
-    m_TrajectoryChooser.addOption("Balance", autoSequences.AutoBalance());
 
     SmartDashboard.putData(m_TrajectoryChooser);
   }
