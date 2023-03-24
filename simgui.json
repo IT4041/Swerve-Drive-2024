@@ -1,0 +1,24 @@
+{
+  "NTProvider": {
+    "types": {
+      "/FMSInfo": "FMSInfo",
+      "/SmartDashboard/SendableChooser[0]": "String Chooser"
+    }
+  },
+  "NetworkTables": {
+    "transitory": {
+      "FMSInfo": {
+        "open": true
+      },
+      "Shuffleboard": {
+        "open": true
+      },
+      "SmartDashboard": {
+        "SendableChooser[0]": {
+          "open": true
+        },
+        "open": true
+      }
+    }
+  }
+}

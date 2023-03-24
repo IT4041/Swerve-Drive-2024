@@ -17,11 +17,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.networktables.BooleanSubscriber;
-import edu.wpi.first.networktables.BooleanTopic;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.networktables.PubSubOption;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -37,7 +32,6 @@ public class RobotContainer {
 
   private final XboxController m_driver = new XboxController(Constants.XboxControllerConstants.DRIVER_CONTROLLER_USB_ID);
   private final XboxController m_assist = new XboxController(Constants.XboxControllerConstants.ASSIST_CONTROLLER_USB_ID);
-  //private final Joystick autoPilotController = new Joystick(Constants.XboxControllerConstants.ASSIST_CONTROLLER_USB_ID);
 
   private final SwerveDriveSubsystem m_drivetrainSubsystem;
   private final WristSubsystemPID m_WristSubsystemPID;
@@ -46,14 +40,7 @@ public class RobotContainer {
   private final MasterController m_MasterController;
 
   private SendableChooser<Command> m_TrajectoryChooser;
-  //private AutoPaths autoPath;
   private AutoSequences autoSequences;
-  
-  private NetworkTableInstance inst = NetworkTableInstance.getDefault();
-  private NetworkTable table = inst.getTable("FMSInfo");
-  private BooleanTopic isRedAlliance = table.getBooleanTopic("IsRedAlliance");
-  private BooleanSubscriber IsRed = isRedAlliance.subscribe(false, PubSubOption.keepDuplicates(false),PubSubOption.pollStorage(6));
-  private boolean isRed = false;
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -66,11 +53,7 @@ public class RobotContainer {
     m_MasterController = MasterController.getInstance(m_WristSubsystemPID, m_ArmSubsystemPID, m_IntakeSubsystem);
 
     m_drivetrainSubsystem.setDefaultCommand(new RunCommand(() -> m_drivetrainSubsystem.DriveWithJoystick(m_driver), m_drivetrainSubsystem));
-
-    // figure out what alliance were on
-    this.isRed = IsRed.get();
   
-
     // Set up the default command for the drivetrain.
     // The controls are for field-oriented driving:
     // Left stick Y axis -> forward and backwards movement
@@ -160,19 +143,17 @@ public class RobotContainer {
 
     m_TrajectoryChooser = new SendableChooser<Command>();
 
-    if(this.isRed){
-      m_TrajectoryChooser.setDefaultOption("Auto-Balance", autoSequences.RED_AutoBalance());
-      m_TrajectoryChooser.addOption("Center", autoSequences.RED_CenterPath());
-      m_TrajectoryChooser.addOption("Center To Station", autoSequences.RED_CenterToStationPath());
-      m_TrajectoryChooser.addOption("Side", autoSequences.RED_SidePath());
-      m_TrajectoryChooser.addOption("Side To Station", autoSequences.RED_SideToStationPath());
-    }else{
-      m_TrajectoryChooser.setDefaultOption("Auto-Balance", autoSequences.BLUE_AutoBalance());
-      m_TrajectoryChooser.addOption("Center", autoSequences.BLUE_CenterPath());
-      m_TrajectoryChooser.addOption("Center To Station", autoSequences.BLUE_CenterToStationPath());
-      m_TrajectoryChooser.addOption("Side", autoSequences.BLUE_SidePath());
-      m_TrajectoryChooser.addOption("Side To Station", autoSequences.BLUE_SideToStationPath());
-    }
+      m_TrajectoryChooser.addOption("RED-Auto-Balance", autoSequences.RED_AutoBalance());
+      m_TrajectoryChooser.addOption("RED-Center", autoSequences.RED_CenterPath());
+      m_TrajectoryChooser.addOption("RED-Center To Station", autoSequences.RED_CenterToStationPath());
+      m_TrajectoryChooser.addOption("RED-Side", autoSequences.RED_SidePath());
+      m_TrajectoryChooser.addOption("RED-Side To Station", autoSequences.RED_SideToStationPath());
+      m_TrajectoryChooser.addOption("-----------------------------------------", null);
+      m_TrajectoryChooser.addOption("BLUE-Auto-Balance", autoSequences.BLUE_AutoBalance());
+      m_TrajectoryChooser.addOption("BLUE-Center", autoSequences.BLUE_CenterPath());
+      m_TrajectoryChooser.addOption("BLUE-Center To Station", autoSequences.BLUE_CenterToStationPath());
+      m_TrajectoryChooser.addOption("BLUE-Side", autoSequences.BLUE_SidePath());
+      m_TrajectoryChooser.addOption("BLUE-Side To Station", autoSequences.BLUE_SideToStationPath());
   
     SmartDashboard.putData(m_TrajectoryChooser);
   }
@@ -180,6 +161,6 @@ public class RobotContainer {
   public void teleopInit() {
     // re-orient robot heading to foward heading away from drive station
     m_drivetrainSubsystem.resetHeading();
-    //m_drivetrainSubsystem.resetAutoRampRate();
   }
+
 }
