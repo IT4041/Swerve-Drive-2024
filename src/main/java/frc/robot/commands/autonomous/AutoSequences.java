@@ -33,84 +33,162 @@ public class AutoSequences extends SequentialCommandGroup {
     addCommands();
   }
 
-  public Command SideToStationPath(){
+  public Command BLUE_SideToStationPath() {
     return new SequentialCommandGroup(
-      new InstantCommand(m_MasterController::gotoTop,m_MasterController),
-      new WaitCommand(2.5),
-      new InstantCommand(m_MasterController::cubeInConeOut,m_MasterController),
-      new WaitCommand(0.35),
-      new InstantCommand(m_MasterController::zero,m_MasterController),
-      new InstantCommand(m_MasterController::intakeStop,m_MasterController),
-      new WaitCommand(0.25),
-      autoPaths.SideToStationPath(),
-      m_drivetrainSubsystem.autoBalance()
-    );
+        new InstantCommand(m_MasterController::gotoTop, m_MasterController),
+        new WaitCommand(2.5),
+        new InstantCommand(m_MasterController::cubeInConeOut, m_MasterController),
+        new WaitCommand(0.35),
+        new InstantCommand(m_MasterController::zero, m_MasterController),
+        new InstantCommand(m_MasterController::intakeStop, m_MasterController),
+        new WaitCommand(0.25),
+        autoPaths.BLUE_SideToStationPath(),
+        m_drivetrainSubsystem.autoBalance());
   }
 
-  public Command CenterToStationPath(){
+  public Command BLUE_CenterToStationPath() {
     return new SequentialCommandGroup(
-      new InstantCommand(m_MasterController::gotoTop,m_MasterController),
-      new WaitCommand(2.5),
-      new InstantCommand(m_MasterController::cubeInConeOut,m_MasterController),
-      new WaitCommand(0.35),
-      new InstantCommand(m_MasterController::zero,m_MasterController),
-      new InstantCommand(m_MasterController::intakeStop,m_MasterController),
-      new WaitCommand(0.25),
-      autoPaths.CenterToStationPath(),
-      m_drivetrainSubsystem.autoBalance()
-    );
+        new InstantCommand(m_MasterController::gotoTop, m_MasterController),
+        new WaitCommand(2.5),
+        new InstantCommand(m_MasterController::cubeInConeOut, m_MasterController),
+        new WaitCommand(0.35),
+        new InstantCommand(m_MasterController::zero, m_MasterController),
+        new InstantCommand(m_MasterController::intakeStop, m_MasterController),
+        new WaitCommand(0.25),
+        autoPaths.BLUE_CenterToStationPath(),
+        m_drivetrainSubsystem.autoBalance());
   }
 
-  public Command CenterPath(){
+  public Command BLUE_CenterPath() {
     return new SequentialCommandGroup(
-      new InstantCommand(m_MasterController::gotoTop,m_MasterController),
+        new InstantCommand(m_MasterController::gotoTop, m_MasterController),
+        new WaitCommand(2.5),
+        new InstantCommand(m_MasterController::cubeInConeOut, m_MasterController),
+        new WaitCommand(0.35),
+        new InstantCommand(m_MasterController::zero, m_MasterController),
+        new InstantCommand(m_MasterController::intakeStop, m_MasterController),
+        new WaitCommand(0.25),
+        new ParallelCommandGroup(autoPaths.BLUE_CenterPath(),
+            new InstantCommand(m_MasterController::autoCubefloorPickUp, m_MasterController)),
+        new InstantCommand(m_MasterController::intakeStop, m_MasterController),
+        new InstantCommand(m_MasterController::gotoTop, m_MasterController),
+        new InstantCommand(m_MasterController::wristZero, m_MasterController),
+        new ParallelCommandGroup(
+            new SequentialCommandGroup(new WaitCommand(0.825), autoPaths.BLUE_CenterFinishPath()),
+            new SequentialCommandGroup(new WaitCommand(1.65),
+                new InstantCommand(m_MasterController::cubeOutConeIn, m_MasterController))));
+  }
+
+  public Command BLUE_SidePath() {
+    return new SequentialCommandGroup(
+        new InstantCommand(m_MasterController::gotoTop, m_MasterController),
+        new WaitCommand(2.5),
+        new InstantCommand(m_MasterController::cubeInConeOut, m_MasterController),
+        new WaitCommand(0.35),
+        new InstantCommand(m_MasterController::zero, m_MasterController),
+        new InstantCommand(m_MasterController::intakeStop, m_MasterController),
+        new WaitCommand(0.25),
+        new ParallelCommandGroup(autoPaths.BLUE_SidePath(),
+            new InstantCommand(m_MasterController::autoCubefloorPickUp, m_MasterController)),
+        new InstantCommand(m_MasterController::intakeStop, m_MasterController),
+        new InstantCommand(m_MasterController::gotoTop, m_MasterController),
+        new InstantCommand(m_MasterController::wristZero, m_MasterController),
+        new ParallelCommandGroup(
+            new SequentialCommandGroup(new WaitCommand(0.825), autoPaths.BLUE_SideFinishPath()),
+            new SequentialCommandGroup(new WaitCommand(1.65),
+                new InstantCommand(m_MasterController::cubeOutConeIn, m_MasterController))));
+  }
+
+  public Command BLUE_AutoBalance() {
+    return new SequentialCommandGroup(
+        new InstantCommand(m_MasterController::gotoTop, m_MasterController),
+        new WaitCommand(2.5),
+        new InstantCommand(m_MasterController::cubeInConeOut, m_MasterController),
+        new WaitCommand(0.35),
+        new InstantCommand(m_MasterController::zero, m_MasterController),
+        new InstantCommand(m_MasterController::intakeStop, m_MasterController),
+        new WaitCommand(0.25),
+        autoPaths.BLUE_AutoBalancePath(),
+        m_drivetrainSubsystem.autoBalance());
+  }
+
+  public Command RED_AutoBalance() {
+    return new SequentialCommandGroup(
+      new InstantCommand(m_MasterController::gotoTop, m_MasterController),
       new WaitCommand(2.5),
-      new InstantCommand(m_MasterController::cubeInConeOut,m_MasterController),
+      new InstantCommand(m_MasterController::cubeInConeOut, m_MasterController),
       new WaitCommand(0.35),
-      new InstantCommand(m_MasterController::zero,m_MasterController),
-      new InstantCommand(m_MasterController::intakeStop,m_MasterController),
+      new InstantCommand(m_MasterController::zero, m_MasterController),
+      new InstantCommand(m_MasterController::intakeStop, m_MasterController),
       new WaitCommand(0.25),
-      new ParallelCommandGroup(autoPaths.CenterPath(),new InstantCommand(m_MasterController::autoCubefloorPickUp,m_MasterController)),
-      new InstantCommand(m_MasterController::intakeStop,m_MasterController),
-      new InstantCommand(m_MasterController::gotoTop,m_MasterController),
-      new InstantCommand(m_MasterController::wristZero,m_MasterController),
+      autoPaths.RED_AutoBalancePath(),
+      m_drivetrainSubsystem.autoBalance());
+  }
+
+  public Command RED_SideToStationPath() {
+    return new SequentialCommandGroup(
+      new InstantCommand(m_MasterController::gotoTop, m_MasterController),
+      new WaitCommand(2.5),
+      new InstantCommand(m_MasterController::cubeInConeOut, m_MasterController),
+      new WaitCommand(0.35),
+      new InstantCommand(m_MasterController::zero, m_MasterController),
+      new InstantCommand(m_MasterController::intakeStop, m_MasterController),
+      new WaitCommand(0.25),
+      autoPaths.RED_SideToStationPath(),
+      m_drivetrainSubsystem.autoBalance());
+  }
+
+  public Command RED_CenterToStationPath() {
+    return new SequentialCommandGroup(
+      new InstantCommand(m_MasterController::gotoTop, m_MasterController),
+      new WaitCommand(2.5),
+      new InstantCommand(m_MasterController::cubeInConeOut, m_MasterController),
+      new WaitCommand(0.35),
+      new InstantCommand(m_MasterController::zero, m_MasterController),
+      new InstantCommand(m_MasterController::intakeStop, m_MasterController),
+      new WaitCommand(0.25),
+      autoPaths.RED_CenterToStationPath(),
+      m_drivetrainSubsystem.autoBalance());
+  }
+
+  public Command RED_CenterPath() {
+    return new SequentialCommandGroup(
+      new InstantCommand(m_MasterController::gotoTop, m_MasterController),
+      new WaitCommand(2.5),
+      new InstantCommand(m_MasterController::cubeInConeOut, m_MasterController),
+      new WaitCommand(0.35),
+      new InstantCommand(m_MasterController::zero, m_MasterController),
+      new InstantCommand(m_MasterController::intakeStop, m_MasterController),
+      new WaitCommand(0.25),
+      new ParallelCommandGroup(autoPaths.RED_CenterPath(),
+          new InstantCommand(m_MasterController::autoCubefloorPickUp, m_MasterController)),
+      new InstantCommand(m_MasterController::intakeStop, m_MasterController),
+      new InstantCommand(m_MasterController::gotoTop, m_MasterController),
+      new InstantCommand(m_MasterController::wristZero, m_MasterController),
       new ParallelCommandGroup(
-        new SequentialCommandGroup(new WaitCommand(0.825),autoPaths.CenterFinishPath()), 
-        new SequentialCommandGroup(new WaitCommand(1.65),new InstantCommand(m_MasterController::cubeOutConeIn,m_MasterController)))
-    );
+          new SequentialCommandGroup(new WaitCommand(0.825), autoPaths.RED_CenterFinishPath()),
+          new SequentialCommandGroup(new WaitCommand(1.65),
+              new InstantCommand(m_MasterController::cubeOutConeIn, m_MasterController))));
   }
 
-  public Command SidePath(){
+  public Command RED_SidePath() {
     return new SequentialCommandGroup(
-      new InstantCommand(m_MasterController::gotoTop,m_MasterController),
+      new InstantCommand(m_MasterController::gotoTop, m_MasterController),
       new WaitCommand(2.5),
-      new InstantCommand(m_MasterController::cubeInConeOut,m_MasterController),
+      new InstantCommand(m_MasterController::cubeInConeOut, m_MasterController),
       new WaitCommand(0.35),
-      new InstantCommand(m_MasterController::zero,m_MasterController),
-      new InstantCommand(m_MasterController::intakeStop,m_MasterController),
+      new InstantCommand(m_MasterController::zero, m_MasterController),
+      new InstantCommand(m_MasterController::intakeStop, m_MasterController),
       new WaitCommand(0.25),
-      new ParallelCommandGroup(autoPaths.SidePath(),new InstantCommand(m_MasterController::autoCubefloorPickUp,m_MasterController)),
-      new InstantCommand(m_MasterController::intakeStop,m_MasterController),
-      new InstantCommand(m_MasterController::gotoTop,m_MasterController),
-      new InstantCommand(m_MasterController::wristZero,m_MasterController),
+      new ParallelCommandGroup(autoPaths.RED_SidePath(),
+          new InstantCommand(m_MasterController::autoCubefloorPickUp, m_MasterController)),
+      new InstantCommand(m_MasterController::intakeStop, m_MasterController),
+      new InstantCommand(m_MasterController::gotoTop, m_MasterController),
+      new InstantCommand(m_MasterController::wristZero, m_MasterController),
       new ParallelCommandGroup(
-        new SequentialCommandGroup(new WaitCommand(0.825),autoPaths.SideFinishPath()), 
-        new SequentialCommandGroup(new WaitCommand(1.65),new InstantCommand(m_MasterController::cubeOutConeIn,m_MasterController)))
-    );
-  }
-
-  public Command AutoBalance(){
-    return new SequentialCommandGroup(
-      new InstantCommand(m_MasterController::gotoTop,m_MasterController),
-      new WaitCommand(2.5),
-      new InstantCommand(m_MasterController::cubeInConeOut,m_MasterController),
-      new WaitCommand(0.35),
-      new InstantCommand(m_MasterController::zero,m_MasterController),
-      new InstantCommand(m_MasterController::intakeStop,m_MasterController),
-      new WaitCommand(0.25),
-      autoPaths.AutoBalancePath(),
-      m_drivetrainSubsystem.autoBalance()
-      );
+          new SequentialCommandGroup(new WaitCommand(0.825), autoPaths.RED_SideFinishPath()),
+          new SequentialCommandGroup(new WaitCommand(1.65),
+              new InstantCommand(m_MasterController::cubeOutConeIn, m_MasterController))));
   }
 
 }

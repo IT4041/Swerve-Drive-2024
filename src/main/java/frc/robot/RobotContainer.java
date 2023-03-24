@@ -53,6 +53,7 @@ public class RobotContainer {
   private NetworkTable table = inst.getTable("FMSInfo");
   private BooleanTopic isRedAlliance = table.getBooleanTopic("IsRedAlliance");
   private BooleanSubscriber IsRed = isRedAlliance.subscribe(false, PubSubOption.keepDuplicates(false),PubSubOption.pollStorage(6));
+  private boolean isRed = false;
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -65,6 +66,10 @@ public class RobotContainer {
     m_MasterController = MasterController.getInstance(m_WristSubsystemPID, m_ArmSubsystemPID, m_IntakeSubsystem);
 
     m_drivetrainSubsystem.setDefaultCommand(new RunCommand(() -> m_drivetrainSubsystem.DriveWithJoystick(m_driver), m_drivetrainSubsystem));
+
+    // figure out what alliance were on
+    this.isRed = IsRed.get();
+  
 
     // Set up the default command for the drivetrain.
     // The controls are for field-oriented driving:
@@ -152,13 +157,23 @@ public class RobotContainer {
   }
 
   private void setupTrajectoryDashboardChooser() {
-    m_TrajectoryChooser = new SendableChooser<Command>();
-    m_TrajectoryChooser.setDefaultOption("Auto-Balance", autoSequences.AutoBalance());
-    m_TrajectoryChooser.addOption("Side To Station", autoSequences.SideToStationPath());
-    m_TrajectoryChooser.addOption("Center To Station", autoSequences.CenterToStationPath());
-    m_TrajectoryChooser.addOption("Center", autoSequences.CenterPath());
-    m_TrajectoryChooser.addOption("Side", autoSequences.SidePath());
 
+    m_TrajectoryChooser = new SendableChooser<Command>();
+
+    if(this.isRed){
+      m_TrajectoryChooser.setDefaultOption("Auto-Balance", autoSequences.RED_AutoBalance());
+      m_TrajectoryChooser.addOption("Center", autoSequences.RED_CenterPath());
+      m_TrajectoryChooser.addOption("Center To Station", autoSequences.RED_CenterToStationPath());
+      m_TrajectoryChooser.addOption("Side", autoSequences.RED_SidePath());
+      m_TrajectoryChooser.addOption("Side To Station", autoSequences.RED_SideToStationPath());
+    }else{
+      m_TrajectoryChooser.setDefaultOption("Auto-Balance", autoSequences.BLUE_AutoBalance());
+      m_TrajectoryChooser.addOption("Center", autoSequences.BLUE_CenterPath());
+      m_TrajectoryChooser.addOption("Center To Station", autoSequences.BLUE_CenterToStationPath());
+      m_TrajectoryChooser.addOption("Side", autoSequences.BLUE_SidePath());
+      m_TrajectoryChooser.addOption("Side To Station", autoSequences.BLUE_SideToStationPath());
+    }
+  
     SmartDashboard.putData(m_TrajectoryChooser);
   }
 
