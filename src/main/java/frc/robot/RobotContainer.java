@@ -13,6 +13,7 @@ import frc.robot.subsystems.IntakeSubsystemPWM;
 import frc.robot.subsystems.MasterController;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 import frc.robot.subsystems.WristSubsystemPID;
+import frc.robot.subsystems.components.LED;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -38,6 +39,7 @@ public class RobotContainer {
   private final ArmSubsystemPID m_ArmSubsystemPID;
   private final IntakeSubsystemPWM m_IntakeSubsystem;
   private final MasterController m_MasterController;
+  private final LED m_LED;
 
   private SendableChooser<Command> m_TrajectoryChooser;
   private AutoSequences autoSequences;
@@ -51,6 +53,7 @@ public class RobotContainer {
     m_IntakeSubsystem = IntakeSubsystemPWM.getInstance();
     m_ArmSubsystemPID = ArmSubsystemPID.getInstance();
     m_MasterController = MasterController.getInstance(m_WristSubsystemPID, m_ArmSubsystemPID, m_IntakeSubsystem);
+    m_LED = LED.getInstance();
 
     m_drivetrainSubsystem.setDefaultCommand(new RunCommand(() -> m_drivetrainSubsystem.DriveWithJoystick(m_driver), m_drivetrainSubsystem));
   
@@ -89,6 +92,8 @@ public class RobotContainer {
     JoystickButton X_BUTTON_AS = new JoystickButton(m_assist,Constants.XboxControllerConstants.X_BUTTON);
     JoystickButton Y_BUTTON_AS = new JoystickButton(m_assist,Constants.XboxControllerConstants.Y_BUTTON);
     JoystickButton THREE_LINES_AS = new JoystickButton(m_assist, Constants.XboxControllerConstants.THREE_LINES);
+    JoystickButton LEFT_BUMPER_AS = new JoystickButton(m_assist, Constants.XboxControllerConstants.LEFT_BUMPER);
+    JoystickButton RIGHT_BUMPER_AS = new JoystickButton(m_assist, Constants.XboxControllerConstants.RIGHT_BUMPER);
 
 
     // -----------DRIVER
@@ -128,6 +133,10 @@ public class RobotContainer {
 
     // ----RETURN TO ZERO---------------------------------------------------------------
     THREE_LINES_AS.onTrue(new InstantCommand(m_MasterController::zero, m_MasterController));
+
+    // ----------SIgnal Light-----------------------------------------------------------
+    RIGHT_BUMPER_AS.onTrue(new InstantCommand(m_LED::signalCone, m_LED));
+    LEFT_BUMPER_AS.onTrue(new InstantCommand(m_LED::signalCube, m_LED));
   }
 
   /**

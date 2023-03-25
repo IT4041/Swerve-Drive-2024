@@ -81,69 +81,6 @@ public final class Constants {
         }
     }
 
-    public static final class ScoringLocations {
-
-        private static final ScoringLocationDetails[] RedLocations = {
-                new ScoringLocationDetails(ScoringPoses.RED1_Pose2d, ElementType.CONE),
-                new ScoringLocationDetails(ScoringPoses.RED2_Pose2d, ElementType.CUBE),
-                new ScoringLocationDetails(ScoringPoses.RED3_Pose2d, ElementType.CONE),
-                new ScoringLocationDetails(ScoringPoses.RED4_Pose2d, ElementType.CONE),
-                new ScoringLocationDetails(ScoringPoses.RED5_Pose2d, ElementType.CUBE),
-                new ScoringLocationDetails(ScoringPoses.RED6_Pose2d, ElementType.CONE),
-                new ScoringLocationDetails(ScoringPoses.RED7_Pose2d, ElementType.CONE),
-                new ScoringLocationDetails(ScoringPoses.RED8_Pose2d, ElementType.CUBE),
-                new ScoringLocationDetails(ScoringPoses.RED9_Pose2d, ElementType.CONE)
-        };
-
-        private static final ScoringLocationDetails[] BlueLocations = {
-                new ScoringLocationDetails(ScoringPoses.BLUE1_Pose2d, ElementType.CONE),
-                new ScoringLocationDetails(ScoringPoses.BLUE2_Pose2d, ElementType.CUBE),
-                new ScoringLocationDetails(ScoringPoses.BLUE3_Pose2d, ElementType.CONE),
-                new ScoringLocationDetails(ScoringPoses.BLUE4_Pose2d, ElementType.CONE),
-                new ScoringLocationDetails(ScoringPoses.BLUE5_Pose2d, ElementType.CUBE),
-                new ScoringLocationDetails(ScoringPoses.BLUE6_Pose2d, ElementType.CONE),
-                new ScoringLocationDetails(ScoringPoses.BLUE7_Pose2d, ElementType.CONE),
-                new ScoringLocationDetails(ScoringPoses.BLUE8_Pose2d, ElementType.CUBE),
-                new ScoringLocationDetails(ScoringPoses.BLUE9_Pose2d, ElementType.CONE)
-        };
-
-        public static final ScoringLocationDetails getLocation(int ID, boolean isRed) {
-            if (isRed) {
-                return RedLocations[ID - 1];
-            } else {
-                return BlueLocations[ID - 1];
-            }
-
-        }
-    }
-
-    public static final class AprilTagCoordinates {
-
-        private static final Pose2d ID1 = new Pose2d(Units.inchesToMeters(610.77), Units.inchesToMeters(42.19),
-                Rotation2d.fromDegrees(180));
-        private static final Pose2d ID2 = new Pose2d(Units.inchesToMeters(610.77), Units.inchesToMeters(108.19),
-                Rotation2d.fromDegrees(180));
-        private static final Pose2d ID3 = new Pose2d(Units.inchesToMeters(610.77), Units.inchesToMeters(174.19),
-                Rotation2d.fromDegrees(180));
-        private static final Pose2d ID4 = new Pose2d(Units.inchesToMeters(636.96), Units.inchesToMeters(265.74),
-                Rotation2d.fromDegrees(180));
-        private static final Pose2d ID5 = new Pose2d(Units.inchesToMeters(14.25), Units.inchesToMeters(265.74),
-                Rotation2d.fromDegrees(0));
-        private static final Pose2d ID6 = new Pose2d(Units.inchesToMeters(40.45), Units.inchesToMeters(174.19),
-                Rotation2d.fromDegrees(0));
-        private static final Pose2d ID7 = new Pose2d(Units.inchesToMeters(40.45), Units.inchesToMeters(108.19),
-                Rotation2d.fromDegrees(0));
-        private static final Pose2d ID8 = new Pose2d(Units.inchesToMeters(40.45), Units.inchesToMeters(42.19),
-                Rotation2d.fromDegrees(0));
-
-        private static final Pose2d[] AprilTagsPoses = { ID1, ID2, ID3, ID4, ID5, ID6, ID7, ID8 };
-
-        public static final Pose2d getAprilTagPose(int targetID) {
-
-            return AprilTagsPoses[targetID - 1];
-        }
-    }
-
     public static final class SwerveModuleConstants {
         //change this voltage to make the robot move faster
         public static final double MAX_VOLTAGE = 12.0;
@@ -223,7 +160,7 @@ public final class Constants {
 
         //----OFFSET-------------------------------
         public static final double zeroOffset = 30;
-        public static final double offset = 321.0526514;
+        public static final double offset = 318.9217329;
         //-----------------------------------------
 
         public static final int SparkMaxDeviceID = 4;
@@ -269,20 +206,9 @@ public final class Constants {
         public static final int RIGHT_STICK_PRESS = 10;
     }
 
-    public static final class AutoPilotController {
-        public static final int AUTOPILOT_CONTROLLER_USB_ID = 1;
-        public static final int GREEN_LEFT = 1;
-        public static final int GREEN_CENTER = 2;
-        public static final int GREEN_RIGHT = 3;
-        public static final int YELLOW_LEFT = 4;
-        public static final int YELLOW_CENTER = 5;
-        public static final int YELLOW_RIGHT = 6;
-        public static final int BLUE_LEFT = 7;
-        public static final int BLUE_CENTER = 8;
-        public static final int BLUE_RIGHT = 9;
-        public static final int CLEAR_TOP = 10;
-        public static final int CLEAR_MIDDLE = 11;
-        public static final int CLEAR_BOTTOM = 12; 
+    public static final class LEDConstants{
+        public static final int PWMPort = 5;
+        public static final int StripLength = 6;
     }
 
 }

@@ -161,8 +161,7 @@ public class AutoSequences extends SequentialCommandGroup {
       new InstantCommand(m_MasterController::intakeStop, m_MasterController),
       new WaitCommand(0.25),
       new ParallelCommandGroup(autoPaths.RED_CenterPath(),
-          new InstantCommand(m_MasterController::autoCubefloorPickUp, m_MasterController)),
-      new InstantCommand(m_MasterController::intakeStop, m_MasterController),
+        new InstantCommand(m_MasterController::autoCubefloorPickUp, m_MasterController)),
       new InstantCommand(m_MasterController::gotoTop, m_MasterController),
       new InstantCommand(m_MasterController::wristZero, m_MasterController),
       new ParallelCommandGroup(

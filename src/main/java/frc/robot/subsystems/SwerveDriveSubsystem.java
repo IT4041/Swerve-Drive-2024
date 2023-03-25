@@ -200,6 +200,9 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         //PIDController xyController = new PIDController(5, 0, 0);
         PIDController xyController = new PIDController(2, 0, 0);
 
+        //PIDController rotController = new PIDController(5, 0, 0);
+        PIDController rotController = new PIDController(2.5, 0, 0);
+
         return new SequentialCommandGroup(
                 new InstantCommand(() -> {
                     if (isFirstPath)
@@ -213,7 +216,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
                         this.m_kinematics,
                         xyController,
                         xyController,
-                        new PIDController(5, 0, 0),
+                        rotController,
                         this::setModuleStates,
                         this),
                 new InstantCommand(() -> {
