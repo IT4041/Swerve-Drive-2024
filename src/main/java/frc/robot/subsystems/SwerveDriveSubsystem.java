@@ -201,7 +201,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         PIDController xyController = new PIDController(2, 0, 0);
 
         //PIDController rotController = new PIDController(5, 0, 0);
-        PIDController rotController = new PIDController(2.5, 0, 0);
+        PIDController rotController = new PIDController(2, 0, 0);
 
         return new SequentialCommandGroup(
                 new InstantCommand(() -> {

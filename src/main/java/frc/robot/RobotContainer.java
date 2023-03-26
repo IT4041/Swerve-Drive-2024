@@ -145,6 +145,13 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
+
+    System.out.println("*****************************");
+    System.out.println("*****************************");
+    System.out.println(m_TrajectoryChooser.getSelected().getName());
+    System.out.println("*****************************");
+    System.out.println("*****************************");
+
     return m_TrajectoryChooser.getSelected();
   }
 
