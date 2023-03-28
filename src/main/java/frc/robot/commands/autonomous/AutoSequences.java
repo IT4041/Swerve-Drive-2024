@@ -71,7 +71,7 @@ public class AutoSequences extends SequentialCommandGroup {
 
     SequentialCommandGroup BLUE_CenterPath = new SequentialCommandGroup(
         new InstantCommand(m_MasterController::gotoTop, m_MasterController),
-        new WaitCommand(2.5),
+        new WaitCommand(2.75),
         new InstantCommand(m_MasterController::cubeInConeOut, m_MasterController),
         new WaitCommand(0.35),
         new InstantCommand(m_MasterController::zero, m_MasterController),
