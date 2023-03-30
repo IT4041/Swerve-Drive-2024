@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.util.Color;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -208,7 +209,11 @@ public final class Constants {
 
     public static final class LEDConstants{
         public static final int PWMPort = 5;
-        public static final int StripLength = 3;
+        public static final int StripLength = 16;
+
+        public static final Color purple = new Color(255, 1, 255);
+        public static final Color yellow = new Color(255, 128, 1);
+        public static final Color orange = new Color(1, 255, 255);
     }
 
 }

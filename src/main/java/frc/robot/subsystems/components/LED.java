@@ -15,9 +15,7 @@ public class LED extends SubsystemBase {
   private static LED m_inst = null;
   private AddressableLED m_led;
   private AddressableLEDBuffer m_ledBuffer;
-  private final Color purple = new Color(128, 0, 128);
-  private final Color yellow = new Color(255, 255, 0);
-  private Color indicator = new Color(255,140,0);// orange
+  private Color indicator = Constants.LEDConstants.orange;
 
   public static LED getInstance() {
     if (m_inst == null) {
@@ -57,11 +55,11 @@ public class LED extends SubsystemBase {
   }
 
   public void signalCone(){
-    indicator = yellow;
+    indicator = Constants.LEDConstants.yellow;
 
   }
   public void signalCube(){
-    indicator = purple;
+    indicator = Constants.LEDConstants.purple;
 
   }
 }
