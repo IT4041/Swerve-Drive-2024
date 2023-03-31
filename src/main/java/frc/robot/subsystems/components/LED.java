@@ -46,12 +46,18 @@ public class LED extends SubsystemBase {
   @Override
   public void periodic() {
 
-    SmartDashboard.putBoolean("SignalCone", indicator == yellow);
+    SmartDashboard.putBoolean("SignalCone", indicator == Constants.LEDConstants.yellow);
 
     // This method will be called once per scheduler run
     for (var i = 0; i < m_ledBuffer.getLength(); i++) {
       // Sets the specified LED to the RGB values for red
-      m_ledBuffer.setLED(i, indicator);
+      if(indicator == Constants.LEDConstants.yellow || indicator == Constants.LEDConstants.purple){
+        m_ledBuffer.setLED(i, indicator);
+      }
+      else{
+        m_ledBuffer.setLED(i, shimmer());
+      }
+      
    }
    
    m_led.setData(m_ledBuffer);
@@ -64,5 +70,14 @@ public class LED extends SubsystemBase {
   public void signalCube(){
     indicator = Constants.LEDConstants.purple;
 
+  }
+
+  private Color shimmer(){
+
+    Double red = (Math.random()*10000) % 256;
+    Double green = (Math.random()*10000) % 256;
+    Double blue = (Math.random()*10000) % 256;
+
+    return new Color(red.intValue(), green.intValue(), blue.intValue());
   }
 }

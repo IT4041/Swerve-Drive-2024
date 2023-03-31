@@ -147,9 +147,9 @@ public final class Constants {
                 public static final int[] ArmPoses = {0,floor,middle,top};    
         }
 
-        public static final double kP = 0.055;
+        public static final double kP = 0.04;
         public static final double kI = 0.0;
-        public static final double kD = -0.05;
+        public static final double kD = 0.5;
         public static final double kFF = 0.0;
         public static final double maxOutput = 1;
         public static final double minOutput = -1;

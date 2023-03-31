@@ -36,13 +36,13 @@ public class AutoSequences extends SequentialCommandGroup {
   public Command BLUE_SideToStationPath() {
     
     SequentialCommandGroup BLUE_SideToStationPath = new SequentialCommandGroup(
-        new InstantCommand(m_MasterController::gotoTop, m_MasterController),
-        new WaitCommand(2.5),
-        new InstantCommand(m_MasterController::cubeInConeOut, m_MasterController),
-        new WaitCommand(0.35),
-        new InstantCommand(m_MasterController::zero, m_MasterController),
-        new InstantCommand(m_MasterController::intakeStop, m_MasterController),
-        new WaitCommand(0.25),
+        // new InstantCommand(m_MasterController::gotoTop, m_MasterController),
+        // new WaitCommand(2.5),
+        // new InstantCommand(m_MasterController::cubeInConeOut, m_MasterController),
+        // new WaitCommand(0.35),
+        // new InstantCommand(m_MasterController::zero, m_MasterController),
+        // new InstantCommand(m_MasterController::intakeStop, m_MasterController),
+        // new WaitCommand(0.25),
         autoPaths.BLUE_SideToStationPath(),
         m_drivetrainSubsystem.autoBalance());
 
@@ -53,13 +53,13 @@ public class AutoSequences extends SequentialCommandGroup {
   public Command BLUE_CenterToStationPath() {
     
     SequentialCommandGroup BLUE_CenterToStationPath = new SequentialCommandGroup(
-        new InstantCommand(m_MasterController::gotoTop, m_MasterController),
-        new WaitCommand(2.5),
-        new InstantCommand(m_MasterController::cubeInConeOut, m_MasterController),
-        new WaitCommand(0.35),
-        new InstantCommand(m_MasterController::zero, m_MasterController),
-        new InstantCommand(m_MasterController::intakeStop, m_MasterController),
-        new WaitCommand(0.25),
+        // new InstantCommand(m_MasterController::gotoTop, m_MasterController),
+        // new WaitCommand(2.5),
+        // new InstantCommand(m_MasterController::cubeInConeOut, m_MasterController),
+        // new WaitCommand(0.35),
+        // new InstantCommand(m_MasterController::zero, m_MasterController),
+        // new InstantCommand(m_MasterController::intakeStop, m_MasterController),
+        // new WaitCommand(0.25),
         autoPaths.BLUE_CenterToStationPath(),
         m_drivetrainSubsystem.autoBalance());
         
@@ -69,62 +69,60 @@ public class AutoSequences extends SequentialCommandGroup {
 
   public Command BLUE_CenterPath() {
 
-    SequentialCommandGroup BLUE_CenterPath = new SequentialCommandGroup(
-        new InstantCommand(m_MasterController::gotoTop, m_MasterController),
-        new WaitCommand(2.75),
-        new InstantCommand(m_MasterController::cubeInConeOut, m_MasterController),
-        new WaitCommand(0.35),
-        new InstantCommand(m_MasterController::zero, m_MasterController),
-        new InstantCommand(m_MasterController::intakeStop, m_MasterController),
-        new WaitCommand(0.25),
-        new ParallelCommandGroup(autoPaths.BLUE_CenterPath(),
-            new InstantCommand(m_MasterController::autoCubefloorPickUp, m_MasterController)),
-        new InstantCommand(m_MasterController::intakeStop, m_MasterController),
-        new InstantCommand(m_MasterController::gotoTop, m_MasterController),
-        new InstantCommand(m_MasterController::wristZero, m_MasterController),
-        new ParallelCommandGroup(
-            new SequentialCommandGroup(new WaitCommand(0.825), autoPaths.BLUE_CenterFinishPath()),
-            new SequentialCommandGroup(new WaitCommand(1.65),
-                new InstantCommand(m_MasterController::cubeOutConeIn, m_MasterController))));
+    // SequentialCommandGroup BLUE_CenterPath = new SequentialCommandGroup(
+    //     new InstantCommand(m_MasterController::gotoTop, m_MasterController),
+    //     new WaitCommand(2.75),
+    //     new InstantCommand(m_MasterController::cubeInConeOut, m_MasterController),
+    //     new WaitCommand(0.35),
+    //     new InstantCommand(m_MasterController::zero, m_MasterController),
+    //     new InstantCommand(m_MasterController::intakeStop, m_MasterController),
+    //     new WaitCommand(0.25),
+    //     new ParallelCommandGroup(autoPaths.BLUE_CenterPath(),
+    //         new InstantCommand(m_MasterController::autoCubefloorPickUp, m_MasterController)),
+    //     new InstantCommand(m_MasterController::intakeStop, m_MasterController),
+    //     new InstantCommand(m_MasterController::gotoTop, m_MasterController),
+    //     new InstantCommand(m_MasterController::wristZero, m_MasterController),
+    //     new ParallelCommandGroup(
+    //         new SequentialCommandGroup(new WaitCommand(0.825), autoPaths.BLUE_CenterFinishPath()),
+    //         new SequentialCommandGroup(new WaitCommand(1.65),
+    //             new InstantCommand(m_MasterController::cubeOutConeIn, m_MasterController))));
 
-        BLUE_CenterPath.setName("BLUE_CENTER_PATH");
-        return BLUE_CenterPath;
+    SequentialCommandGroup BLUE_CenterPath = new SequentialCommandGroup(autoPaths.BLUE_CenterPath(),autoPaths.BLUE_CenterFinishPath());
+
+    BLUE_CenterPath.setName("BLUE_CENTER_PATH");
+    return BLUE_CenterPath;
   }
 
   public Command BLUE_SidePath() {
 
-    SequentialCommandGroup BLUE_SidePath = new SequentialCommandGroup(
-        new InstantCommand(m_MasterController::gotoTop, m_MasterController),
-        new WaitCommand(2.5),
-        new InstantCommand(m_MasterController::cubeInConeOut, m_MasterController),
-        new WaitCommand(0.35),
-        new InstantCommand(m_MasterController::zero, m_MasterController),
-        new InstantCommand(m_MasterController::intakeStop, m_MasterController),
-        new WaitCommand(0.25),
-        new ParallelCommandGroup(autoPaths.BLUE_SidePath(),
-            new InstantCommand(m_MasterController::autoCubefloorPickUp, m_MasterController)),
-        new InstantCommand(m_MasterController::intakeStop, m_MasterController),
-        new InstantCommand(m_MasterController::gotoTop, m_MasterController),
-        new InstantCommand(m_MasterController::wristZero, m_MasterController),
-        new ParallelCommandGroup(
-            new SequentialCommandGroup(new WaitCommand(0.825), autoPaths.BLUE_SideFinishPath()),
-            new SequentialCommandGroup(new WaitCommand(1.65),
-                new InstantCommand(m_MasterController::cubeOutConeIn, m_MasterController))));
+    // SequentialCommandGroup BLUE_SidePath = new SequentialCommandGroup(
+    //     new InstantCommand(m_MasterController::gotoTop, m_MasterController),
+    //     new WaitCommand(2.5),
+    //     new InstantCommand(m_MasterController::cubeInConeOut, m_MasterController),
+    //     new WaitCommand(0.35),
+    //     new InstantCommand(m_MasterController::zero, m_MasterController),
+    //     new InstantCommand(m_MasterController::intakeStop, m_MasterController),
+    //     new WaitCommand(0.25),
+    //     new ParallelCommandGroup(autoPaths.BLUE_SidePath(),
+    //         new InstantCommand(m_MasterController::autoCubefloorPickUp, m_MasterController)),
+    //     new InstantCommand(m_MasterController::intakeStop, m_MasterController),
+    //     new InstantCommand(m_MasterController::gotoTop, m_MasterController),
+    //     new InstantCommand(m_MasterController::wristZero, m_MasterController),
+    //     new ParallelCommandGroup(
+    //         new SequentialCommandGroup(new WaitCommand(0.825), autoPaths.BLUE_SideFinishPath()),
+    //         new SequentialCommandGroup(new WaitCommand(1.65),
+    //             new InstantCommand(m_MasterController::cubeOutConeIn, m_MasterController))));
 
-        BLUE_SidePath.setName("BLUE_SIDE_PATH");
-        return BLUE_SidePath;
+    SequentialCommandGroup BLUE_SidePath = new SequentialCommandGroup(autoPaths.BLUE_SidePath(),autoPaths.BLUE_SideFinishPath());
+
+    BLUE_SidePath.setName("BLUE_SIDE_PATH");
+    return BLUE_SidePath;
   }
 
   public Command BLUE_AutoBalance() {
 
     SequentialCommandGroup BLUE_AutoBalance = new SequentialCommandGroup(
-        new InstantCommand(m_MasterController::gotoTop, m_MasterController),
-        new WaitCommand(2.5),
-        new InstantCommand(m_MasterController::cubeInConeOut, m_MasterController),
-        new WaitCommand(0.35),
-        new InstantCommand(m_MasterController::zero, m_MasterController),
-        new InstantCommand(m_MasterController::intakeStop, m_MasterController),
-        new WaitCommand(0.25),
+           
         autoPaths.BLUE_AutoBalancePath(),
         m_drivetrainSubsystem.autoBalance());
 
@@ -135,13 +133,13 @@ public class AutoSequences extends SequentialCommandGroup {
   public Command RED_AutoBalance() {
 
     SequentialCommandGroup RED_AutoBalance = new SequentialCommandGroup(
-      new InstantCommand(m_MasterController::gotoTop, m_MasterController),
-      new WaitCommand(2.5),
-      new InstantCommand(m_MasterController::cubeInConeOut, m_MasterController),
-      new WaitCommand(0.35),
-      new InstantCommand(m_MasterController::zero, m_MasterController),
-      new InstantCommand(m_MasterController::intakeStop, m_MasterController),
-      new WaitCommand(0.25),
+      // new InstantCommand(m_MasterController::gotoTop, m_MasterController),
+      // new WaitCommand(2.5),
+      // new InstantCommand(m_MasterController::cubeInConeOut, m_MasterController),
+      // new WaitCommand(0.35),
+      // new InstantCommand(m_MasterController::zero, m_MasterController),
+      // new InstantCommand(m_MasterController::intakeStop, m_MasterController),
+      // new WaitCommand(0.25),
       autoPaths.RED_AutoBalancePath(),
       m_drivetrainSubsystem.autoBalance());
 
@@ -152,13 +150,13 @@ public class AutoSequences extends SequentialCommandGroup {
   public Command RED_SideToStationPath() {
 
     SequentialCommandGroup RED_SideToStationPath = new SequentialCommandGroup(
-      new InstantCommand(m_MasterController::gotoTop, m_MasterController),
-      new WaitCommand(2.5),
-      new InstantCommand(m_MasterController::cubeInConeOut, m_MasterController),
-      new WaitCommand(0.35),
-      new InstantCommand(m_MasterController::zero, m_MasterController),
-      new InstantCommand(m_MasterController::intakeStop, m_MasterController),
-      new WaitCommand(0.25),
+      // new InstantCommand(m_MasterController::gotoTop, m_MasterController),
+      // new WaitCommand(2.5),
+      // new InstantCommand(m_MasterController::cubeInConeOut, m_MasterController),
+      // new WaitCommand(0.35),
+      // new InstantCommand(m_MasterController::zero, m_MasterController),
+      // new InstantCommand(m_MasterController::intakeStop, m_MasterController),
+      // new WaitCommand(0.25),
       autoPaths.RED_SideToStationPath(),
       m_drivetrainSubsystem.autoBalance());
 
@@ -169,13 +167,13 @@ public class AutoSequences extends SequentialCommandGroup {
   public Command RED_CenterToStationPath() {
 
     SequentialCommandGroup RED_CenterToStationPath = new SequentialCommandGroup(
-      new InstantCommand(m_MasterController::gotoTop, m_MasterController),
-      new WaitCommand(2.5),
-      new InstantCommand(m_MasterController::cubeInConeOut, m_MasterController),
-      new WaitCommand(0.35),
-      new InstantCommand(m_MasterController::zero, m_MasterController),
-      new InstantCommand(m_MasterController::intakeStop, m_MasterController),
-      new WaitCommand(0.25),
+      // new InstantCommand(m_MasterController::gotoTop, m_MasterController),
+      // new WaitCommand(2.5),
+      // new InstantCommand(m_MasterController::cubeInConeOut, m_MasterController),
+      // new WaitCommand(0.35),
+      // new InstantCommand(m_MasterController::zero, m_MasterController),
+      // new InstantCommand(m_MasterController::intakeStop, m_MasterController),
+      // new WaitCommand(0.25),
       autoPaths.RED_CenterToStationPath(),
       m_drivetrainSubsystem.autoBalance());
 
@@ -186,22 +184,24 @@ public class AutoSequences extends SequentialCommandGroup {
 
   public Command RED_CenterPath() {
 
-    SequentialCommandGroup RED_CenterPath = new SequentialCommandGroup(
-      new InstantCommand(m_MasterController::gotoTop, m_MasterController),
-      new WaitCommand(2.5),
-      new InstantCommand(m_MasterController::cubeInConeOut, m_MasterController),
-      new WaitCommand(0.35),
-      new InstantCommand(m_MasterController::zero, m_MasterController),
-      new InstantCommand(m_MasterController::intakeStop, m_MasterController),
-      new WaitCommand(0.25),
-      new ParallelCommandGroup(autoPaths.RED_CenterPath(),
-        new InstantCommand(m_MasterController::autoCubefloorPickUp, m_MasterController)),
-      new InstantCommand(m_MasterController::gotoTop, m_MasterController),
-      new InstantCommand(m_MasterController::wristZero, m_MasterController),
-      new ParallelCommandGroup(
-          new SequentialCommandGroup(new WaitCommand(0.825), autoPaths.RED_CenterFinishPath()),
-          new SequentialCommandGroup(new WaitCommand(1.65),
-              new InstantCommand(m_MasterController::cubeOutConeIn, m_MasterController))));
+    // SequentialCommandGroup RED_CenterPath = new SequentialCommandGroup(
+    //   new InstantCommand(m_MasterController::gotoTop, m_MasterController),
+    //   new WaitCommand(2.5),
+    //   new InstantCommand(m_MasterController::cubeInConeOut, m_MasterController),
+    //   new WaitCommand(0.35),
+    //   new InstantCommand(m_MasterController::zero, m_MasterController),
+    //   new InstantCommand(m_MasterController::intakeStop, m_MasterController),
+    //   new WaitCommand(0.25),
+    //   new ParallelCommandGroup(autoPaths.RED_CenterPath(),
+    //     new InstantCommand(m_MasterController::autoCubefloorPickUp, m_MasterController)),
+    //   new InstantCommand(m_MasterController::gotoTop, m_MasterController),
+    //   new InstantCommand(m_MasterController::wristZero, m_MasterController),
+    //   new ParallelCommandGroup(
+    //       new SequentialCommandGroup(new WaitCommand(0.825), autoPaths.RED_CenterFinishPath()),
+    //       new SequentialCommandGroup(new WaitCommand(1.65),
+    //           new InstantCommand(m_MasterController::cubeOutConeIn, m_MasterController))));
+
+      SequentialCommandGroup RED_CenterPath = new SequentialCommandGroup(autoPaths.RED_CenterPath(),autoPaths.RED_CenterFinishPath());
 
       RED_CenterPath.setName("RED_CENTER_PATH");
       return RED_CenterPath;
@@ -209,23 +209,25 @@ public class AutoSequences extends SequentialCommandGroup {
 
   public Command RED_SidePath() {
 
-    SequentialCommandGroup RED_SidePath = new SequentialCommandGroup(
-      new InstantCommand(m_MasterController::gotoTop, m_MasterController),
-      new WaitCommand(2.5),
-      new InstantCommand(m_MasterController::cubeInConeOut, m_MasterController),
-      new WaitCommand(0.35),
-      new InstantCommand(m_MasterController::zero, m_MasterController),
-      new InstantCommand(m_MasterController::intakeStop, m_MasterController),
-      new WaitCommand(0.25),
-      new ParallelCommandGroup(autoPaths.RED_SidePath(),
-          new InstantCommand(m_MasterController::autoCubefloorPickUp, m_MasterController)),
-      new InstantCommand(m_MasterController::intakeStop, m_MasterController),
-      new InstantCommand(m_MasterController::gotoTop, m_MasterController),
-      new InstantCommand(m_MasterController::wristZero, m_MasterController),
-      new ParallelCommandGroup(
-          new SequentialCommandGroup(new WaitCommand(0.825), autoPaths.RED_SideFinishPath()),
-          new SequentialCommandGroup(new WaitCommand(1.65),
-              new InstantCommand(m_MasterController::cubeOutConeIn, m_MasterController))));
+    // SequentialCommandGroup RED_SidePath = new SequentialCommandGroup(
+    //   new InstantCommand(m_MasterController::gotoTop, m_MasterController),
+    //   new WaitCommand(2.5),
+    //   new InstantCommand(m_MasterController::cubeInConeOut, m_MasterController),
+    //   new WaitCommand(0.35),
+    //   new InstantCommand(m_MasterController::zero, m_MasterController),
+    //   new InstantCommand(m_MasterController::intakeStop, m_MasterController),
+    //   new WaitCommand(0.25),
+    //   new ParallelCommandGroup(autoPaths.RED_SidePath(),
+    //       new InstantCommand(m_MasterController::autoCubefloorPickUp, m_MasterController)),
+    //   new InstantCommand(m_MasterController::intakeStop, m_MasterController),
+    //   new InstantCommand(m_MasterController::gotoTop, m_MasterController),
+    //   new InstantCommand(m_MasterController::wristZero, m_MasterController),
+    //   new ParallelCommandGroup(
+    //       new SequentialCommandGroup(new WaitCommand(0.825), autoPaths.RED_SideFinishPath()),
+    //       new SequentialCommandGroup(new WaitCommand(1.65),
+    //           new InstantCommand(m_MasterController::cubeOutConeIn, m_MasterController))));
+
+    SequentialCommandGroup RED_SidePath = new SequentialCommandGroup(autoPaths.RED_SidePath(),autoPaths.RED_SideFinishPath());
 
     RED_SidePath.setName("RED_SIDE_PATH");
     return RED_SidePath;
