@@ -10,6 +10,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class LED extends SubsystemBase {
 
@@ -17,6 +19,9 @@ public class LED extends SubsystemBase {
   private AddressableLED m_led;
   private AddressableLEDBuffer m_ledBuffer;
   private Color indicator = Constants.LEDConstants.orange;
+  private Timer timer = new Timer();
+  private TimerTask task;
+  private int m_animationDelay = 50;
 
   public static LED getInstance() {
     if (m_inst == null) {
@@ -29,7 +34,7 @@ public class LED extends SubsystemBase {
   private LED() {
     // PWM port 5
     // Must be a PWM header, not MXP or DIO
-     this.m_led = new AddressableLED(Constants.LEDConstants.PWMPort);
+    this.m_led = new AddressableLED(Constants.LEDConstants.PWMPort);
 
     // Reuse buffer
     // Default to a length of 6 start empty output
@@ -51,32 +56,43 @@ public class LED extends SubsystemBase {
     // This method will be called once per scheduler run
     for (var i = 0; i < m_ledBuffer.getLength(); i++) {
       // Sets the specified LED to the RGB values for red
-      if(indicator == Constants.LEDConstants.yellow || indicator == Constants.LEDConstants.purple){
+      if (indicator == Constants.LEDConstants.yellow || indicator == Constants.LEDConstants.purple) {
         m_ledBuffer.setLED(i, indicator);
-      }
-      else{
+      } else {
         m_ledBuffer.setLED(i, shimmer());
       }
-      
-   }
-   
-   m_led.setData(m_ledBuffer);
+    }
+
+    if (indicator == Constants.LEDConstants.yellow || indicator == Constants.LEDConstants.purple) {
+      m_led.setData(m_ledBuffer);
+    } else {
+      task = new TimerTask() {
+        public void run() {
+          m_led.setData(m_ledBuffer);
+        }
+      };
+      timer.scheduleAtFixedRate(
+          task,
+          20, // run first occurrence in 20ms
+          m_animationDelay);
+    }
   }
 
-  public void signalCone(){
+  public void signalCone() {
     indicator = Constants.LEDConstants.yellow;
 
   }
-  public void signalCube(){
+
+  public void signalCube() {
     indicator = Constants.LEDConstants.purple;
 
   }
 
-  private Color shimmer(){
+  private Color shimmer() {
 
-    Double red = (Math.random()*10000) % 256;
-    Double green = (Math.random()*10000) % 256;
-    Double blue = (Math.random()*10000) % 256;
+    Double red = (Math.random() * 10000) % 256;
+    Double green = (Math.random() * 10000) % 256;
+    Double blue = (Math.random() * 10000) % 256;
 
     return new Color(red.intValue(), green.intValue(), blue.intValue());
   }
