@@ -172,9 +172,11 @@ public final class Constants {
                 public static final int top = 12;
                 public static final int shelf = 29;
                 public static final int floorCone = 85;
-                public static final int floorCube = 90; 
+                public static final int floorCube = 86; 
                 public static final int tiltedCone = 97;
                 public static final int[] WristPoses = {0,top,shelf,floorCone,floorCube,tiltedCone};    
+
+                public static final int autoWrist = 84;
         }
 
         public static final double kP = 0.09;
@@ -188,7 +190,7 @@ public final class Constants {
 
     public static final class IntakeSubsystemConstants {
 
-        public static final int SparkMaxPWMChannel = 0;
+        public static final int SparkMaxPWMChannel = 1;
         public static final int SparkMaxDeviceID = 8;
     }
 

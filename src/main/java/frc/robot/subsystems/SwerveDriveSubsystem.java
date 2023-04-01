@@ -198,10 +198,10 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     public Command traj(PathPlannerTrajectory traj, boolean isFirstPath) {
 
         //PIDController xyController = new PIDController(5, 0, 0);
-        PIDController xyController = new PIDController(3, 0, 0);
+        PIDController xyController = new PIDController(4, 0, 0);
 
         //PIDController rotController = new PIDController(5, 0, 0);
-        PIDController rotController = new PIDController(3, 0, 0);
+        PIDController rotController = new PIDController(4, 0, 0);
 
         return new SequentialCommandGroup(
                 new InstantCommand(() -> {

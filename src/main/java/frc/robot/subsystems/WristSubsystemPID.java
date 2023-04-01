@@ -112,8 +112,8 @@ public class WristSubsystemPID extends SubsystemBase {
   }
 
   public void autoIntake(){
-    this.targetPosition = Constants.WristSubsystemConstants.WristPositions.floorCube;
-    this.setPosition(Constants.WristSubsystemConstants.WristPositions.floorCube);
+    this.targetPosition = Constants.WristSubsystemConstants.WristPositions.autoWrist;
+    this.setPosition(Constants.WristSubsystemConstants.WristPositions.autoWrist);
   }
 
   public void zero(){

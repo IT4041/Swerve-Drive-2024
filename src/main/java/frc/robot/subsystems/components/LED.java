@@ -21,7 +21,7 @@ public class LED extends SubsystemBase {
   private Color indicator = Constants.LEDConstants.orange;
   private Timer timer = new Timer();
   private TimerTask task;
-  private int m_animationDelay = 50;
+  private int m_animationDelay = 200;
 
   public static LED getInstance() {
     if (m_inst == null) {

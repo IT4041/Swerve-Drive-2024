@@ -39,6 +39,11 @@ public class MasterController extends SubsystemBase {
     m_ArmSubsystemPID.top();
   }
 
+  public void gotoMiddle() {
+    // top
+    m_ArmSubsystemPID.middle();
+  }
+
   // --- return to arm wrist to zero position
   // --------------------------------------
   public void zero() {
@@ -67,6 +72,10 @@ public class MasterController extends SubsystemBase {
 
   public void wristZero() {
     m_WristSubsystemPID.zero();
+  }
+
+  public void wristTop() {
+    m_WristSubsystemPID.top();
   }
 
   public void autoCubefloorPickUp() {
