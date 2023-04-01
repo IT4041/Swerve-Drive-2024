@@ -244,10 +244,9 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     private void SlowUntilLevel(){
 
         double pitch = pigeon.getPitch();
-        double driveSpeed = 0;
+        double driveSpeed = Constants.SwerveDriveConstants.balanceHold;
 
-        if(Math.abs(pitch) > Constants.SwerveDriveConstants.balanceRollThreshold){
-
+        if(Math.abs(pitch) >= Constants.SwerveDriveConstants.balanceRollThreshold){
             driveSpeed = Math.signum(pitch) * Constants.SwerveDriveConstants.balanceSpeed;
         }
 

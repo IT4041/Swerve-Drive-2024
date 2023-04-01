@@ -125,8 +125,9 @@ public final class Constants {
         public static final double MAX_OMEGA_RADIANS_PER_SECOND = 2.5;
 
         public static final double balanceSpeedMultipier = 0.0625;
-        public static final int balanceRollThreshold = 3;
-        public static final double balanceSpeed = .65;
+        public static final double balanceRollThreshold = 4.5;
+        public static final double balanceSpeed = 0.55;
+        public static final double balanceHold = 0.05;
     }
 
     public static final class ArmSubsystemConstants {
