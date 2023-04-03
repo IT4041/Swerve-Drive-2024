@@ -77,7 +77,7 @@ public class WristSubsystemPID extends SubsystemBase {
     m_motor.burnFlash();
     m_follower.burnFlash();
 
-    this.targetPosition = 0;
+    this.targetPosition = Constants.WristSubsystemConstants.offset_offset;
   }
 
   @Override
@@ -117,13 +117,13 @@ public class WristSubsystemPID extends SubsystemBase {
   }
 
   public void zero(){
-    this.targetPosition = 0;
-    this.setPosition(0);
+    this.targetPosition = Constants.WristSubsystemConstants.offset_offset;
+    this.setPosition(Constants.WristSubsystemConstants.offset_offset);
     currWristPoseIndex = 0;
   }
 
   public void top(){
-    this.targetPosition = 1;
+    this.targetPosition = Constants.WristSubsystemConstants.WristPositions.top;
     this.setPosition(Constants.WristSubsystemConstants.WristPositions.top);
     currWristPoseIndex = 1;
   }

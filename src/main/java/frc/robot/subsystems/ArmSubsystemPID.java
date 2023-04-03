@@ -14,6 +14,7 @@ import com.revrobotics.SparkMaxAbsoluteEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.ExternalFollower;
 import com.revrobotics.CANSparkMax.IdleMode;
+import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -66,6 +67,11 @@ public class ArmSubsystemPID extends SubsystemBase {
     m_motor.setIdleMode(IdleMode.kBrake);
     m_motor.setSmartCurrentLimit(20, 80, 100);
     m_motor.setClosedLoopRampRate(1);
+
+    m_motor.setSoftLimit(SoftLimitDirection.kForward, Constants.ArmSubsystemConstants.ArmPositions.top);
+    m_motor.setSoftLimit(SoftLimitDirection.kReverse, Constants.ArmSubsystemConstants.offset_offset);
+    m_motor.enableSoftLimit(SoftLimitDirection.kForward, true);
+    m_motor.enableSoftLimit(SoftLimitDirection.kReverse, true);
     
     m_follower.setIdleMode(IdleMode.kBrake);
     m_follower.setSmartCurrentLimit(20, 80, 100);
@@ -79,7 +85,7 @@ public class ArmSubsystemPID extends SubsystemBase {
     m_motor.burnFlash();
     m_follower.burnFlash();
 
-    this.targetPosition = 0;
+    this.targetPosition = Constants.ArmSubsystemConstants.offset_offset;
   }
 
   @Override
@@ -90,10 +96,6 @@ public class ArmSubsystemPID extends SubsystemBase {
     SmartDashboard.putBoolean("Arm Middle", currArmPoseIndex == 2);
     SmartDashboard.putBoolean("Arm Low", currArmPoseIndex == 1);
     SmartDashboard.putBoolean("Arm Zero", currArmPoseIndex == 0);
-
-    // if(currArmPoseIndex == 0 && (m_AbsoluteEncoder.getPosition() > 355 || m_AbsoluteEncoder.getPosition() < 5 )){
-    //   m_pidController.setReference(-.05, CANSparkMax.ControlType.kDutyCycle);
-    // }
   }
   
   public void up() {
@@ -131,8 +133,8 @@ public class ArmSubsystemPID extends SubsystemBase {
   }
 
   public void zero() {
-    this.targetPosition = 0;
-    this.setPosition(0);
+    this.targetPosition = Constants.ArmSubsystemConstants.offset_offset;
+    this.setPosition(Constants.ArmSubsystemConstants.offset_offset);
     currArmPoseIndex = 0;
   }
 
