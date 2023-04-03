@@ -161,15 +161,11 @@ public class RobotContainer {
 
       m_TrajectoryChooser.addOption("RED-Auto-Balance", autoSequences.RED_AutoBalance());
       m_TrajectoryChooser.addOption("RED-Center", autoSequences.RED_CenterPath());
-      m_TrajectoryChooser.addOption("RED-Center To Station", autoSequences.RED_CenterToStationPath());
       m_TrajectoryChooser.addOption("RED-Side", autoSequences.RED_SidePath());
-      m_TrajectoryChooser.addOption("RED-Side To Station", autoSequences.RED_SideToStationPath());
       m_TrajectoryChooser.addOption("-----------------------------------------", null);
       m_TrajectoryChooser.addOption("BLUE-Auto-Balance", autoSequences.BLUE_AutoBalance());
       m_TrajectoryChooser.addOption("BLUE-Center", autoSequences.BLUE_CenterPath());
-      m_TrajectoryChooser.addOption("BLUE-Center To Station", autoSequences.BLUE_CenterToStationPath());
       m_TrajectoryChooser.addOption("BLUE-Side", autoSequences.BLUE_SidePath());
-      m_TrajectoryChooser.addOption("BLUE-Side To Station", autoSequences.BLUE_SideToStationPath());
   
     SmartDashboard.putData(m_TrajectoryChooser);
   }

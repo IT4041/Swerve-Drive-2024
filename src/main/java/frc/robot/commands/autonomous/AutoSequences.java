@@ -31,40 +31,6 @@ public class AutoSequences extends SequentialCommandGroup {
     addCommands();
   }
 
-  public Command BLUE_SideToStationPath() {
-
-    SequentialCommandGroup BLUE_SideToStationPath = new SequentialCommandGroup(
-        // new InstantCommand(m_MasterController::gotoTop, m_MasterController),
-        // new WaitCommand(2.5),
-        // new InstantCommand(m_MasterController::cubeInConeOut, m_MasterController),
-        // new WaitCommand(0.35),
-        // new InstantCommand(m_MasterController::zero, m_MasterController),
-        // new InstantCommand(m_MasterController::intakeStop, m_MasterController),
-        // new WaitCommand(0.25),
-        autoPaths.BLUE_SideToStationPath(),
-        m_drivetrainSubsystem.autoBalance());
-
-    BLUE_SideToStationPath.setName("BLUE_SIDE_TO_STATION_PATH");
-    return BLUE_SideToStationPath;
-  }
-
-  public Command BLUE_CenterToStationPath() {
-
-    SequentialCommandGroup BLUE_CenterToStationPath = new SequentialCommandGroup(
-        // new InstantCommand(m_MasterController::gotoTop, m_MasterController),
-        // new WaitCommand(2.5),
-        // new InstantCommand(m_MasterController::cubeInConeOut, m_MasterController),
-        // new WaitCommand(0.35),
-        // new InstantCommand(m_MasterController::zero, m_MasterController),
-        // new InstantCommand(m_MasterController::intakeStop, m_MasterController),
-        // new WaitCommand(0.25),
-        autoPaths.BLUE_CenterToStationPath(),
-        m_drivetrainSubsystem.autoBalance());
-
-    BLUE_CenterToStationPath.setName("BLUE_CENTER_TO_STATION_PATH");
-    return BLUE_CenterToStationPath;
-  }
-
   public Command BLUE_CenterPath() {
 
     SequentialCommandGroup BLUE_CenterPath = new SequentialCommandGroup(
@@ -149,41 +115,6 @@ public class AutoSequences extends SequentialCommandGroup {
 
     RED_AutoBalance.setName("RED_AUTO_BALANCE");
     return RED_AutoBalance;
-  }
-
-  public Command RED_SideToStationPath() {
-
-    SequentialCommandGroup RED_SideToStationPath = new SequentialCommandGroup(
-        // new InstantCommand(m_MasterController::gotoTop, m_MasterController),
-        // new WaitCommand(2.5),
-        // new InstantCommand(m_MasterController::cubeInConeOut, m_MasterController),
-        // new WaitCommand(0.35),
-        // new InstantCommand(m_MasterController::zero, m_MasterController),
-        // new InstantCommand(m_MasterController::intakeStop, m_MasterController),
-        // new WaitCommand(0.25),
-        autoPaths.RED_SideToStationPath(),
-        m_drivetrainSubsystem.autoBalance());
-
-    RED_SideToStationPath.setName("RED_SIDE_TO_STATION_PATH");
-    return RED_SideToStationPath;
-  }
-
-  public Command RED_CenterToStationPath() {
-
-    SequentialCommandGroup RED_CenterToStationPath = new SequentialCommandGroup(
-        // new InstantCommand(m_MasterController::gotoTop, m_MasterController),
-        // new WaitCommand(2.5),
-        // new InstantCommand(m_MasterController::cubeInConeOut, m_MasterController),
-        // new WaitCommand(0.35),
-        // new InstantCommand(m_MasterController::zero, m_MasterController),
-        // new InstantCommand(m_MasterController::intakeStop, m_MasterController),
-        // new WaitCommand(0.25),
-        autoPaths.RED_CenterToStationPath(),
-        m_drivetrainSubsystem.autoBalance());
-
-    RED_CenterToStationPath.setName("RED_CENTER_TO_STATION_PATH");
-    return RED_CenterToStationPath;
-
   }
 
   public Command RED_CenterPath() {

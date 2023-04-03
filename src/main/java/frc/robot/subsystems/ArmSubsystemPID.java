@@ -64,11 +64,11 @@ public class ArmSubsystemPID extends SubsystemBase {
     m_pidController.setOutputRange(Constants.ArmSubsystemConstants.minOutput, Constants.ArmSubsystemConstants.maxOutput);
 
     m_motor.setIdleMode(IdleMode.kBrake);
-    m_motor.setSmartCurrentLimit(80);
+    m_motor.setSmartCurrentLimit(20, 80, 100);
     m_motor.setClosedLoopRampRate(1);
-
+    
     m_follower.setIdleMode(IdleMode.kBrake);
-    m_follower.setSmartCurrentLimit(80);
+    m_follower.setSmartCurrentLimit(20, 80, 100);
     m_follower.setClosedLoopRampRate(1);
 
     m_motor.follow(ExternalFollower.kFollowerDisabled, 0);

@@ -20,28 +20,20 @@ public class AutoPaths extends SequentialCommandGroup {
         return m_drivetrainSubsystem.traj(PathPlanner.loadPath("BLUE_AutoBalancePath", new PathConstraints(.85, 1.0)), true);
     }
 
-    public Command BLUE_CenterFinishPath(){
-        return m_drivetrainSubsystem.traj(PathPlanner.loadPath("BLUE_CenterFinishPath", new PathConstraints(1.5, 1.5)), false);
-    }
-    
     public Command BLUE_CenterPath(){
         return m_drivetrainSubsystem.traj(PathPlanner.loadPath("BLUE_CenterPath", new PathConstraints(1.65, 1.25)), true);
     }
 
-    public Command BLUE_CenterToStationPath(){
-        return m_drivetrainSubsystem.traj(PathPlanner.loadPath("BLUE_CenterToStationPath", new PathConstraints(1.65, 1.25)), true);
-    }
-
-    public Command BLUE_SideFinishPath(){
-        return m_drivetrainSubsystem.traj(PathPlanner.loadPath("BLUE_SideFinishPath", new PathConstraints(1.5, 1.5)), false);
+    public Command BLUE_CenterFinishPath(){
+        return m_drivetrainSubsystem.traj(PathPlanner.loadPath("BLUE_CenterFinishPath", new PathConstraints(1.5, 1.5)), false);
     }
 
     public Command BLUE_SidePath(){
         return m_drivetrainSubsystem.traj(PathPlanner.loadPath("BLUE_SidePath", new PathConstraints(1.5, 1.5)), true);
     }
 
-    public Command BLUE_SideToStationPath(){
-        return m_drivetrainSubsystem.traj(PathPlanner.loadPath("BLUE_SideToStationPath", new PathConstraints(1, 1)), true);
+    public Command BLUE_SideFinishPath(){
+        return m_drivetrainSubsystem.traj(PathPlanner.loadPath("BLUE_SideFinishPath", new PathConstraints(1.5, 1.5)), false);
     }
 
     //-----RED PATHS -----------------------------------------------------------------------------------------
@@ -49,28 +41,20 @@ public class AutoPaths extends SequentialCommandGroup {
         return m_drivetrainSubsystem.traj(PathPlanner.loadPath("RED_AutoBalancePath", new PathConstraints(.85, 1.0)), true);
     }
 
-    public Command RED_CenterFinishPath(){
-        return m_drivetrainSubsystem.traj(PathPlanner.loadPath("RED_CenterFinishPath", new PathConstraints(1.5, 1.5)), false);
-    }
-    
     public Command RED_CenterPath(){
         return m_drivetrainSubsystem.traj(PathPlanner.loadPath("RED_CenterPath", new PathConstraints(1.65, 1.25)), true);
     }
 
-    public Command RED_CenterToStationPath(){
-        return m_drivetrainSubsystem.traj(PathPlanner.loadPath("RED_CenterToStationPath", new PathConstraints(1.65, 1.25)), true);
-    }
-
-    public Command RED_SideFinishPath(){
-        return m_drivetrainSubsystem.traj(PathPlanner.loadPath("RED_SideFinishPath", new PathConstraints(1.5, 1.5)), false);
+    public Command RED_CenterFinishPath(){
+        return m_drivetrainSubsystem.traj(PathPlanner.loadPath("RED_CenterFinishPath", new PathConstraints(1.5, 1.5)), false);
     }
 
     public Command RED_SidePath(){
         return m_drivetrainSubsystem.traj(PathPlanner.loadPath("RED_SidePath", new PathConstraints(1.5, 1.5)), true);
     }
 
-    public Command RED_SideToStationPath(){
-        return m_drivetrainSubsystem.traj(PathPlanner.loadPath("RED_SideToStationPath", new PathConstraints(1, 1)), true);
+    public Command RED_SideFinishPath(){
+        return m_drivetrainSubsystem.traj(PathPlanner.loadPath("RED_SideFinishPath", new PathConstraints(1.5, 1.5)), false);
     }
 
 }

@@ -4,9 +4,6 @@
 
 package frc.robot;
 
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.util.Color;
 
 /**
@@ -24,63 +21,6 @@ import edu.wpi.first.wpilibj.util.Color;
 public final class Constants {
 
     public static final String CANBUS_NAME = "CANivore1";
-
-    public static final class ScoringPoses {
-
-        private static final Pose2d RED1_Pose2d = new Pose2d(Units.inchesToMeters(656.49), Units.inchesToMeters(20.19),
-                Rotation2d.fromDegrees(0));
-        private static final Pose2d RED2_Pose2d = new Pose2d(Units.inchesToMeters(656.49), Units.inchesToMeters(42.19),
-                Rotation2d.fromDegrees(0));
-        private static final Pose2d RED3_Pose2d = new Pose2d(Units.inchesToMeters(656.49), Units.inchesToMeters(64.19),
-                Rotation2d.fromDegrees(0));
-        private static final Pose2d RED4_Pose2d = new Pose2d(Units.inchesToMeters(656.49), Units.inchesToMeters(86.74),
-                Rotation2d.fromDegrees(0));
-        private static final Pose2d RED5_Pose2d = new Pose2d(Units.inchesToMeters(656.49), Units.inchesToMeters(108.74),
-                Rotation2d.fromDegrees(0));
-        private static final Pose2d RED6_Pose2d = new Pose2d(Units.inchesToMeters(656.49), Units.inchesToMeters(130.19),
-                Rotation2d.fromDegrees(0));
-        private static final Pose2d RED7_Pose2d = new Pose2d(Units.inchesToMeters(656.49), Units.inchesToMeters(152.19),
-                Rotation2d.fromDegrees(0));
-        private static final Pose2d RED8_Pose2d = new Pose2d(Units.inchesToMeters(656.49), Units.inchesToMeters(174.19),
-                Rotation2d.fromDegrees(0));
-        private static final Pose2d RED9_Pose2d = new Pose2d(Units.inchesToMeters(656.49), Units.inchesToMeters(196.19),
-                Rotation2d.fromDegrees(0));
-
-        private static final Pose2d BLUE1_Pose2d = new Pose2d(Units.inchesToMeters(54.73), Units.inchesToMeters(196.19),
-                Rotation2d.fromDegrees(180));
-        private static final Pose2d BLUE2_Pose2d = new Pose2d(Units.inchesToMeters(54.73), Units.inchesToMeters(174.19),
-                Rotation2d.fromDegrees(180));
-        private static final Pose2d BLUE3_Pose2d = new Pose2d(Units.inchesToMeters(54.73), Units.inchesToMeters(152.19),
-                Rotation2d.fromDegrees(180));
-        private static final Pose2d BLUE4_Pose2d = new Pose2d(Units.inchesToMeters(54.73), Units.inchesToMeters(130.74),
-                Rotation2d.fromDegrees(180));
-        private static final Pose2d BLUE5_Pose2d = new Pose2d(Units.inchesToMeters(54.73), Units.inchesToMeters(108.74),
-                Rotation2d.fromDegrees(180));
-        private static final Pose2d BLUE6_Pose2d = new Pose2d(Units.inchesToMeters(54.73), Units.inchesToMeters(86.19),
-                Rotation2d.fromDegrees(180));
-        private static final Pose2d BLUE7_Pose2d = new Pose2d(Units.inchesToMeters(54.73), Units.inchesToMeters(64.19),
-                Rotation2d.fromDegrees(180));
-        private static final Pose2d BLUE8_Pose2d = new Pose2d(Units.inchesToMeters(54.73), Units.inchesToMeters(42.19),
-                Rotation2d.fromDegrees(180));
-        private static final Pose2d BLUE9_Pose2d = new Pose2d(Units.inchesToMeters(54.73), Units.inchesToMeters(20.19),
-                Rotation2d.fromDegrees(180));
-    }
-
-    public static enum ElementType {
-        CUBE,
-        CONE
-    }
-
-    public static final class ScoringLocationDetails {
-        public Pose2d pose;
-        public ElementType item;
-
-        public ScoringLocationDetails(Pose2d in_pose, ElementType in_item) {
-
-            this.pose = in_pose;
-            this.item = in_item;
-        }
-    }
 
     public static final class SwerveModuleConstants {
         //change this voltage to make the robot move faster
@@ -134,7 +74,7 @@ public final class Constants {
 
         //----OFFSET-------------------------------
         public static final double zeroOffset = 30;
-        public static final double offset = 190.3774238;
+        public static final double offset = 252.8590107;
         //-----------------------------------------
 
         public static final int SparkMaxDeviceID = 32;
@@ -162,7 +102,7 @@ public final class Constants {
 
         //----OFFSET-------------------------------
         public static final double zeroOffset = 30;
-        public static final double offset = 318.9217329;
+        public static final double offset = 312.9485393;
         //-----------------------------------------
 
         public static final int SparkMaxDeviceID = 4;
