@@ -113,7 +113,7 @@ public class ArmSubsystemPID extends SubsystemBase {
   }
 
   private void setPosition(double position) {
-    m_pidController.setReference(position, CANSparkMax.ControlType.kPosition, 0, 0, ArbFFUnits.kPercentOut);
+    m_pidController.setReference(position, CANSparkMax.ControlType.kPosition, 0, Constants.ArmSubsystemConstants.arbFeedFoward, ArbFFUnits.kPercentOut);
   }
 
   public void shelf() {

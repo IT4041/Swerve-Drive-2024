@@ -95,7 +95,6 @@ public class RobotContainer {
     JoystickButton LEFT_BUMPER_AS = new JoystickButton(m_assist, Constants.XboxControllerConstants.LEFT_BUMPER);
     JoystickButton RIGHT_BUMPER_AS = new JoystickButton(m_assist, Constants.XboxControllerConstants.RIGHT_BUMPER);
 
-
     // -----------DRIVER
     // ----------intake-----------------------------------------------------------
     RIGHT_BUMPER.onTrue(new InstantCommand(m_IntakeSubsystem::out_persist, m_IntakeSubsystem));

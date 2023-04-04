@@ -85,6 +85,7 @@ public final class Constants {
         public static final double kFF = 0.0;
         public static final double maxOutput = 1;
         public static final double minOutput = -1;
+        public static final double arbFeedFoward = 0;
         
     }
 
