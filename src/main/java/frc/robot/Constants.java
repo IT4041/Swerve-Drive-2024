@@ -6,18 +6,6 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.util.Color;
 
-/**
- * The Constants class provides a convenient place for teams to hold robot-wide
- * numerical or boolean
- * constants. This class should not be used for any other purpose. All constants
- * should be declared
- * globally (i.e. public static). Do not put anything functional in this class.
- *
- * <p>
- * It is advised to statically import this class (or one of its inner classes)
- * wherever the
- * constants are needed, to reduce verbosity.
- */
 public final class Constants {
 
     public static final String CANBUS_NAME = "CANivore1";
@@ -25,6 +13,7 @@ public final class Constants {
     public static final class SwerveModuleConstants {
         //change this voltage to make the robot move faster
         public static final double MAX_VOLTAGE = 12.0;
+        
         public static final double NOMINAL_VOLTAGE = 12;
         public static final double TURN_MOTOR_KP = 0.2;
         public static final double TURN_MOTOR_KI = 0.0;
@@ -34,6 +23,7 @@ public final class Constants {
     }
 
     public static final class SwerveDriveConstants {
+
         public static final String FRONT_LEFT_MODULE_NAME = "FrontLeft";
         public static final int FRONT_LEFT_DRIVE_MOTOR_ID = 45;
         public static final int FRONT_LEFT_TURN_MOTOR_ID = 40;

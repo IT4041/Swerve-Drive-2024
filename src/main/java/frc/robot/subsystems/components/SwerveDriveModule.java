@@ -104,8 +104,4 @@ public class SwerveDriveModule {
 
         turnMotor.set(ControlMode.Position, 0);
     }
-
-    public void setClosedLoopRampRate(double rate){
-        driveMotor.configClosedloopRamp(rate);
-    }
 }

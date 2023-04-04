@@ -92,6 +92,7 @@ public class ArmSubsystemPID extends SubsystemBase {
   public void periodic() {
     SmartDashboard.putNumber("Arm Encoder", m_AbsoluteEncoder.getPosition());
     SmartDashboard.putNumber("Arm target position", targetPosition);
+    
     SmartDashboard.putBoolean("Arm shelf", currArmPoseIndex == 4);
     SmartDashboard.putBoolean("Arm Top", currArmPoseIndex == 3);
     SmartDashboard.putBoolean("Arm Middle", currArmPoseIndex == 2);
