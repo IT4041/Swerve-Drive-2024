@@ -36,6 +36,7 @@ public class IntakeSubsystemPWM extends SubsystemBase {
     m_motor.set(this.speed);
 
     SmartDashboard.putBoolean("Intake-On",  Math.abs(this.speed) > 0.1);
+    SmartDashboard.putBoolean("Intake-Direction",  this.speed > 0.0);
   }
   
   public void in() {
@@ -61,8 +62,7 @@ public class IntakeSubsystemPWM extends SubsystemBase {
   }
   
   public void out_persist(){
-    if(out_on){
-      
+    if(out_on){ 
       this.speed = -0.05;
     }else{
       this.speed = -0.6;

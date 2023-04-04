@@ -68,10 +68,10 @@ public class ArmSubsystemPID extends SubsystemBase {
     m_motor.setSmartCurrentLimit(20, 80, 100);
     m_motor.setClosedLoopRampRate(1);
 
-    m_motor.setSoftLimit(SoftLimitDirection.kForward, Constants.ArmSubsystemConstants.ArmPositions.top);
-    m_motor.setSoftLimit(SoftLimitDirection.kReverse, Constants.ArmSubsystemConstants.offset_offset);
-    m_motor.enableSoftLimit(SoftLimitDirection.kForward, true);
-    m_motor.enableSoftLimit(SoftLimitDirection.kReverse, true);
+    // m_motor.setSoftLimit(SoftLimitDirection.kForward, Constants.ArmSubsystemConstants.ArmPositions.shelf);
+    // m_motor.setSoftLimit(SoftLimitDirection.kReverse, Constants.ArmSubsystemConstants.offset_offset);
+    // m_motor.enableSoftLimit(SoftLimitDirection.kForward, true);
+    // m_motor.enableSoftLimit(SoftLimitDirection.kReverse, true);
     
     m_follower.setIdleMode(IdleMode.kBrake);
     m_follower.setSmartCurrentLimit(20, 80, 100);
@@ -92,6 +92,7 @@ public class ArmSubsystemPID extends SubsystemBase {
   public void periodic() {
     SmartDashboard.putNumber("Arm Encoder", m_AbsoluteEncoder.getPosition());
     SmartDashboard.putNumber("Arm target position", targetPosition);
+    SmartDashboard.putBoolean("Arm shelf", currArmPoseIndex == 4);
     SmartDashboard.putBoolean("Arm Top", currArmPoseIndex == 3);
     SmartDashboard.putBoolean("Arm Middle", currArmPoseIndex == 2);
     SmartDashboard.putBoolean("Arm Low", currArmPoseIndex == 1);
@@ -112,6 +113,12 @@ public class ArmSubsystemPID extends SubsystemBase {
 
   private void setPosition(double position) {
     m_pidController.setReference(position, CANSparkMax.ControlType.kPosition, 0, 0, ArbFFUnits.kPercentOut);
+  }
+
+  public void shelf() {
+    this.targetPosition = Constants.ArmSubsystemConstants.ArmPositions.shelf;
+    this.setPosition(Constants.ArmSubsystemConstants.ArmPositions.shelf);
+    currArmPoseIndex = 4;
   }
 
   public void top() {
@@ -150,7 +157,7 @@ public class ArmSubsystemPID extends SubsystemBase {
 
   public void stepUp() {
 
-    if (currArmPoseIndex < 3) {
+    if (currArmPoseIndex < 4) {
       currArmPoseIndex++;
     }
 
