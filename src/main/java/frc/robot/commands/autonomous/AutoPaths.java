@@ -29,7 +29,7 @@ public class AutoPaths extends SequentialCommandGroup {
     }
 
     public Command BLUE_SidePath(){
-        return m_drivetrainSubsystem.traj(PathPlanner.loadPath("BLUE_SidePath", new PathConstraints(1.5, 1.5)), true);
+        return m_drivetrainSubsystem.traj(PathPlanner.loadPath("BLUE_SidePath", new PathConstraints(1.4, 1.5)), true);
     }
 
     public Command BLUE_SideFinishPath(){
@@ -50,7 +50,7 @@ public class AutoPaths extends SequentialCommandGroup {
     }
 
     public Command RED_SidePath(){
-        return m_drivetrainSubsystem.traj(PathPlanner.loadPath("RED_SidePath", new PathConstraints(1.5, 1.5)), true);
+        return m_drivetrainSubsystem.traj(PathPlanner.loadPath("RED_SidePath", new PathConstraints(1.4, 1.5)), true);
     }
 
     public Command RED_SideFinishPath(){

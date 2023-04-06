@@ -111,7 +111,7 @@ public final class Constants {
                 //public static final int[] WristPoses = {offset_offset,top,middle,shelf,floorCone,floorCube,tiltedCone};    
                 public static final int[] WristPoses = {offset_offset,top,middle,floorCone,floorCube,tiltedCone};    
 
-                public static final int autoWrist = 92 + offset_offset;
+                public static final int autoWrist = 91 + offset_offset;
         }
 
         public static final double kP = 0.15;
