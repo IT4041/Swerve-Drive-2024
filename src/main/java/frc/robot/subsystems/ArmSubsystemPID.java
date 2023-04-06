@@ -93,7 +93,7 @@ public class ArmSubsystemPID extends SubsystemBase {
     SmartDashboard.putNumber("Arm Encoder", m_AbsoluteEncoder.getPosition());
     SmartDashboard.putNumber("Arm target position", targetPosition);
     
-    SmartDashboard.putBoolean("Arm shelf", currArmPoseIndex == 4);
+    //SmartDashboard.putBoolean("Arm shelf", currArmPoseIndex == 4);
     SmartDashboard.putBoolean("Arm Top", currArmPoseIndex == 3);
     SmartDashboard.putBoolean("Arm Middle", currArmPoseIndex == 2);
     SmartDashboard.putBoolean("Arm Low", currArmPoseIndex == 1);
@@ -116,11 +116,11 @@ public class ArmSubsystemPID extends SubsystemBase {
     m_pidController.setReference(position, CANSparkMax.ControlType.kPosition, 0, Constants.ArmSubsystemConstants.arbFeedFoward, ArbFFUnits.kPercentOut);
   }
 
-  public void shelf() {
-    this.targetPosition = Constants.ArmSubsystemConstants.ArmPositions.shelf;
-    this.setPosition(Constants.ArmSubsystemConstants.ArmPositions.shelf);
-    currArmPoseIndex = 4;
-  }
+  //public void shelf() {
+  //   this.targetPosition = Constants.ArmSubsystemConstants.ArmPositions.shelf;
+  //   this.setPosition(Constants.ArmSubsystemConstants.ArmPositions.shelf);
+  //   currArmPoseIndex = 4;
+  // }
 
   public void top() {
     this.targetPosition = Constants.ArmSubsystemConstants.ArmPositions.top;
@@ -158,7 +158,7 @@ public class ArmSubsystemPID extends SubsystemBase {
 
   public void stepUp() {
 
-    if (currArmPoseIndex < 4) {
+    if (currArmPoseIndex < 3) {
       currArmPoseIndex++;
     }
 

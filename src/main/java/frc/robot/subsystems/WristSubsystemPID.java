@@ -86,10 +86,10 @@ public class WristSubsystemPID extends SubsystemBase {
     SmartDashboard.putNumber("Wrist Encoder", m_AbsoluteEncoder.getPosition());
     SmartDashboard.putNumber("Wrist target position", targetPosition);
 
-    SmartDashboard.putBoolean("Wrist Titled Cone", currWristPoseIndex == 6);
-    SmartDashboard.putBoolean("Wrist Floor Cube", currWristPoseIndex == 5);
-    SmartDashboard.putBoolean("Wrist Floor Cone", currWristPoseIndex == 4);
-    SmartDashboard.putBoolean("Wrist Shelf", currWristPoseIndex == 3);
+    SmartDashboard.putBoolean("Wrist Titled Cone", currWristPoseIndex == 5);
+    SmartDashboard.putBoolean("Wrist Floor Cube", currWristPoseIndex == 4);
+    SmartDashboard.putBoolean("Wrist Floor Cone", currWristPoseIndex == 3);
+    //SmartDashboard.putBoolean("Wrist Shelf", currWristPoseIndex == 3);
     SmartDashboard.putBoolean("Wrist Middle", currWristPoseIndex == 2);
     SmartDashboard.putBoolean("Wrist Top", currWristPoseIndex == 1);
     SmartDashboard.putBoolean("Wrist Zero", currWristPoseIndex == 0);
@@ -141,7 +141,7 @@ public class WristSubsystemPID extends SubsystemBase {
 
   public void stepUp() {
 
-    if (currWristPoseIndex < 6) {
+    if (currWristPoseIndex < 5) {
       currWristPoseIndex++;
     }
 

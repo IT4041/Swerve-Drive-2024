@@ -72,16 +72,17 @@ public final class Constants {
         public static final int EncoderID = 0;
 
         public static final class ArmPositions{
-                public static final int shelf = 86 + offset_offset;
+                //public static final int shelf = 86 + offset_offset;
                 public static final int top = 74 + offset_offset;
                 public static final int middle = 52 + offset_offset;
-                public static final int floor = 16 + offset_offset;
-                public static final int[] ArmPoses = {offset_offset,floor,middle,top,shelf};    
+                public static final int floor = 15 + offset_offset;
+                //public static final int[] ArmPoses = {offset_offset,floor,middle,top,shelf};
+                public static final int[] ArmPoses = {offset_offset,floor,middle,top};        
         }
 
-        public static final double kP = 0.04;
+        public static final double kP = 0.035;
         public static final double kI = 0.0;
-        public static final double kD = 0.5;
+        public static final double kD = 0.6;
         public static final double kFF = 0.0;
         public static final double maxOutput = 1;
         public static final double minOutput = -1;
@@ -103,16 +104,17 @@ public final class Constants {
         public static final class WristPositions{
                 public static final int top = 12 + offset_offset;
                 public static final int middle = 29 + offset_offset;
-                public static final int shelf = 60 + offset_offset;
-                public static final int floorCone = 85 + offset_offset;
-                public static final int floorCube = 86 + offset_offset; 
-                public static final int tiltedCone = 97 + offset_offset;
-                public static final int[] WristPoses = {offset_offset,top,middle,shelf,floorCone,floorCube,tiltedCone};    
+                //public static final int shelf = 60 + offset_offset;
+                public static final int floorCone = 90 + offset_offset;
+                public static final int floorCube = 97 + offset_offset; 
+                public static final int tiltedCone = 100 + offset_offset;
+                //public static final int[] WristPoses = {offset_offset,top,middle,shelf,floorCone,floorCube,tiltedCone};    
+                public static final int[] WristPoses = {offset_offset,top,middle,floorCone,floorCube,tiltedCone};    
 
-                public static final int autoWrist = 84 + offset_offset;
+                public static final int autoWrist = 92 + offset_offset;
         }
 
-        public static final double kP = 0.09;
+        public static final double kP = 0.15;
         public static final double kI = 0.0;
         public static final double kD = -1;
         public static final double kFF = 0.0;
