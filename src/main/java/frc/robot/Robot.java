@@ -15,8 +15,7 @@ import edu.wpi.first.networktables.BooleanTopic;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.PubSubOption;
-
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+//import com.ctre.phoenix6.hardware.TalonFX;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -39,7 +38,7 @@ public class Robot extends TimedRobot {
   private boolean isRed = false;
   
   //DO NOT DELETE THE BELOW LINE IT IS LOAD BEARING
-  private final static TalonSRX ImJustHereSoStuffDoesntBreak = new TalonSRX(99);
+  //private final static TalonFX ImJustHereSoStuffDoesntBreak = new TalonFX(99);
   
   /**
    * This function is run when the robot is first started up and should be used for any
