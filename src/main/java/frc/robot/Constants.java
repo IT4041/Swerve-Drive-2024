@@ -25,27 +25,27 @@ public final class Constants {
     public static final class SwerveDriveConstants {
 
         public static final String FRONT_LEFT_MODULE_NAME = "FrontLeft";
-        public static final int FRONT_LEFT_DRIVE_MOTOR_ID = 45;
-        public static final int FRONT_LEFT_TURN_MOTOR_ID = 40;
-        public static final int FRONT_LEFT_ENC_ID = 50;
+        public static final int FRONT_LEFT_DRIVE_MOTOR_ID = 20;
+        public static final int FRONT_LEFT_TURN_MOTOR_ID = 22;
+        public static final int FRONT_LEFT_ENC_ID = 53;
         public static final double FRONT_LEFT_OFFSET = 321.6796875;
 
         public static final String FRONT_RIGHT_MODULE_NAME = "FrontRight";
-        public static final int FRONT_RIGHT_DRIVE_MOTOR_ID = 43;
-        public static final int FRONT_RIGHT_TURN_MOTOR_ID = 44;
-        public static final int FRONT_RIGHT_ENC_ID = 51;
+        public static final int FRONT_RIGHT_DRIVE_MOTOR_ID = 23;
+        public static final int FRONT_RIGHT_TURN_MOTOR_ID = 41;
+        public static final int FRONT_RIGHT_ENC_ID = 52;
         public static final double FRONT_RIGHT_OFFSET = 338.90625;
 
         public static final String BACK_RIGHT_MODULE_NAME = "BackRight";
-        public static final int BACK_RIGHT_DRIVE_MOTOR_ID = 23;
-        public static final int BACK_RIGHT_TURN_MOTOR_ID = 41;
-        public static final int BACK_RIGHT_ENC_ID = 52;
+        public static final int BACK_RIGHT_DRIVE_MOTOR_ID = 45;
+        public static final int BACK_RIGHT_TURN_MOTOR_ID = 40;
+        public static final int BACK_RIGHT_ENC_ID = 50;
         public static final double BACK_RIGHT_OFFSET = 121.46484375;
 
         public static final String BACK_LEFT_MODULE_NAME = "BackLeft";
-        public static final int BACK_LEFT_DRIVE_MOTOR_ID = 20;
-        public static final int BACK_LEFT_TURN_MOTOR_ID = 22;
-        public static final int BACK_LEFT_ENC_ID = 53;
+        public static final int BACK_LEFT_DRIVE_MOTOR_ID = 43;
+        public static final int BACK_LEFT_TURN_MOTOR_ID = 44;
+        public static final int BACK_LEFT_ENC_ID = 52;
         public static final double BACK_LEFT_OFFSET = 153.017578125;
 
         public static final double WHEEL_BASE = 19.325 * 0.0254;
