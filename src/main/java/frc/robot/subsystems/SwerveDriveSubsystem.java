@@ -1,8 +1,6 @@
 package frc.robot.subsystems;
 
-
-import com.ctre.phoenix6.hardware.Pigeon2;
-
+import com.ctre.phoenix.sensors.Pigeon2;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -99,9 +97,9 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         backLeftModule.periodic();
         backRightModule.periodic();
 
-        SmartDashboard.putNumber("Pidgeon yaw", pigeon.getYaw().getValueAsDouble());
-        SmartDashboard.putNumber("Pidgeon pitch", pigeon.getPitch().getValueAsDouble());
-        SmartDashboard.putNumber("Pidgeon roll", pigeon.getRoll().getValueAsDouble());
+        SmartDashboard.putNumber("Pidgeon yaw", pigeon.getYaw());
+        SmartDashboard.putNumber("Pidgeon pitch", pigeon.getPitch());
+        SmartDashboard.putNumber("Pidgeon roll", pigeon.getRoll());
 
         // adjust overall speed adn rotation of the robot
         this.setDriveRate(1);
@@ -123,7 +121,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         // values as the robot turns clockwise. This is not standard convention that
         // is used by the WPILib classes.
         // var gyroAngle = Rotation2d.fromDegrees(-m_gyro.getAngle());
-        return Rotation2d.fromDegrees(pigeon.getYaw().getValueAsDouble());
+        return Rotation2d.fromDegrees(pigeon.getYaw());
     }
 
     private Pose2d getPose() {
@@ -167,7 +165,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
                 fwdBackDir * Constants.SwerveDriveConstants.MAX_VELOCITY_METERS_PER_SECOND,
                 leftRightDir * Constants.SwerveDriveConstants.MAX_VELOCITY_METERS_PER_SECOND,
                 turn * Constants.SwerveDriveConstants.MAX_OMEGA_RADIANS_PER_SECOND,
-                Rotation2d.fromDegrees(pigeon.getYaw().getValueAsDouble()));
+                Rotation2d.fromDegrees(pigeon.getYaw()));
 
         // Convert to module states
         SwerveModuleState[] moduleStates = m_kinematics.toSwerveModuleStates(speeds);
@@ -210,7 +208,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
 
     private void SlowUntilLevel(){
 
-        double pitch = pigeon.getPitch().getValueAsDouble();
+        double pitch = pigeon.getPitch();
         double driveSpeed = Constants.SwerveDriveConstants.balanceHold;
 
         if(Math.abs(pitch) >= Constants.SwerveDriveConstants.balanceRollThreshold){
@@ -223,7 +221,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
             driveSpeed,
             0,
             0,
-            Rotation2d.fromDegrees(pigeon.getYaw().getValueAsDouble()));
+            Rotation2d.fromDegrees(pigeon.getYaw()));
             
         // Convert to module states
         SwerveModuleState[] moduleStates = m_kinematics.toSwerveModuleStates(speeds);
