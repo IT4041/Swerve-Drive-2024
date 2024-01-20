@@ -28,13 +28,13 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     private static SwerveDriveSubsystem m_inst = null;
 
     // Locations for the swerve drive modules relative to the robot center.
-    private Translation2d m_frontLeftLocation = new Translation2d(Constants.SwerveDriveConstants.WHEEL_BASE,
+    private Translation2d m_frontLeftLocation = new Translation2d(Constants.SwerveDriveConstants.TRACK_WIDTH,
             Constants.SwerveDriveConstants.WHEEL_BASE);
-    private Translation2d m_frontRightLocation = new Translation2d(Constants.SwerveDriveConstants.WHEEL_BASE,
+    private Translation2d m_frontRightLocation = new Translation2d(Constants.SwerveDriveConstants.TRACK_WIDTH,
             -Constants.SwerveDriveConstants.WHEEL_BASE);
-    private Translation2d m_backLeftLocation = new Translation2d(-Constants.SwerveDriveConstants.WHEEL_BASE,
+    private Translation2d m_backLeftLocation = new Translation2d(-Constants.SwerveDriveConstants.TRACK_WIDTH,
             Constants.SwerveDriveConstants.WHEEL_BASE);
-    private Translation2d m_backRightLocation = new Translation2d(-Constants.SwerveDriveConstants.WHEEL_BASE,
+    private Translation2d m_backRightLocation = new Translation2d(-Constants.SwerveDriveConstants.TRACK_WIDTH,
             -Constants.SwerveDriveConstants.WHEEL_BASE);
 
     // Creating my kinematics object using the module locations
