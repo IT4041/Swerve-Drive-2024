@@ -2,10 +2,7 @@ package frc.robot.subsystems;
 
 
 import com.ctre.phoenix6.hardware.Pigeon2;
-import com.pathplanner.lib.commands.PPSwerveControllerCommand;
-import com.pathplanner.lib.path.PathPlannerTrajectory;
 
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -17,9 +14,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.components.SwerveDriveModule;
@@ -194,35 +189,6 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         frontRightModule.setModuleState(frontRight);
         backRightModule.setModuleState(backRight);
         backLeftModule.setModuleState(backLeft);
-    }
-
-    public Command traj(PathPlannerTrajectory traj, boolean isFirstPath) {
-
-        //PIDController xyController = new PIDController(5, 0, 0);
-        PIDController xyController = new PIDController(4, 0, 0);
-
-        //PIDController rotController = new PIDController(5, 0, 0);
-        PIDController rotController = new PIDController(4, 0, 0);
-
-        return new SequentialCommandGroup(
-                new InstantCommand(() -> {
-                    if (isFirstPath)
-                        this.m_odometry.resetPosition(getGyroHeading(), getModulePositions(),
-                                traj.getInitialTargetHolonomicPose());
-
-                }),
-                new PPSwerveControllerCommand(
-                        traj,
-                        this::getPose,
-                        this.m_kinematics,
-                        xyController,
-                        xyController,
-                        rotController,
-                        this::setModuleStates,
-                        this),
-                new InstantCommand(() -> {
-                    SmartDashboard.putBoolean("Done", true);
-                }));
     }
 
     public void setDriveRate(double driveRate) {
