@@ -9,7 +9,7 @@
       "name": "Launch Main",
       "request": "launch",
       "mainClass": "frc.robot.Main",
-      "projectName": "Drive-Swerve-2023"
+      "projectName": "Drive-Swerve-2024-1"
     },
     {
       "type": "wpilib",
