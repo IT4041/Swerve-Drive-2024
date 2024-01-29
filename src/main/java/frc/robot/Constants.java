@@ -48,9 +48,9 @@ public final class Constants {
         public static final int BACK_LEFT_ENC_ID = 52;
         public static final double BACK_LEFT_OFFSET = 160.400;
 
-        private static final double IN_TO_CM = 0.0254;
-        public static final double WHEEL_BASE = 22.375 * IN_TO_CM;
-        public static final double TRACK_WIDTH = 26.75 * IN_TO_CM;
+        private static final double IN_TO_M = 0.0254;
+        public static final double WHEEL_BASE = 22.375 * IN_TO_M;
+        public static final double TRACK_WIDTH = 26.75 * IN_TO_M;
         public static final double SLEW_RATE_LIMIT = 0.5;
         public static final int PIDGEON_ID = 13;
         public static final double MAX_VELOCITY_METERS_PER_SECOND = 5;
